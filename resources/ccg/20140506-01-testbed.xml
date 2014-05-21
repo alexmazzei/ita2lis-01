@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<regression name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../testbed.xsd">
+  <item string="treno-2456-2 arrivare-2835-2" numOfParses="1"/>
+  <item string="treno-2456-2 frecciarossa numero 9 5 7 2 ore 7 40 sera salerno venire binario numero 12 arrivare fut_progr" numOfParses="1"/>
+  <item string="treno-2456-2 frecciarossa numero 9 5 6 1 ore 6 18 mattina salerno andare binario numero 9 partire fut_prog" numOfParses="1"/>
+</regression>
