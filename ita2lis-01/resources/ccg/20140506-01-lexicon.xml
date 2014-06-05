@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ccg-lexicon name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../lexicon.xsd">
+  <family name="N_prova" pos="N_prova" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="Z">
+            <nomvar name="Z"/>
+            <diamond mode="uno">
+              <prop name="[*DEFAULT*]"/>
+            </diamond>
+            <nomvar name="X"/>
+            <diamond mode="due">
+              <nomvar name="Y"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="numero-prova" pred="pre-number"/>
+  </family>
+  <family name="N_II" pos="N_II" closed="true">
+    <entry name="Entry-1">
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+        </fs>
+        <lf>
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+          </satop>
+        </lf>
+      </atomcat>
+    </entry>
+    <member stem="treno-2456-2" pred="train"/>
+    <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
+    <member stem="numero-xxxx-1" pred="pre-number"/>
+    <member stem="binario-xxxx-1" pred="rail"/>
+    <member stem="0-xxxx-1"/>
+    <member stem="1-xxxx-1" pred="1"/>
+    <member stem="2-xxxx-1" pred="2"/>
+    <member stem="3-xxxx-1" pred="3"/>
+    <member stem="4-xxxx-1" pred="4"/>
+    <member stem="5-xxxx-1" pred="5"/>
+    <member stem="6-xxxx-1" pred="6"/>
+    <member stem="7-xxxx-1" pred="7"/>
+    <member stem="8-xxxx-1" pred="8"/>
+    <member stem="9-xxxx-1" pred="9"/>
+    <member stem="10-xxxx-1" pred="10"/>
+    <member stem="11-xxxx-1" pred="11"/>
+    <member stem="12-xxxx-1" pred="12"/>
+    <member stem="13-xxxx-1" pred="13"/>
+    <member stem="14-xxxx-1" pred="14"/>
+    <member stem="15-xxxx-1" pred="15"/>
+    <member stem="16-xxxx-1" pred="16"/>
+    <member stem="17-xxxx-1" pred="17"/>
+    <member stem="18-xxxx-1" pred="18"/>
+    <member stem="19-xxxx-1" pred="19"/>
+    <member stem="20-xxxx-1" pred="20"/>
+    <member stem="21-xxxx-1" pred="21"/>
+    <member stem="22-xxxx-1" pred="22"/>
+    <member stem="23-xxxx-1" pred="23"/>
+    <member stem="24-xxxx-1" pred="24"/>
+    <member stem="25-xxxx-1" pred="25"/>
+    <member stem="26-xxxx-1" pred="26"/>
+    <member stem="27-xxxx-1" pred="27"/>
+    <member stem="28-xxxx-1" pred="28"/>
+    <member stem="29-xxxx-1" pred="29"/>
+    <member stem="30-xxxx-1" pred="30"/>
+  </family>
+  <family name="InTransV_I" pos="InTransV_I" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="s">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="E"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="&lt;"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="E:achievement">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-SUBJ">
+              <nomvar name="X:physical-object"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="arrivare-2835-2" pred="arrive"/>
+  </family>
+</ccg-lexicon>

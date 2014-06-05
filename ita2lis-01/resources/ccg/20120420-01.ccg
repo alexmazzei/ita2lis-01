@@ -1,0 +1,1047 @@
+# -*- mode: python;  -*-
+############ [name of the grammar] ####################
+#
+#
+## [LIS Grammar meteo19-01]
+## [Alessandro Mazzei, 19/01/2012]
+#
+# Working Hypotheses: 
+#
+# TUP ontology
+#
+#Linguistic phenomena modeled: word order,  
+#
+#
+#TODO: reciprocity, plural for distributivity
+#
+####################### Features #######################
+#
+## here's a sample feature declaration (commented out)
+## NB: only use *one* feature declaration per grammar
+#
+## feature {
+##   case<2>: nom acc;
+##   num<2>: sg pl;
+##   pers<2>: non-3rd {1st 2nd} 3rd;
+##   tense<E>: past pres;
+##   ontology: sem-obj {
+##      phys-obj {animate-being {person animal}
+##                thing }
+##      situation {change {action} state}
+##  };
+## }
+#
+
+feature  {
+  kind<1>: dcl copula adj;
+  num<5>: sing plur;
+  pers<5>: non-3rd {1st 2nd} 3rd;
+  #articulation_position<1 2 3>: non-body {sx dx neutral} body;
+  #articulation_position_s<1 2 3>: left central right;
+  ap <5 1>: non-body {sx dx neutral} body;
+  #PoS<1 2 3>   : Punctuation Determiner Noun Adjective Verb Pronoun Adverb Preposition Conjunction Interjection;
+  PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron;
+
+  TC<2 3 5>: tc-off tc-0 tc-1 tc-2 tc-1-2;
+  
+
+ 
+  tense<E>: past present future;
+  sem-num<X:NUM>: sg-X pl-X;
+
+  ontology: #02 September 2010
+  	sem-obj 
+          {
+	   precipitation-strength
+	   weather-event-width
+	   datatype
+	     {
+	      string
+	      integer
+              sound
+                {
+                 speech
+                }
+	     }
+           entity
+             {
+              evaluable-entity
+                {
+                 positive-eval-entity
+                 image-01#ALE 20120516
+                }
+              person
+                {
+                 everybody#ALE
+                }
+              geographic-area
+                {
+                 italy#ALE
+                 it-geographic-area
+                   {
+                    it-region
+	              {
+		       it-cardinal-region
+			 {
+			  it-western-region
+			  it-eastern-region
+			  it-southern-region
+			  it-northern-region
+			    {
+		             it-alps-region
+		            }
+                          it-northwestern-region
+                            {
+                             liguria-01
+                            }
+			  it-northeastern-region
+			  it-southwestern-region
+			  it-southeastern-region
+	                 }
+		       it-central-region
+		       it-island-region
+		       it-ponente-region
+		       it-adriatic-region
+		         {
+			  it-adriatic-central-region[it-central-region]
+			 }
+		       it-tirrenic-region
+		      }
+		    it-region-group
+                   }
+		 sea
+                   {
+		    it-sea[it-region]
+                   }
+                 mountain
+                }
+              time-interv-or-point
+                {
+	         time-interval[sequenceable-entity]
+		   {
+		    day[evaluable-entity]
+                      {
+                       positive-day[positive-eval-entity]
+                      }
+                    month[day-sequence]
+                    evening[evaluable-entity]
+                      {
+                       positive-evening[positive-eval-entity]
+                      }
+                   }
+                }
+              geogr-part-selection-criterium
+                {
+		 cardinal-direction
+                 cardinal-origin
+		}
+              event
+                {
+                 action{#ALE
+                      increase[meteo-status-situation]
+                      mean#ALE 20120130
+                      to-show-01#ALE 20120516
+                    }
+                }
+	      meteo-status-situation[dialogue-topic]
+		{
+		 sea-status-situation
+                   {
+                    sea-current
+                   }
+                 weather-status-situation
+                 {
+                  weather-status-stable
+                  weather-status-unstable
+                  weather-status-high-pressure#ALE 23/09/10
+		 }
+                 weather-event
+		 {
+		  precipitation
+                  {
+                   rain
+     	           snowfall
+                   storm
+		  }
+                  clouds
+		 }
+		}
+	      description
+	        {
+                 it-area-spec
+                 sea-status-description
+                 weather-status-description
+		 time-interval-description
+		   {
+                    period#ALE 20121901
+                    month-description
+		    day-description
+		      {
+		       deictic-day-description
+		      }
+		    part-of-day-description
+		   }
+                 deictic-description
+		   {
+		    deictic-time-interval-description
+		      {
+		       deictic-part-of-day-description[part-of-day-description]
+		      }
+		   }
+                 anaphoric-description
+                   {
+                    anaphoric-time-interval-description[time-interval-description]                    
+                   }
+                 ordinal-description[reified-relation]
+		}
+              reified-relation
+		{
+		 part-of
+		   {
+		    geogr-part-of
+                    temporal-part-of
+                      {
+                       day-month-part-of
+                      }
+		   }
+                 intensification-rel
+		}
+	      degree
+	        {
+		 weather-instability-degree
+		 weather-stability-degree
+		}
+	      dialogue
+	      dialogue-topic
+                {
+                 greetings
+                 to-have-meteo-status[to-have]
+                }
+              television-program
+                {
+                 meteo-news
+                }
+              sequenceable-entity
+              entity-sequence
+                {
+                 day-sequence
+                }
+              to-have
+             }
+          };
+
+
+  }
+
+
+######################### Words #########################
+#
+## word declarations include the lexical item, the
+## family/category, the semantic sort, and any
+## associated features
+#
+## word the:Det;
+## word slept:IntransV: past;
+
+
+####MEMBER words;
+word prova_adj : addj;
+word prova_avv : avv;
+word pressione-alta;
+
+word quale-01905-2 : Pronoun-relative : pron;
+ 
+#Morphology Punctuation (1)
+
+#Morphology Determiner (2)
+
+#Morphology Noun (3)
+
+#Noun Class I
+def noun-I(Stem,lf,classe,cat) {
+   word Stem:N_I (classe, pred=lf){
+      Stem    : body cat;
+   }
+}
+noun-I(mamma,mother,person,noun)
+#noun-I(gruppo,group,thing)
+#noun-I(papa,father,person)
+noun-I(giugno-3056-1,june,month-description,noun)
+noun-I(spagna,spain,geographic-area,noun)
+noun-I(francia,france,geographic-area,noun)
+noun-I(aria,air,weather-event,noun)
+
+
+#noun-I coordination ("spagna FRANCIA")
+def noun-I-coord(Stem,lf,classe) {
+   word Stem:N-I-coord (classe, pred=lf){
+     Stem                     : body;
+   }
+}
+
+#noun-I-coord(francia,france,geographic-area)
+
+
+
+#Noun Class II
+def noun-II(Stem,lf,classe,cat) {
+   word Stem:N-II (classe, pred=lf){
+     Stem                     : neutral cat tc-off;
+#     Stem . _sx               : sx;
+#     Stem . _dx               : dx;
+   }
+}
+
+def noun-II-predicable(Stem,lf,classe,cat,tc-cat) {
+   word Stem:N-II (classe, pred=lf){
+     Stem                     : neutral cat tc-cat;
+   }
+}
+
+#verb-III-B-tr(previsione-2678-1,foresee,meteo-status-situation,neutral,verb)
+
+noun-II(tempo-2696-1,weather,weather-event,noun)
+noun-II(sud-2329-1,it-southern-region,it-region,noun)
+noun-II(nord-1533-1,it-northern-region,it-region,noun)
+noun-II(italia-1207-1,italy,geographic-area,noun)
+noun-II(centro-2649-1,it-central-region,it-region,noun)
+noun-II(fascia_adriatica-02721-1,it-adriatic-region,it-region,noun)
+#noun-II(ligure-3064-1,liguria,it-region,noun)
+noun-II(liguria-2810-1,liguria,it-region,noun)
+noun-II(toscana-3177-1,toscana,it-region,noun)
+noun-II-predicable(pioggia-1767-2,rain,precipitation,noun,tc-0)
+noun-II-predicable(nuvola-02667-2,clouds,weather-event,noun,tc-0)
+noun-II-predicable(temporale-2697-2,storm,precipitation,noun,tc-0)
+noun-II-predicable(instabilita-02724-1,unstable-weather,weather-status-situation,noun,tc-0)
+noun-II-predicable(previsione-2678-1,foresee,meteo-status-situation,noun,tc-2)
+noun-II(mese-1398-2,generic_month,month,noun)
+noun-II(giorno-1052-1,generic_day,day,noun)
+#noun-II(giugno,june,sem-obj)
+noun-II(temperatura-2998-2,temperature,evaluable-entity,noun)
+#noun-II-predicable(temperatura-2998-2,temperature,weather-event,noun,tc-0)
+noun-II(valore_valere-80020-2,value,evaluable-entity,noun)
+noun-II(media-3072-2,average,evaluable-entity,adjc+qualif)#noun)
+noun-II(cielo-00491-2,sky,weather-event,noun)
+noun-II(immagine_mostrare-02845-2,image,evaluable-entity,noun)
+noun-II(serata-2690-2,evening,time-interval,noun)
+
+
+noun-II(sera,generic_evening,evening,noun)
+noun-II(umidita,humidity,weather-event,noun)
+noun-II(satellite,satellite,geographic-area,noun)
+noun-II(monte,generic_mountain,mountain,noun)
+#noun-II(pressione-alta,high-pressure,weather-status-high-pressure)
+#noun-II(satellite,satellite,entity)#C'è un problema sulla categorizzazione
+#noun-II(italia,italy,geographic-area,noun)
+noun-II(sicilia,sicily,geographic-area,noun)
+noun-II(regioni-settentrionali,north-regions,it-northern-region,noun)
+noun-II(nord,north,it-northern-region,noun)
+noun-II(nuvola,cloud,clouds,noun)
+
+#noun-II predictive ("immagini_catturate dal satellite")
+def noun-II-pred(Stem,lf,classe) {
+   word Stem:N-II-pred (classe, pred=lf){
+     Stem                     : neutral;
+#     Stem . _sx               : sx;
+#     Stem . _dx               : dx;
+   }
+}
+noun-II-pred(immagini-catturare,image1,entity)
+
+#noun-II coordination ("spagna FRANCIA")
+def noun-II-coord(Stem,lf,classe) {
+   word Stem:N-II-coord (classe, pred=lf){
+     Stem                     : neutral;
+#     Stem . _sx               : sx;
+#     Stem . _dx               : dx;
+   }
+}
+#noun-II-coord(italia2,italy,geographic-area)
+
+
+def noun-II-s(Stem,lf,classe) {
+   word Stem:N-II-s (classe, pred=lf){
+     Stem                     : neutral;
+ #    Stem . _sx               : sx;
+ #    Stem . _dx               : dx;
+   }
+}
+#noun-II-s(italia,italy,it-geographic-area)
+#noun-II-s(pressione-alta,high-pressure,weather-status-high-pressure)
+
+
+#Morphology Adjective (4)
+word buono: Adj-greeting : neutral ;
+
+def adjective-I(Stem,lf,classe) {
+   word Stem:Adj-I (classe, pred=lf){
+     Stem       : body;
+   }
+}
+#adjective-I(ultimo,last,sem-obj)
+adjective-I(caldo,hot,weather-event)
+adjective-I(umidita2,humidity,weather-event)
+#adjective-I(pioggia,rain,weather-event)
+adjective-I(temporale,storm,weather-event)
+
+def adjective-II(Stem,lf,classe,cat) {
+   word Stem:Adj-II (classe, pred=lf){
+     Stem       : neutral cat;
+#     Stem . _sx    : sx;
+#     Stem . _dx    : dx;
+   }
+}
+adjective-II(ultimo-2747-1,last,sem-obj,adjc+ordin)
+adjective-II(brutto-0316-1,bad,weather-status-situation,adjc+qualif)
+adjective-II(buono-0326-1,good,entity,adjc+qualif)
+#00326-buono 02647-buono
+#adjective-II(instabilita-02724-1,unstable-2,weather-status-situation,adjc+qualif)
+adjective-II(alto-3006-1,high,weather-status-situation,adjc+qualif)
+adjective-II(sereno-2741-2,clear,weather-status-situation,adjc+qualif)
+
+adjective-II(umidita,humidity,weather-event,adjc)
+adjective-II(veneto,veneto,geographic-area,adjc)
+
+
+def adjective-II-indef(Stem,lf,classe) {
+   word Stem:Adj-II-indef (classe, pred=lf){
+     Stem       : neutral;
+   }
+}
+adjective-II-indef(alcuni,some,sem-obj)
+
+#Morphology Verb (5)
+
+#CLASS I
+#Inransitive verbs
+def verb-I-intr(Stem,lf,classe) {
+   word Stem . _body:InTransV_I (classe, pred=lf);
+}
+verb-I-intr(dormire,sleep,action)
+verb-I-intr(piangere,cry,action)
+verb-I-intr(soffrire,pain,action)
+verb-I-intr(tossire,cough,action)
+verb-I-intr(sudare,swet,action)
+
+def verb-I-intr-weather(Stem,lf,classe) {
+   word Stem :InTransV-I-weather (classe, pred=lf);
+}
+verb-I-intr-weather(nevicare,snowing,meteo-status-situation)
+verb-I-intr-weather(vento_poco,slow_winding,meteo-status-situation)
+
+#Transitive verbs
+def verb-I-tr(Stem,lf,classe) {
+   word Stem:TransV_I (classe, pred=lf);
+}
+verb-I-tr(pensare,think,action)
+verb-I-tr(mangiare,eat,action)
+verb-I-tr(conoscere,know-I,action)
+verb-I-tr(piacere,like,action)
+verb-I-tr(amare,love,action)
+
+#RELATIVE VERB CONSTRUCTION
+def verb-I-Relative(Stem,lf,classe,art_posi,cat) {
+  word Stem:TransV_I-Relative  (classe, pred=lf) :cat ;   
+};
+verb-I-Relative(significare-03155-2,mean,action,neutral,verb)
+
+
+
+#VERBAL Class II DARE, INSEGNARE, RISPONDERE, CHIEDERE, AIUTARE,
+# UCCIDERE, VEDERE, GETTARE, VISITARE
+
+
+#VERBAL SubClass II-A: Subject-to-Object (indirect)
+#Intransitive Verbs: empty???
+#transitive Verbs: 
+def verb-II-A-tr(Stem,lf,classe,start_posi, end_posi,cat) {
+#   word start_posi. _ . Stem . _ . end_posi:TransV_II-A . _ .  start_posi . end_posi (classe, pred=lf) : cat;
+   word Stem:TransV_II-A . _ .  start_posi . end_posi (classe, pred=lf) : cat;
+
+};
+verb-II-A-tr(mostrare-03087-2,show,action,neutral,neutral,verb)
+
+#VERBAL SubClass II-B: Object(indirect)-to-Subject
+#Intransitive Verbs: empty???
+#transitive Verbs: 
+def verb-II-B-tr(Stem,lf,classe,start_posi, end_posi) {
+   word start_posi. _ . Stem . _ . end_posi:TransV_II-B . _ .  start_posi . end_posi (classe, pred=lf);
+};
+verb-II-B-tr(sfruttare,exploit,action,sx,dx)
+
+
+#VERBAL Class III CRESCERE, ROMPERE, ACCETTARE, 
+#SCOMPARIRE, SVENIRE, INIZIARE, MORIRE, GIOCARE, ASPETTARE, LAVORARE. 
+
+# 
+#VERBAL SubClass III-A: Subject(indirect)
+#Intransitive Verbs: 
+def verb-III-A-intr(Stem,lf,classe,art_posi) {
+   word Stem . _ . art_posi:InTransV_III-A . _ .  art_posi  (classe, pred=lf) ;
+};
+verb-III-A-intr(dare,give1,action,neutral)
+
+#transitive Verbs: 
+def verb-III-A-tr(Stem,lf,classe,art_posi) {
+   word Stem . _ . art_posi:TransV_III-A . _ .  art_posi  (classe, pred=lf) ;
+};
+#verb-III-A-tr-s(dare,give,action,neutral)
+def verb-III-A-tr-s(Stem,lf,classe,art_posi) {
+   word Stem . _ . art_posi:TransV_III-A-s . _ .  art_posi  (classe, pred=lf) ;
+};
+verb-III-A-tr-s(dare,give2,action,neutral)
+
+
+
+def verb-III-A-nuvola-aumentare(Stem,lf,classe,art_posi,cat) {
+   word Stem:TransV_III-A-s . _ . nuvola-aumentare  (classe, pred=lf) :cat ;
+};
+verb-III-A-nuvola-aumentare(nuvola_aumentare-2888-2,increase,meteo-status-situation,neutral,verb)
+
+
+def verb-III-A-temperatura-aumentare(Stem,lf,classe,art_posi,cat) {
+   word Stem:TransV_III-A-s . _ . temperatura-aumentare  (classe, pred=lf) :cat ;
+};
+verb-III-A-temperatura-aumentare(temperatura_aumentare-3170-2,increase,meteo-status-situation,neutral,verb)
+
+
+
+
+#VERBAL SubClass III-B: Object
+#Transitive Verbs: 
+def verb-III-B-tr(Stem,lf,classe,art_posi,cat) {
+ #  word Stem . _ . art_posi:TransV_III-B . _ .  art_posi  (classe, pred=lf) ;
+  word Stem:TransV_III-B  (classe, pred=lf) :cat ;
+   
+};
+verb-III-B-tr(superiore-3168-2,exceed,meteo-status-situation,neutral,verb)#it shoud be "superarare"
+
+
+
+def verb-III-B-tr-s(Stem,lf,classe,art_posi) {
+   word Stem . _ . art_posi:TransV_III-B-s . _ .  art_posi  (classe, pred=lf) ;
+   
+};
+verb-III-B-tr-s(sembrare,seem,action,neutral)
+
+#Morphology Pronoun (6)
+def pronoun-demons(Stem,lf,classe) {
+   word Stem:Pron(classe, pred=lf){
+     Stem                     : neutral;
+#    Stem . _sx               : sx;
+#    Stem . _dx               : dx;
+   }
+}
+pronoun-demons(proprio-quello,that,sem-obj)
+
+def pronoun-indef(Stem,lf,classe) {
+   word Stem:Pron(classe,pred=lf){
+     Stem       : neutral;
+   }
+}
+pronoun-indef(tutti,everybody,person)
+#pronoun-indef(alcuni,some,sem-obj)
+
+def pronoun-quest(Stem,lf,classe) {
+   word Stem:Pron(classe,pred=lf){
+     Stem       : neutral;
+   }
+}
+pronoun-quest(cosa,what,anaphoric-description)
+
+
+#Morphology Adverb (7)
+
+def adverb-II(Stem,lf,classe) {
+   word Stem:Adv (classe,pred=lf){
+     Stem       : neutral;
+   }
+}
+adverb-II(piu,more,sem-obj)
+
+def adverb-II-s(Stem,lf,classe) {
+   word Stem:Adv-s (classe,pred=lf){
+     Stem       : neutral;
+   }
+}
+adverb-II-s(fatto,done,greetings)
+
+
+def adverb-II-when(Stem,lf,classe,cat) {
+   word Stem:Adv-when (classe,pred=lf){
+     Stem       : neutral cat;
+   }
+}
+adverb-II-when(oggi-2669-2,today,deictic-day-description,noun)
+adverb-II-when(domani-2652-1,tomorrow,deictic-day-description,noun)
+adverb-II-when(dopodomani-0783-1,aftertomorrow,deictic-day-description,noun)
+#adverb-II-when(periodo-02817-2,period,description,noun)
+
+
+adverb-II-when(sera2,evening,deictic-day-description,adve)
+adverb-II-when(poi,later,time-interval-description,adve)
+
+
+#Morphology Preposition (8)
+#It seems that we can have "improper" preposition
+
+def preposition-when(Stem,lf,classe,cat) {
+   word Stem:Prep-when (classe,pred=lf){
+     Stem       : neutral cat;
+   }
+}
+preposition-when(periodo-02817-2,period,time-interval,prep)
+
+
+#Morphology Conjunction (9)
+
+
+def conj(Stem,lf,classe) {
+   word Stem:conj-fam (classe,pred=lf){
+     Stem       : body;
+   }
+}
+conj(pure,also,sem-obj)
+
+
+def conj-pause(Stem,lf,classe) {
+   word Stem:conj-pause-fam (classe,pred=lf){
+     Stem       : body;
+   }
+}
+conj-pause(-pause-,stop,sem-obj)
+
+
+
+#Morphology Interjection-Onomatopea (10)
+
+def Interj-I-s(Stem,lf,classe) {
+   word Stem:Inter-s (classe,pred=lf){
+     Stem       : body;
+   }
+}
+#noun-II(tempo-2696-1,weather,meteo-status-situation,noun)
+Interj-I-s(grazie,thx,greetings)
+#Interj-I-s(grazie,thx,greetings)
+
+
+
+#
+######################### Rules #########################
+
+
+###Standard TypeChange: from n to np
+rule {
+  no; # remove all defaults
+  app +-;
+  comp +-;
+ # xcomp -;
+
+  #Standard typechange
+  typechange: n<5> [L] => np <5>[L];
+
+
+  #Prepositional (TO) typechange
+  #typechange: n   => s [Y neutral]  \* s  [X neutral] :  
+  #typechange: n <5> [Y] => s \* s <~5> [E] : E:sem-obj( <OF> Y:sem-obj);
+ 
+#  typechange: n<5> [L ap=dx] => np [L]; #TEST
+
+#  COORDINATION TypeChange: from n to n\n. "Francia" -> "e Francia"
+#  typechange: n <5> [Y dx] => n \* n <~5> [X sx] : X:sem-obj( <COORD> Y:sem-obj);
+
+#  OF TypeChange: from n to n\n. "giugno" -> "di giugno"
+  typechange: n  [Y] => n [X] \* n [X] : X:month( <SYN-RMOD-DENOM> Y:month-description);
+
+#  OF TypeChange: from n to n\n. "giugno" -> "di giugno"
+  typechange: n [Y] => n [X] \* n [X] : X:geographic-area( <SYN-RMOD-DENOM> Y:geographic-area);
+
+#  OF TypeChange: from n to n\n. "temperatura" -> "della temperatura"
+  typechange: n [Y] => n [X] \* n [X] : X:evaluable-entity( <SYN-RMOD> Y:evaluable-entity);
+  
+
+  #OF TypeChange: from n to n/n. "mese" -> "del mese"
+  typechange: n <2> [Y] => n  [X] /*  n [X] : X:day( <SYN-RMOD-REFSEQ> Y:month);
+
+  #OF TypeChange: from n to s\s.
+  #typechange: np <2> [Y] => s \* s [Z] : Z:event( <COORD> Y:weather-event);
+
+  #OF TypeChange: from n to s/s. "geographic-area" 
+  typechange: n  [Y] => s [X] /*  s [X] : X:meteo-status-situation(<SYN-RMOD>Y:geographic-area);
+
+  #OF TypeChange: from n to s/s. giorno->"durante il giorno" (DA CAMBIARE) 
+  #typechange: n  [Y] => s [X] /*  s [X] : X:meteo-status-situation(<SYN-RMOD>Y:day);
+
+
+
+  #OF TypeChange: from n to s. "meteo-status-situation" 
+  typechange:  n [X tc-0] => s [X]; #OK
+  typechange:  n [X tc-2] => s [X]/ np [Y] : X( <SYN-OBJ> Y);
+
+#  typechange:  n   [X] => adj[X] / adj[X] : X:precipitation(*) ; #NOOO
+
+#  typechange:  adj[X] / adj[X] => S[X] ;
+
+#  typechange: np <5> [Y position_x=R1] => np [X position_x=R2]\* np <~5> [X position_x=R3] : X:geographic-area( <SYN-SET> Y:geographic-area);
+  typechange: np <5> [Y] => np [X]\* np <~5> [X] : X:geographic-area( <SYN-RMOD-COORD> Y:geographic-area);
+
+  typechange: s <1> [Y] => s [X]\* s <~1> [X] : X:weather-event( <SYN-RMOD-COORD> Y:weather-event);
+
+
+
+
+  # blue : adj[M] : @M(blue) 
+  # very: adj[M]/adj[M]: @M(<Magn>(R ^ very))
+  # adj_prenom_rule: adj[M] => n[X]/n[X] : @X(<Mod>M)
+   typechange: adj[M] => n[X]/n[X] : X(<Mod>M);
+}
+
+
+
+
+
+################## Lexicon/Categories ####################
+
+## TRIALS #######
+#blue : adj[M] : @M(blue)
+family addj{
+  entry: adj[X]: X(*);
+  member: prova_adj;
+}
+#very: adj[M]/adj[M]: @M(<Magn>(R ^ very))
+family avv{
+  entry: adj[M]/adj[M]: M(<Magn>(R ^ * ^ <BB> (Q *)))  ;
+  member: prova_avv;
+}
+#################
+
+
+
+
+#Syntactic families Punctuation (1)
+#Syntactic families Determiner  (2)
+#Syntactic families Noun        (3)
+
+#Syntax Noun Class I
+family N_I{
+  entry: n<5>[X] : X(*);
+}
+
+
+# family N-I-coord{
+#   entry: n \* n  [X] : X:sem-obj( <COORD> (P:sem-obj *));
+# }
+# family N-II-coord{
+#   entry: n \* n  [X] : X:sem-obj( <COORD> (P:sem-obj *));
+# }
+
+#Syntax Noun Class II
+family N-II{
+  entry: n<5>[X] : X(*);
+ # entry: s<1>[X] : X:meteo-status-situation(*);
+ # member: pressione-alta;
+}
+
+
+family N-II-s{
+ entry: s<1>[X] : X:meteo-status-situation(*);
+ member: pressione-alta;#: class=weather-status-high-pressure pred=high-pressure;
+# member: pioggia(rain);
+}
+
+family N-II-pred{
+  entry: n<~5> [E] \* n<5> [X] :  E:action( * <FROM> X:geographic-area);
+}
+
+family N-II-coord{
+   entry: n [X] \* n [Y] \* n  [Z] : X:geographic-area(* <COORD> Y:geographic-area ^  <COORD> Z:geographic-area);
+}
+
+
+
+#Syntactic families Adjective   (4)
+
+
+#word buono: Adj-greeting : neutral ;
+
+family Adj-greeting {
+        entry: s [E] /* np [Y] /* np [X] : E:greetings(* <WHAT>X:sem-obj  <TO> Y:person);
+        entry: s [E] /* np [X]  : E:greetings(* <WHAT>X:sem-obj);
+        member: buono(good);
+}
+
+
+#Adj and Noun agree on articulation  position!!!
+family Adj-I {
+	entry: n [X] \* n [X] : X(<ATT>(P *));
+        entry: s [X adj] \* np [X] : X(<ATT>(P *));
+        entry: s [X adj] : X (*);
+        entry: s <~1> [Z adj] \* s <1>[Z] : Z:event( <COORD> (P *));
+}
+
+family Adj-II {
+	entry: n<~5> [X] \* n<5> [X] : X(<SYN-RMOD>(P *));
+	entry: n<5> [X] /* n [X noun] : X:time-interval(<SYN-RMOD>(P *));
+        entry: s <1>[X adj] \*  np  [Y] : X:weather-status-situation(*<SYN-SUBJ>Y:meteo-status-situation);
+entry: s <1>[X adj] \*  np  [Y] : X:weather-status-situation(*<SYN-SUBJ>Y:evaluable-entity);
+        entry: s <1>[X adj] \*  np <5> [X] : X(<SYN-RMOD-SEQPOS>(P *));
+        #entry: s <1> [X adj] : X (P *);
+        entry: s <~1> [Z adj] \* s <1>[Z] : Z:event( <COORD> (P *));
+}
+
+# family Adj-II {
+# 	entry: n<~5> [X] /* n<5> [X] : X(<RMOD>(P *));
+# }
+
+
+
+family Adj-II-indef {
+	entry: s [X] /* s [X] : X(<ATT>(P *));
+}
+
+#Syntactic families Verb        (5)
+
+#Syntactic definition of VERBAL Class I
+
+#RELATIVE VERB CONSTRUCTION
+
+
+#Intransitive
+def InTransV_I_def() {
+#s<1> [E articulation_position=body] \ n<2> [X ] : E:action(* <ACTOR>X:person)}
+    s<1> [E] \ n<2> [X ] : E:action(* <ACTOR>X:person)}
+family InTransV_I {
+  entry: InTransV_I_def(); 
+};
+
+family InTransV-I-weather {
+  entry: s<1> [X] : X(*);
+};
+
+#Transitive
+def TransV_I_def() {
+#s<1> [E articulation_position=body] \ np<2> [X ]  \ np<3> [Y ]: E:action(* <ACTOR>X:person <PATIENT>Y:sem-obj)}
+s<1> [E] \ np<2> [X]  \ np<3> [Y]: E:action(* <ACTOR>X:person <PATIENT>Y:sem-obj)}
+family TransV_I {
+  entry: TransV_I_def(); 
+};
+
+#RELATIVE VERB CONSTRUCTION
+
+family TransV_I-Relative {
+    entry: s [E] / s [Y]  : E:action(* <SYN-OBJ> Y:sem-obj);
+}
+
+
+
+
+#Syntactic definition of VERBAL Class II
+#SubClass II-A
+#Intransitive
+#Transitive
+def TransV_II-A_def(start_position, end_position) {
+s<1> [E] \ np<2> [X]  \ np<3> [Y] : E:action(* <SYN-SUBJ>X:evaluable-entity <SYN-OBJ>Y:sem-obj)
+}
+def TransV_II-A-s_def(start_position, end_position) {
+s<1> [E] \ np [X]  / s [Y] : E:action(* <SYN-SUBJ>X:evaluable-entity <SYN-OBJ>Y:sem-obj)
+}
+
+family TransV_II-A_neutralneutral {
+  entry: TransV_II-A_def(neutral,neutral); 
+  entry: TransV_II-A-s_def(neutral,neutral); 
+};
+
+
+family TransV_II-A_sxdx {
+  entry: TransV_II-A_def(sx,dx); 
+  entry: TransV_II-A-s_def(sx,dx); 
+};
+
+family TransV_II-A_dxsx {
+  entry: TransV_II-A_def(dx,sx); 
+};
+
+#SubClass II-B
+#Intransitive
+#Transitive
+def TransV_II-B_def(start_position, end_position) {
+
+#s<1> [E] \ np<2> [X articulation_position=start_position]  \ n<3> [Y articulation_position=end_position] : E:action(* <ACTOR>Y:sem-obj <PATIENT>X:person)}
+s<1> [E] \ np<2> [X]  \ n<3> [Y] : E:action(* <ACTOR>Y:sem-obj <PATIENT>X:person)}
+family TransV_II-B_sxdx {
+  entry: TransV_II-B_def(sx,dx); 
+};
+family TransV_II-B_dxsx {
+  entry: TransV_II-B_def(dx,sx); 
+};
+
+#Syntactic definition of VERBAL Class III
+#SubClass III-A
+#Transitive
+def TransV_III-A_def(art_position) {
+#s<1> [E] \ np<2> [X articulation_position=art_position] / s : E:action(* <ACTOR>X:sem-obj)}
+s<1> [E] \ np<5> [X] / np <5> : E:action(* <ACTOR>X:sem-obj <THEME>Y:sem-obj)}
+
+family TransV_III-A_neutral {
+  entry: TransV_III-A_def(neutral); 
+};
+
+family fam-nuvola-aumentare_neutral {
+  entry: s<1> [E] \ np<5> [X]  : E:meteo-status-situation(* <ACTOR>X:clouds);
+  member: nuvola-aumentare;
+};
+
+family fam-nuvola-diminuire_neutral {
+  entry: s [E] : E:meteo-status-situation(*);
+  member: nuvola-diminuire;
+};
+
+
+def TransV_III-A-s_def(art_position) {
+#s<1> [E] \ np<2> [X articulation_position=art_position] / s : E:action(* <ACTOR>X:sem-obj)}
+#s<1> [E] \ np<5> [X] / s [Z]: E:action(* <ACTOR>X:sem-obj ^ <THEME> Z:sem-obj)
+#s<1> [E] \ np  [X] : E:meteo-status-situation(* <SYN-SUBJ>X:clouds);
+s<1> [E] \ np  [X] : E:meteo-status-situation(* <SYN-SUBJ>X:evaluable-entity);
+}
+
+family TransV_III-A-s_neutral {
+  entry: TransV_III-A-s_def(neutral)
+};
+
+
+family TransV_III-A-s_nuvola-aumentare {
+entry: s<1> [E] \ np  [X] : E:meteo-status-situation(* <SYN-SUBJ>X:clouds);
+};
+
+family TransV_III-A-s_temperatura-aumentare {
+entry: s<1> [E] \ np  [X] : E:meteo-status-situation(* <SYN-SUBJ>X:evaluable-entity);
+};
+
+
+#Intransitive
+def InTransV_III-A_def(art_position) {
+#s<1> [E] \ np<2> [X articulation_position=art_position] : E:action(* <ACTOR>X:sem-obj)}
+s<1> [E] \ np<2> [X] : E:action(* <ACTOR>X:sem-obj)}
+
+family InTransV_III-A_neutral {
+  entry: InTransV_III-A_def(neutral); 
+};
+
+family InTransV_III-A_sx {
+  entry: InTransV_III-A_def(sx); 
+};
+
+family InTransV_III-A_dx {
+  entry: InTransV_III-A_def(dx); 
+};
+
+#SubClass III-B
+#Transitive
+def TransV_III-B_def(art_position) {
+#s<1> [E] \ np<2> [X]  \ np<3> [Y articulation_position=art_position]: E:action(* <ACTOR>X:sem-obj <PATIENT>Y:sem-obj)}
+s<1> [E] \ np<2> [X]  \ np<3> [Y]: E:action(* <ACTOR>X:sem-obj <PATIENT>Y:sem-obj)}
+
+family TransV_III-B_neutral {
+  entry: TransV_III-B_def(neutral); 
+};
+
+
+def TransV_III-B-s_def(art_position) {
+#s<1> [E] \ np<2> [X]  \ np<3> [Y articulation_position=art_position]: E:action(* <ACTOR>X:sem-obj <PATIENT>Y:sem-obj)}
+s<1> [E] / s<2> [X]  : E:action(* <THEME>X)}
+
+family TransV_III-B-s_neutral {
+  entry: TransV_III-B-s_def(neutral); 
+};
+
+
+
+family TransV_III-B {
+#  entry: s<1> [E] \ np<2> [X]  \ np<3> [Y]: E:meteo-status-situation(* <SYN-SUBJ>X:sem-obj <SYN-OBJ>Y:sem-obj) ;
+  entry: s<1> [E PoS=verb] \ np [X]  \ np [Y]: E:meteo-status-situation(* <SYN-SUBJ>X:evaluable-entity <SYN-OBJ>Y:evaluable-entity) ;
+
+};
+
+
+
+
+#Syntactic families Pronoun     (6)
+
+family Pron{
+  entry: np<5>[X]: X:sem-obj(*);
+}
+
+family Pronoun-relative(indexRel=SYN-RMOD+RELCL) {
+    #  entry: np<2>[X PERS=3rd] /^ n<2>[X]: X:sem-obj(<SYN-RELATIVE>*);
+    entry: s <5> [E]  \* np [E]/* s [B] : E:sem-obj(<SYN-RMOD+RELCL>B); #le previsioni sono che il cielo sarà pulito
+#    entry: np [E] \* np [E]/* np [B] : E:sem-obj(<SYN-RELATIVE>B); #il cielo che è previsto sarà pulito
+#    member: quale;
+}
+
+#Syntactic families Adverb      (7)
+
+family Adv {
+	entry: s [E] /* s [E] : E ( <MOD> (A *));
+        entry: s [E] \* s [E adj]  : E( <MOD> (A *));
+}
+
+family Adv-when {
+	entry: s  <1> [E]/* s  [E]   :@E:day(<SYN-SUBJ> (Q *)) ; #[E adj] : E:sem-obj (<TIME> (A *)); 
+	entry: s   <1> [E]/* s   [E]   :@E:sem-obj(<SYN-RMOD> (Q *)) ; #[E adj] : E:sem-obj (<TIME> (A *)); 
+        entry: np   <2> [E]/* np   [E]   :@E:evaluable-entity(<SYN-RMOD> (Q *)) ; #[E adj] : E:sem-obj (<TIME> (A *)); 
+}
+
+family Adv-s {
+	entry: s [X]: X(*);
+}
+
+
+#Syntactic families Preposition (8)
+
+family Prep-when {
+	entry: s [E] /* s [E] / np [A] : E (<SYN-RMOD> (B *))  B (<SYN-ARG> A) ;
+}
+
+
+#Syntactic families Conjunction (9)
+
+family conj-fam {
+	entry: s [X]\ s [Y] \ s [Z] : X:weather-event (* <COORD> Y:weather-event <COORD> Z:weather-event);
+}
+
+family conj-pause-fam {
+#    entry: s [X]\ s [Y] / s [Z] : X:weather-event (* <COORD> Y:weather-event <COORD> Z:weather-event);
+    entry: s [X]\ s [Y] / s [Z] : X:greetings (* <COORD> Y:greetings <COORD> Z:greetings);
+}
+
+
+#Syntactic families Inter.      (10)
+
+family Inter-s {
+	entry: s [X]: X(*);
+}
+
+####################### Testbed #########################
+#
+## use just one testbed per grammar
+## here's a sample testbed -- the number after the sentence
+## is the expected number of parses
+#
+
+testbed {
+    domani-2652-1 sud-2329-1 pioggia-1767-2 : 1; #domani and sud can appear in the inverted order
+    liguria-2810-1 previsione-2678-1 temporale-2697-2 : 1;
+    periodo-02817-2  giorno-1052-1 centro-2649-1 nuvola-02667-2 nuvola_aumentare-2888-2 : 1;
+    oggi-2669-2  italia-1207-1 tempo-2696-1 brutto-0316-1 : 1;
+    dopodomani-0783-1 temperatura-2998-2 alto-3006-1 :2;
+#    dopodomani-0783-1 temperatura-2998-2 alto-3006-1 :2;
+    oggi-2669-2 mese-1398-2 giugno-3056-1 giorno-1052-1 ultimo-2747-1 : 7;
+    temperatura-2998-2 valore_valere-80020-2 media-3072-2 superiore-3168-2 : 4;
+    significare-03155-2 nord-1533-1 domani-2652-1 nuvola-02667-2 nuvola_aumentare-2888-2 : 1; #    domani-2652-1 nord-1533-1 nuvola-02667-2 nuvola_aumentare-2888-2 : 1;
+    domani-2652-1 fascia_adriatica-02721-1 previsione-2678-1 quale-01905-2 cielo-00491-2 sereno-2741-2 : 1;
+    domani-2652-1 pioggia-1767-2 : 1;
+    toscana-3177-1 pioggia-1767-2 liguria-2810-1 pioggia-1767-2 : 1;
+    italia-1207-1 instabilita-02724-1 : 1;
+}
+
+#   <tokenizer replacement-sem-classes="domani-2652-1 sud-2329-1 liguria-2810-1 periodo-02817-2  giorno-1052-1 oggi-2669-2  italia-1207-1 dopodomani-0783-1 oggi-2669-2 domani-2652-1 nord-1533-1 domani-2652-1 fascia_adriatica-02721-1 toscana-3177-1 italia-1207-1"/>

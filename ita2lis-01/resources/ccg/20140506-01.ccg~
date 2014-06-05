@@ -1,0 +1,288 @@
+# -*- mode: python;  -*-
+############ [name of the grammar] ####################
+#
+#
+## [LIS Grammar rail-station-01]
+## [Alessandro Mazzei, 06/05/2014]
+#
+# Working Hypotheses:
+#
+# DOLCE-lite TOP ontology
+#
+#Linguistic phenomena modeled: word order
+#
+#
+#TODO: reciprocity, plural for distributivity
+#
+####################### Features #######################
+#
+## here's a sample feature declaration (commented out)
+## NB: only use *one* feature declaration per grammar
+#
+## feature {
+##   case<2>: nom acc;
+##   num<2>: sg pl;
+##   pers<2>: non-3rd {1st 2nd} 3rd;
+##   tense<E>: past pres;
+##   ontology: sem-obj {
+##      phys-obj {animate-being {person animal}
+##                thing }
+##      situation {change {action} state}
+##  };
+## }
+#
+
+feature  {
+  kind<1>: dcl copula adj;
+  num<5>: sing plur;
+  pers<5>: non-3rd {1st 2nd} 3rd;
+  ap <5 1>: non-body {sx dx neutral} body;
+  PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron;
+  TC<2 3 5>: tc-noun {tc-off tc-apposition} tc-apposition-denom tc-apposition-number tc-denom-contin tc-number tc-number-0 tc-number-1;
+  tense<E>: past present future;
+
+  ontology:
+    sem-obj
+    {
+    particular
+        {
+        endurant
+            {
+            physical-endurant
+                {
+                amount-of-matter
+                feature
+                physical-object
+                    {
+                    agentive-physical-object
+                    non-agentive-physical-object
+                    }
+                }
+            non-physical-endurant
+                {
+                non-physical-object
+                    {
+                    mental-object
+                    social-object
+                        {
+                        agentive-social-object
+                            {
+                            social-agent
+                            society
+                            }
+                        non-agentive-social-object
+                        }
+                    }
+                }
+            arbitrary-sum
+            }
+        perdurant
+            {
+            event
+                {
+                achievement
+                accomplishment
+                }
+            stative
+                {
+                state
+                process
+                }
+            }
+        quality
+            {
+            temporal-quality
+                {
+                temporal-location
+                }
+            physical-quality
+                {
+                number#ale
+                {
+                 digit#ale
+                }
+                spatial-location
+                }
+            abstract-quality
+            }
+        abstract
+            {
+            fact
+            set
+            region
+                {
+                temporal-region
+                    {
+                    time-interval
+                    }
+                physical-region
+                    {
+                    space-region
+                    }
+                }
+            }
+        }
+    };
+}
+
+
+######################### Words #########################
+
+#Morphology Punctuation (1)
+#Morphology Determiner (2)
+#Morphology Noun (3)
+
+
+
+#Noun Class II
+def noun-II(Stem,lf,classe,cat,tc-type) {
+   word Stem:N_II (classe, pred=lf){
+     Stem  : neutral cat tc-type;
+   }
+}
+noun-II(treno-2456-2,train,non-agentive-physical-object,noun,tc-off)
+noun-II(frecciarossa-xxxx-1,redarrow,non-agentive-physical-object,noun,tc-apposition)
+noun-II(numero-xxxx-1,number-class,feature,noun,tc-apposition-number)
+noun-II(binario-xxxx-1,rail,non-agentive-physical-object,noun,tc-noun)
+
+#numeri
+noun-II(0-xxxx-1,0,digit,noun,tc-digit-0)
+noun-II(1-xxxx-1,1,digit,noun,tc-digit-0)
+noun-II(2-xxxx-1,2,digit,noun,tc-digit-0)
+noun-II(3-xxxx-1,3,digit,noun,tc-digit-0)
+noun-II(4-xxxx-1,4,digit,noun,tc-digit-0)
+noun-II(5-xxxx-1,5,digit,noun,tc-digit-0)
+noun-II(6-xxxx-1,6,digit,noun,tc-digit-0)
+noun-II(7-xxxx-1,7,digit,noun,tc-digit-0)
+noun-II(8-xxxx-1,8,digit,noun,tc-digit-0)
+noun-II(9-xxxx-1,9,digit,noun,tc-digit-0)
+noun-II(10-xxxx-1,10,number,noun,tc-number-0)
+noun-II(11-xxxx-1,11,number,noun,tc-number-0)
+noun-II(12-xxxx-1,12,number,noun,tc-number-0)
+noun-II(13-xxxx-1,13,number,noun,tc-number-0)
+noun-II(14-xxxx-1,14,number,noun,tc-number-0)
+noun-II(15-xxxx-1,15,number,noun,tc-number-0)
+noun-II(16-xxxx-1,16,number,noun,tc-number-0)
+noun-II(17-xxxx-1,17,number,noun,tc-number-0)
+noun-II(18-xxxx-1,18,number,noun,tc-number-0)
+noun-II(19-xxxx-1,19,number,noun,tc-number-0)
+noun-II(20-xxxx-1,20,number,noun,tc-number-0)
+noun-II(21-xxxx-1,21,number,noun,tc-number-0)
+noun-II(22-xxxx-1,22,number,noun,tc-number-0)
+noun-II(23-xxxx-1,23,number,noun,tc-number-0)
+noun-II(24-xxxx-1,24,number,noun,tc-number-0)
+noun-II(25-xxxx-1,25,number,noun,tc-number-0)
+noun-II(26-xxxx-1,26,number,noun,tc-number-0)
+noun-II(27-xxxx-1,27,number,noun,tc-number-0)
+noun-II(28-xxxx-1,28,number,noun,tc-number-0)
+noun-II(29-xxxx-1,29,number,noun,tc-number-0)
+noun-II(30-xxxx-1,30,number,noun,tc-number-0)
+
+
+
+
+
+#Morphology Adjective (4)
+#Morphology Verb (5)
+
+#CLASS I
+#Inransitive verbs
+def verb-I-intr(Stem,lf,classe,cat) {
+#   word Stem . _body:InTransV_I (classe, pred=lf);
+   word Stem :InTransV_I (classe, pred=lf) : cat;
+}
+verb-I-intr(arrivare-2835-2,arrive,achievement,verb)
+
+
+#VERBAL Class II DARE, INSEGNARE, RISPONDERE, CHIEDERE, AIUTARE,
+# UCCIDERE, VEDERE, GETTARE, VISITARE
+
+
+#VERBAL SubClass II-A: Subject-to-Object (indirect)
+#Intransitive Verbs: empty???
+#transitive Verbs:
+#VERBAL SubClass II-B: Object(indirect)-to-Subject
+#Intransitive Verbs: empty???
+#transitive Verbs:
+#VERBAL Class III CRESCERE, ROMPERE, ACCETTARE,
+#SCOMPARIRE, SVENIRE, INIZIARE, MORIRE, GIOCARE, ASPETTARE, LAVORARE.
+#VERBAL SubClass III-A: Subject(indirect)
+#Intransitive Verbs:
+#VERBAL SubClass III-B: Object
+#Transitive Verbs:
+#Morphology Pronoun (6)
+#Morphology Adverb (7)
+#Morphology Preposition (8)
+#It seems that we can have "improper" preposition
+#Morphology Conjunction (9)
+#Morphology Interjection-Onomatopea (10)
+
+
+######################### Rules #########################
+
+rule {
+  no; # remove all defaults
+  app +-;
+  comp +-;
+ # xcomp -;
+
+#  Typechange to account apposition: used several times. E.G. "treno frecciarossa" or "treno-numero"
+    typechange: n <5> [Y tc-apposition] => n <~5> [X] \* n <~5> [X] : X:particular( <SYN-NOUN-APPOSITION> Y:particular);
+    typechange: n <5> [Y tc-noun] => n <~5> [X tc-noun] \* n <~5> [X tc-noun] : X:particular( <SYN-NOUN-APPOSITION> Y:particular);
+    typechange: n <5> [Y tc-apposition-denom] => n <5> [X] \* n <5> [X] : X:particular( <SYN-NOUN-APPOSITION-DENOM> Y:particular);
+    typechange: n <5> [Y tc-denom-contin] => n <5> [X] \* n <5> [X] : X:particular( <SYN-NOUNCONTIN-DENOM> Y:particular);
+
+#  Typechange to account simple modification, e.g. "treno binario ..."
+    #typechange: n <5> [Y tc-modification] => n <5> [X] \* n <5> [X] : X:particular( <SYN-NOUN-RMOD> Y:particular);
+
+   #Typechange to account number continuation
+    typechange: n  [X tc-digit] => n <~5> [X tc-number-1] /* n <5> [Y tc-number-1] : X:number( <SYN-NOUN-CONTIN-DENOM> Y:digit);
+    typechange: n <5> [X tc-digit] => n <~5> [X tc-number-1] ;
+
+    #"numero" search for a number to be an apposition
+    typechange: n <5> [X tc-apposition-number] => n <~5>[X tc-noun] /* n <~5> [Y tc-number-1] : X:particular( <SYN-APPOSITION-DENOM> Y:number);
+#    typechange: n <5> [X tc-modification-number] => n <~5>[X tc-noun] \ n <~5>[Z tc-noun] /* n <~5> [Y tc-number-1] : Z:particular( <SYN-APPOSITION-DENOM> Y:number) ^ X:particular( <SYN-APPOSITION-> Z:rail);
+
+
+
+}
+################## Lexicon/Categories ####################
+
+#Syntactic families Punctuation (1)
+#Syntactic families Determiner  (2)
+#Syntactic families Noun        (3)
+family N_II{
+  entry: n<5>[X] : X(*);
+}
+
+#Syntactic families Adjective   (4)
+#Syntactic families Verb        (5)
+
+#Syntactic definition of VERBAL Class I
+
+
+#Intransitive
+def InTransV_I_def() {
+#s<1> [E articulation_position=body] \ n<2> [X ] : E:action(* <ACTOR>X:person)}
+    s [E] \ n [X] : E:achievement(* <SYN-SUBJ>X:physical-object)}
+family InTransV_I {
+  entry: InTransV_I_def();
+};
+
+#Syntactic families Pronoun     (6)
+#Syntactic families Adverb      (7)
+#Syntactic families Preposition (8)
+#Syntactic families Conjunction (9)
+#Syntactic families Inter.      (10)
+####################### Testbed #########################
+#
+## use just one testbed per grammar
+## here's a sample testbed -- the number after the sentence
+## is the expected number of parses
+#
+
+testbed {
+    "treno-2456-2 arrivare-2835-2" : 1;
+    "treno-2456-2 frecciarossa numero 9 5 7 2 ore 7 40 sera salerno venire binario numero 12 arrivare fut_progr": 1;
+   "treno-2456-2 frecciarossa numero 9 5 6 1 ore 6 18 mattina salerno andare binario numero 9 partire fut_prog" : 1;#p1
+}

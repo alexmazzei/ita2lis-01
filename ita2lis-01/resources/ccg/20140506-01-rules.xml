@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../rules.xsd">
+  <typechanging name="typechange-1">
+    <arg>
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="Y"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-apposition"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:particular">
+            <diamond mode="SYN-NOUN-APPOSITION">
+              <nomvar name="Y:particular"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-2">
+    <arg>
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="Y"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-noun"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC" val="tc-noun"/>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC" val="tc-noun"/>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:particular">
+            <diamond mode="SYN-NOUN-APPOSITION">
+              <nomvar name="Y:particular"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-3">
+    <arg>
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="Y"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-apposition-denom"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:particular">
+            <diamond mode="SYN-NOUN-APPOSITION-DENOM">
+              <nomvar name="Y:particular"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-4">
+    <arg>
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="Y"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-denom-contin"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:particular">
+            <diamond mode="SYN-NOUNCONTIN-DENOM">
+              <nomvar name="Y:particular"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-5">
+    <arg>
+      <atomcat type="n">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-digit"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <atomcat type="n">
+        <fs inheritsFrom="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-number"/>
+        </fs>
+      </atomcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-6">
+    <arg>
+      <atomcat type="n">
+        <fs>
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+          <feat attr="TC" val="tc-number"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs inheritsFrom="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC" val="tc-number"/>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+            <feat attr="TC" val="tc-digit"/>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:number">
+            <diamond mode="SYN-NOUN-CONTIN-DENOM">
+              <nomvar name="Y:digit"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <application dir="forward"/>
+  <application dir="backward"/>
+  <composition harmonic="true" dir="forward"/>
+  <composition harmonic="true" dir="backward"/>
+</rules>
