@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ccg-lexicon name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../lexicon.xsd">
-  <family name="N_prova" pos="N_prova" closed="true">
+  <family name="N_II_arg" pos="N_II_arg" closed="true">
     <entry name="Entry-1">
       <complexcat>
         <atomcat type="n">
@@ -12,17 +12,7 @@
             </feat>
           </fs>
         </atomcat>
-        <slash dir="\" mode="*"/>
-        <atomcat type="n">
-          <fs inheritsFrom="5">
-            <feat attr="index">
-              <lf>
-                <nomvar name="Z"/>
-              </lf>
-            </feat>
-          </fs>
-        </atomcat>
-        <slash dir="/" mode="*"/>
+        <slash dir="/" mode="&gt;"/>
         <atomcat type="n">
           <fs inheritsFrom="5">
             <feat attr="index">
@@ -30,23 +20,20 @@
                 <nomvar name="Y"/>
               </lf>
             </feat>
+            <feat attr="TC-TYPE" val="tc-number"/>
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="Z">
-            <nomvar name="Z"/>
-            <diamond mode="uno">
-              <prop name="[*DEFAULT*]"/>
-            </diamond>
-            <nomvar name="X"/>
-            <diamond mode="due">
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="NUM-APPOSITION-DENOM">
               <nomvar name="Y"/>
             </diamond>
           </satop>
         </lf>
       </complexcat>
     </entry>
-    <member stem="numero-prova" pred="pre-number"/>
+    <member stem="numero-xxxx-1" pred="pre-number"/>
   </family>
   <family name="N_II" pos="N_II" closed="true">
     <entry name="Entry-1">
@@ -67,8 +54,10 @@
     </entry>
     <member stem="treno-2456-2" pred="train"/>
     <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
-    <member stem="numero-xxxx-1" pred="pre-number"/>
     <member stem="binario-xxxx-1" pred="rail"/>
+    <member stem="milano-xxxx-1" pred="milano"/>
+    <member stem="salerno-xxxx-1" pred="salerno"/>
+    <member stem="ora-xxxx-1" pred="time-point"/>
     <member stem="0-xxxx-1"/>
     <member stem="1-xxxx-1" pred="1"/>
     <member stem="2-xxxx-1" pred="2"/>
@@ -100,6 +89,26 @@
     <member stem="28-xxxx-1" pred="28"/>
     <member stem="29-xxxx-1" pred="29"/>
     <member stem="30-xxxx-1" pred="30"/>
+  </family>
+  <family name="ADJ_family" pos="ADJ_family" closed="true">
+    <entry name="Entry-1">
+      <atomcat type="adj">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+        </fs>
+        <lf>
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+          </satop>
+        </lf>
+      </atomcat>
+    </entry>
+    <member stem="sera-xxxx-1" pred="evening"/>
+    <member stem="mattina-xxxx-1" pred="morning"/>
   </family>
   <family name="InTransV_I" pos="InTransV_I" closed="true">
     <entry name="Entry-1">
@@ -134,5 +143,42 @@
       </complexcat>
     </entry>
     <member stem="arrivare-2835-2" pred="arrive"/>
+    <member stem="partire-xxxx-1" pred="arrive"/>
+    <member stem="andare-xxxx-1" pred="togo"/>
+  </family>
+  <family name="verb-mod-fam" pos="verb-mod-fam" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="s">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="&lt;"/>
+        <atomcat type="s">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-VERB+MODAL-INDCOMPL">
+              <nomvar name="Y"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="futuro_deve-xxxx-1" pred="future"/>
+    <member stem="futuro_prog-xxxx-1" pred="future_prog"/>
   </family>
 </ccg-lexicon>

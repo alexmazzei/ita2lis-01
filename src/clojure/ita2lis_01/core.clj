@@ -374,8 +374,20 @@
 (intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom})
 (html/deftemplate lf-p1-simplified "templates-xml-lf/lf-p1-simplified.xml"
   [post]
-  [:prop#agent] (html/set-attr :name "boat" )
+  [:prop#agent] (html/set-attr :name "boat2" )
   [:prop#agent] (html/remove-attr :id )  )
+
+;; (html/deftemplate lf-p1 "templates-xml-lf/lf-p1.xml"
+;;   [post]
+;;   [:prop#train-time-ampm] (html/set-attr :name "morning" )
+;;   [:prop#train-time-ampm] (html/remove-attr :id )
+
+;;   [:prop#train-time-hhmm] (html/set-attr :name "morning" );;TODOHERE
+;;   [:prop#agent] (html/remove-attr :id )
+
+;;   )
+
+
 
 (def sample-hash {:type :P1 :agent "boat"})
 
@@ -502,4 +514,6 @@
 (defn total-test
   "call all the chain"
   []
-  (test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2)))))))
+  ;;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
+  (test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-01.xml"))
+  )

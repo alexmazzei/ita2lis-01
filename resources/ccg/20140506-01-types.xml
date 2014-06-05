@@ -4,6 +4,14 @@
   <type name="dcl" parents="kind"/>
   <type name="copula" parents="kind"/>
   <type name="adj" parents="kind"/>
+  <type name="TC-RELATION"/>
+  <type name="tc-noun-apposition" parents="TC-RELATION"/>
+  <type name="tc-noun-apposition-denom" parents="TC-RELATION"/>
+  <type name="tc-noun-rmod" parents="TC-RELATION"/>
+  <type name="tc-relcl-red" parents="TC-RELATION"/>
+  <type name="tc-rmod-loc" parents="TC-RELATION"/>
+  <type name="tc-rmod-time" parents="TC-RELATION"/>
+  <type name="tc-rmod-time-2" parents="TC-RELATION"/>
   <type name="PoS"/>
   <type name="noun" parents="PoS"/>
   <type name="verb" parents="PoS"/>
@@ -13,6 +21,19 @@
   <type name="adve" parents="PoS"/>
   <type name="prep" parents="PoS"/>
   <type name="pron" parents="PoS"/>
+  <type name="TC-TYPE"/>
+  <type name="tc-noun" parents="TC-TYPE"/>
+  <type name="tc-apposition" parents="TC-TYPE"/>
+  <type name="tc-apposition-denom" parents="TC-TYPE"/>
+  <type name="tc-apposition-number" parents="TC-TYPE"/>
+  <type name="tc-denom-contin" parents="TC-TYPE"/>
+  <type name="tc-number" parents="TC-TYPE"/>
+  <type name="tc-number-0" parents="TC-TYPE"/>
+  <type name="tc-number-1" parents="TC-TYPE"/>
+  <type name="tc-digit" parents="TC-TYPE"/>
+  <type name="tc-0" parents="TC-TYPE"/>
+  <type name="tc-1" parents="TC-TYPE"/>
+  <type name="tc-2" parents="TC-TYPE"/>
   <type name="pers"/>
   <type name="non-3rd" parents="pers"/>
   <type name="3rd" parents="pers"/>
@@ -73,14 +94,4 @@
   <type name="physical-region" parents="region"/>
   <type name="time-interval" parents="temporal-region"/>
   <type name="space-region" parents="physical-region"/>
-  <type name="TC"/>
-  <type name="tc-noun" parents="TC"/>
-  <type name="tc-apposition" parents="TC"/>
-  <type name="tc-apposition-denom" parents="TC"/>
-  <type name="tc-apposition-number" parents="TC"/>
-  <type name="tc-denom-contin" parents="TC"/>
-  <type name="tc-number" parents="TC"/>
-  <type name="tc-number-0" parents="TC"/>
-  <type name="tc-number-1" parents="TC"/>
-  <type name="tc-digit" parents="TC"/>
 </types>
