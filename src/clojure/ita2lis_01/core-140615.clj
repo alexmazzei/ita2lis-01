@@ -366,54 +366,33 @@
   ;;(. (new realizer.ATLASRealizer) GetRealization "dummmy-string" logical-form-string)
   )
 
+
+
 ;;;Some examples
 ;;enlive trials
 ;(def ^:dynamic html/self-closing-tags #{:prop :nom})
 (intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom})
-
 (html/deftemplate lf-p1-simplified "templates-xml-lf/lf-p1-simplified.xml"
   [post]
-  [:prop#agent] (html/set-attr :name (:name post) )
+  [:prop#agent] (html/set-attr :name "boat2" )
   [:prop#agent] (html/remove-attr :id )  )
-(def sample-hash {:type :P1 :name "boat3"})
-(defn prova-enlive [] (println (reduce str (lf-p1-simplified sample-hash))))
+
+;; (html/deftemplate lf-p1 "templates-xml-lf/lf-p1.xml"
+;;   [post]
+;;   [:prop#train-time-ampm] (html/set-attr :name "morning" )
+;;   [:prop#train-time-ampm] (html/remove-attr :id )
+
+;;   [:prop#train-time-hhmm] (html/set-attr :name "morning" );;TODOHERE
+;;   [:prop#agent] (html/remove-attr :id )
+
+;;   )
 
 
-(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-02.xml"
-  [post]
-  [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
-  [:prop#train-time-ampm] (html/remove-attr :id )
-  [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
-  [:prop#train-time-hh] (html/remove-attr :id )
-  [:prop#train-time-mm] (html/set-attr :name  (:mm post) )
-  [:prop#train-time-mm] (html/remove-attr :id )
-  [:prop#train-categ] (html/set-attr :name  (:categ post) )
-  [:prop#train-categ] (html/remove-attr :id )
-  [:prop#train-number] (html/set-attr :name  (:train-number post) )
-  [:prop#train-number] (html/remove-attr :id )
-  [:prop#rail-number] (html/set-attr :name  (:rail-number post) )
-  [:prop#rail-number] (html/remove-attr :id )
-  [:prop#train-destination] (html/set-attr :name  (:train-destination post) )
-  [:prop#train-destination] (html/remove-attr :id )
 
+(def sample-hash {:type :P1 :agent "boat"})
 
-  ;;TODOHERE
- )
-(def hash-test-p1  {:ampm "morning" :hh "1" :mm "2" :categ "redarrow" :train-number "7" :rail-number "4" :train-destination "salerno"})
-(defn prova-enlive-2 [] (reduce str (lf-p1 hash-test-p1)))
-
-(defn build-branch-for-number
-  "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))    "
-  [cifre]
-  (if (== 1 (count cifre))
-    (str )
-
-
-    )
-
-  )
-
-
+(def prova-enlive
+  (reduce str (lf-p1-simplified sample-hash)))
 ;;
 
 (def template-xml-01

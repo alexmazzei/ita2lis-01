@@ -379,28 +379,16 @@
 (defn prova-enlive [] (println (reduce str (lf-p1-simplified sample-hash))))
 
 
-(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-02.xml"
+(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-01.xml"
   [post]
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
   [:prop#train-time-ampm] (html/remove-attr :id )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
   [:prop#train-time-hh] (html/remove-attr :id )
-  [:prop#train-time-mm] (html/set-attr :name  (:mm post) )
-  [:prop#train-time-mm] (html/remove-attr :id )
-  [:prop#train-categ] (html/set-attr :name  (:categ post) )
-  [:prop#train-categ] (html/remove-attr :id )
-  [:prop#train-number] (html/set-attr :name  (:train-number post) )
-  [:prop#train-number] (html/remove-attr :id )
-  [:prop#rail-number] (html/set-attr :name  (:rail-number post) )
-  [:prop#rail-number] (html/remove-attr :id )
-  [:prop#train-destination] (html/set-attr :name  (:train-destination post) )
-  [:prop#train-destination] (html/remove-attr :id )
-
-
-  ;;TODOHERE
+;;TODOHERE
  )
-(def hash-test-p1  {:ampm "morning" :hh "1" :mm "2" :categ "redarrow" :train-number "7" :rail-number "4" :train-destination "salerno"})
-(defn prova-enlive-2 [] (reduce str (lf-p1 hash-test-p1)))
+(def hash-test-p1  {:ampm "afternoon" :hh "5"})
+(defn prova-enlive-2 [] (println (reduce str (lf-p1 hash-test-p1))))
 
 (defn build-branch-for-number
   "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))    "

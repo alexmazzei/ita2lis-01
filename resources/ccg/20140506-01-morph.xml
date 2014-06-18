@@ -41,7 +41,7 @@
   <entry word="sera-xxxx-1" macros="@neutral @noun @tc-1" pos="ADJ_family" stem="sera-xxxx-1" class="temporal-location" pred="evening"/>
   <entry word="mattina-xxxx-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="mattina-xxxx-1" class="temporal-location" pred="morning"/>
   <entry word="arrivare-2835-2" macros="@verb" pos="InTransV_I" stem="arrivare-2835-2" class="achievement" pred="arrive"/>
-  <entry word="partire-xxxx-1" macros="@verb" pos="InTransV_I" stem="partire-xxxx-1" class="achievement" pred="arrive"/>
+  <entry word="partire-xxxx-1" macros="@verb" pos="InTransV_I" stem="partire-xxxx-1" class="achievement" pred="leave"/>
   <entry word="andare-xxxx-1" macros="@verb @tc-1 @tc-relcl-red" pos="InTransV_I" stem="andare-xxxx-1" class="achievement" pred="togo"/>
   <entry word="futuro_deve-xxxx-1" macros="@verb" pos="verb-mod-fam" stem="futuro_deve-xxxx-1" class="achievement" pred="future"/>
   <entry word="futuro_prog-xxxx-1" macros="@verb" pos="verb-mod-fam" stem="futuro_prog-xxxx-1" class="achievement" pred="future_prog"/>

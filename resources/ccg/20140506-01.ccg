@@ -216,7 +216,7 @@ family InTransV_I {
   entry: s [E] \ n [X] : E:achievement(* <SYN-SUBJ>X:physical-object);
 };
 verb-I-intr(arrivare-2835-2,arrive,achievement,verb,,)
-verb-I-intr(partire-xxxx-1,arrive,achievement,verb,,)
+verb-I-intr(partire-xxxx-1,leave,achievement,verb,,)
 verb-I-intr(andare-xxxx-1,togo,achievement,verb,tc-1,tc-relcl-red)
 
 #modal verb
