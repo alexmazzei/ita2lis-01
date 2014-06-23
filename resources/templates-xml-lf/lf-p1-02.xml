@@ -18,11 +18,11 @@
             </diamond>
             <diamond mode="NOUN-APPOSITION-DENOM">
               <nom name="n1:digit"/>
-              <prop id="train-hh" name="6"/>
+              <prop id="train-time-hh" name="6"/>
             </diamond>
             <diamond mode="NOUN-APPOSITION-DENOM">
               <nom name="n2:digit"/>
-              <prop id="train-mm" name="5"/>
+              <prop id="train-time-mm" name="5"/>
             </diamond>
           </diamond>
           <diamond mode="SYN-NOUN-APPOSITION">

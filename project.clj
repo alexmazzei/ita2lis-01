@@ -9,7 +9,8 @@
                  [trove "2.1.1"]
                  [org.clojars.nakkaya/jdom "1.1.2"]
                  [enlive "1.1.5"]
-                 [openccg "0.9.4"]]
+                 [openccg "0.9.4"]
+                 [org.clojure/data.csv "0.1.2"]]
   :main ^:skip-aot ita2lis-01.core
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]

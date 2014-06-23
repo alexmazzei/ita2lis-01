@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ccg-lexicon name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../lexicon.xsd">
+  <family name="Genitive_fam" pos="Genitive_fam" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="PoS" val="noun"/>
+            <feat attr="TC-TYPE" val="tc-0"/>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="&lt;"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="&lt;"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:physical-object">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-DET+GENITIVE-ARG">
+              <nomvar name="Y"/>
+            </diamond>
+            <diamond mode="SYN-DET+GENITIVE-RESTR">
+              <nomvar name="Z:physical-object"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="poss-xxxx-1" pred="possesive"/>
+  </family>
   <family name="N_II_arg" pos="N_II_arg" closed="true">
     <entry name="Entry-1">
       <complexcat>
@@ -26,7 +75,7 @@
         <lf>
           <satop nomvar="X">
             <prop name="[*DEFAULT*]"/>
-            <diamond mode="NUM-APPOSITION-DENOM">
+            <diamond mode="SYN-NUM-APPOSITION-DENOM">
               <nomvar name="Y"/>
             </diamond>
           </satop>
@@ -53,11 +102,13 @@
       </atomcat>
     </entry>
     <member stem="treno-2456-2" pred="train"/>
-    <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
     <member stem="binario-xxxx-1" pred="rail"/>
+    <member stem="ora-xxxx-1" pred="time-point"/>
+    <member stem="trenitalia-xxxx-1" pred="trainitaly"/>
+    <member stem="ntv-xxxx-1" pred="ntv"/>
     <member stem="milano-xxxx-1" pred="milano"/>
     <member stem="salerno-xxxx-1" pred="salerno"/>
-    <member stem="ora-xxxx-1" pred="time-point"/>
+    <member stem="chivasso-xxxx-1" pred="chivasso"/>
     <member stem="0-xxxx-1"/>
     <member stem="1-xxxx-1" pred="1"/>
     <member stem="2-xxxx-1" pred="2"/>
@@ -89,6 +140,35 @@
     <member stem="28-xxxx-1" pred="28"/>
     <member stem="29-xxxx-1" pred="29"/>
     <member stem="30-xxxx-1" pred="30"/>
+    <member stem="31-xxxx-1" pred="31"/>
+    <member stem="32-xxxx-1" pred="32"/>
+    <member stem="33-xxxx-1" pred="33"/>
+    <member stem="34-xxxx-1" pred="34"/>
+    <member stem="35-xxxx-1" pred="35"/>
+    <member stem="36-xxxx-1" pred="36"/>
+    <member stem="37-xxxx-1" pred="37"/>
+    <member stem="38-xxxx-1" pred="38"/>
+    <member stem="39-xxxx-1" pred="39"/>
+    <member stem="40-xxxx-1" pred="40"/>
+    <member stem="41-xxxx-1" pred="41"/>
+    <member stem="42-xxxx-1" pred="42"/>
+    <member stem="43-xxxx-1" pred="43"/>
+    <member stem="44-xxxx-1" pred="44"/>
+    <member stem="45-xxxx-1" pred="45"/>
+    <member stem="46-xxxx-1" pred="46"/>
+    <member stem="47-xxxx-1" pred="47"/>
+    <member stem="48-xxxx-1" pred="48"/>
+    <member stem="49-xxxx-1" pred="49"/>
+    <member stem="50-xxxx-1" pred="50"/>
+    <member stem="51-xxxx-1" pred="51"/>
+    <member stem="52-xxxx-1" pred="52"/>
+    <member stem="53-xxxx-1" pred="53"/>
+    <member stem="54-xxxx-1" pred="54"/>
+    <member stem="55-xxxx-1" pred="55"/>
+    <member stem="56-xxxx-1" pred="56"/>
+    <member stem="57-xxxx-1" pred="57"/>
+    <member stem="58-xxxx-1" pred="58"/>
+    <member stem="59-xxxx-1" pred="59"/>
   </family>
   <family name="ADJ_family" pos="ADJ_family" closed="true">
     <entry name="Entry-1">
@@ -109,6 +189,9 @@
     </entry>
     <member stem="sera-xxxx-1" pred="evening"/>
     <member stem="mattina-xxxx-1" pred="morning"/>
+    <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
+    <member stem="regionale-xxxx-1" pred="regional"/>
+    <member stem="straordinario-xxxx-1" pred="special"/>
   </family>
   <family name="InTransV_I" pos="InTransV_I" closed="true">
     <entry name="Entry-1">

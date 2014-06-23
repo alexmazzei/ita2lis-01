@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <morph name="20140506-01.ccg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../morph.xsd">
+  <entry word="poss-xxxx-1" macros="@determiner" pos="Genitive_fam" stem="poss-xxxx-1" class="mental-object" pred="possesive"/>
   <entry word="numero-xxxx-1" macros="@neutral @noun @tc-2 @tc-noun-apposition" pos="N_II_arg" stem="numero-xxxx-1" class="feature" pred="pre-number"/>
   <entry word="treno-2456-2" macros="@neutral @noun @tc-0" pos="N_II" stem="treno-2456-2" class="non-agentive-physical-object" pred="train"/>
-  <entry word="frecciarossa-xxxx-1" macros="@neutral @noun @tc-1 @tc-noun-apposition" pos="N_II" stem="frecciarossa-xxxx-1" class="non-agentive-physical-object" pred="redarrow"/>
   <entry word="binario-xxxx-1" macros="@neutral @noun @tc-1 @tc-noun-rmod" pos="N_II" stem="binario-xxxx-1" class="non-agentive-physical-object" pred="rail"/>
+  <entry word="ora-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-time" pos="N_II" stem="ora-xxxx-1" class="temporal-location" pred="time-point"/>
+  <entry word="trenitalia-xxxx-1" macros="@neutral @noun @tc-1 @tc-0" pos="N_II" stem="trenitalia-xxxx-1" class="non-agentive-physical-object" pred="trainitaly"/>
+  <entry word="ntv-xxxx-1" macros="@neutral @noun @tc-1 @tc-0" pos="N_II" stem="ntv-xxxx-1" class="non-agentive-physical-object" pred="ntv"/>
   <entry word="milano-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="milano-xxxx-1" class="space-region" pred="milano"/>
   <entry word="salerno-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="salerno-xxxx-1" class="space-region" pred="salerno"/>
-  <entry word="ora-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-time" pos="N_II" stem="ora-xxxx-1" class="temporal-location" pred="time-point"/>
+  <entry word="chivasso-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="chivasso-xxxx-1" class="space-region" pred="chivasso"/>
   <entry word="0-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="0-xxxx-1" class="digit" pred="0"/>
   <entry word="1-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="1-xxxx-1" class="digit" pred="1"/>
   <entry word="2-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="2-xxxx-1" class="digit" pred="2"/>
@@ -17,29 +20,61 @@
   <entry word="7-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="7-xxxx-1" class="digit" pred="7"/>
   <entry word="8-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="8-xxxx-1" class="digit" pred="8"/>
   <entry word="9-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="9-xxxx-1" class="digit" pred="9"/>
-  <entry word="10-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="10-xxxx-1" class="number" pred="10"/>
-  <entry word="11-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="11-xxxx-1" class="number" pred="11"/>
-  <entry word="12-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="12-xxxx-1" class="number" pred="12"/>
-  <entry word="13-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="13-xxxx-1" class="number" pred="13"/>
-  <entry word="14-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="14-xxxx-1" class="number" pred="14"/>
-  <entry word="15-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="15-xxxx-1" class="number" pred="15"/>
-  <entry word="16-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="16-xxxx-1" class="number" pred="16"/>
-  <entry word="17-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="17-xxxx-1" class="number" pred="17"/>
-  <entry word="18-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="18-xxxx-1" class="number" pred="18"/>
-  <entry word="19-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="19-xxxx-1" class="number" pred="19"/>
-  <entry word="20-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="20-xxxx-1" class="number" pred="20"/>
-  <entry word="21-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="21-xxxx-1" class="number" pred="21"/>
-  <entry word="22-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="22-xxxx-1" class="number" pred="22"/>
-  <entry word="23-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="23-xxxx-1" class="number" pred="23"/>
-  <entry word="24-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="24-xxxx-1" class="number" pred="24"/>
-  <entry word="25-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="25-xxxx-1" class="number" pred="25"/>
-  <entry word="26-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="26-xxxx-1" class="number" pred="26"/>
-  <entry word="27-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="27-xxxx-1" class="number" pred="27"/>
-  <entry word="28-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="28-xxxx-1" class="number" pred="28"/>
-  <entry word="29-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="29-xxxx-1" class="number" pred="29"/>
-  <entry word="30-xxxx-1" macros="@neutral @noun @tc-number-0" pos="N_II" stem="30-xxxx-1" class="number" pred="30"/>
-  <entry word="sera-xxxx-1" macros="@neutral @noun @tc-1" pos="ADJ_family" stem="sera-xxxx-1" class="temporal-location" pred="evening"/>
+  <entry word="10-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="10-xxxx-1" class="number" pred="10"/>
+  <entry word="11-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="11-xxxx-1" class="number" pred="11"/>
+  <entry word="12-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="12-xxxx-1" class="number" pred="12"/>
+  <entry word="13-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="13-xxxx-1" class="number" pred="13"/>
+  <entry word="14-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="14-xxxx-1" class="number" pred="14"/>
+  <entry word="15-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="15-xxxx-1" class="number" pred="15"/>
+  <entry word="16-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="16-xxxx-1" class="number" pred="16"/>
+  <entry word="17-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="17-xxxx-1" class="number" pred="17"/>
+  <entry word="18-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="18-xxxx-1" class="number" pred="18"/>
+  <entry word="19-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="19-xxxx-1" class="number" pred="19"/>
+  <entry word="20-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="20-xxxx-1" class="number" pred="20"/>
+  <entry word="21-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="21-xxxx-1" class="number" pred="21"/>
+  <entry word="22-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="22-xxxx-1" class="number" pred="22"/>
+  <entry word="23-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="23-xxxx-1" class="number" pred="23"/>
+  <entry word="24-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="24-xxxx-1" class="number" pred="24"/>
+  <entry word="25-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="25-xxxx-1" class="number" pred="25"/>
+  <entry word="26-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="26-xxxx-1" class="number" pred="26"/>
+  <entry word="27-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="27-xxxx-1" class="number" pred="27"/>
+  <entry word="28-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="28-xxxx-1" class="number" pred="28"/>
+  <entry word="29-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="29-xxxx-1" class="number" pred="29"/>
+  <entry word="30-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="30-xxxx-1" class="number" pred="30"/>
+  <entry word="31-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="31-xxxx-1" class="number" pred="31"/>
+  <entry word="32-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="32-xxxx-1" class="number" pred="32"/>
+  <entry word="33-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="33-xxxx-1" class="number" pred="33"/>
+  <entry word="34-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="34-xxxx-1" class="number" pred="34"/>
+  <entry word="35-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="35-xxxx-1" class="number" pred="35"/>
+  <entry word="36-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="36-xxxx-1" class="number" pred="36"/>
+  <entry word="37-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="37-xxxx-1" class="number" pred="37"/>
+  <entry word="38-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="38-xxxx-1" class="number" pred="38"/>
+  <entry word="39-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="39-xxxx-1" class="number" pred="39"/>
+  <entry word="40-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="40-xxxx-1" class="number" pred="40"/>
+  <entry word="41-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="41-xxxx-1" class="number" pred="41"/>
+  <entry word="42-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="42-xxxx-1" class="number" pred="42"/>
+  <entry word="43-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="43-xxxx-1" class="number" pred="43"/>
+  <entry word="44-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="44-xxxx-1" class="number" pred="44"/>
+  <entry word="45-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="45-xxxx-1" class="number" pred="45"/>
+  <entry word="46-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="46-xxxx-1" class="number" pred="46"/>
+  <entry word="47-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="47-xxxx-1" class="number" pred="47"/>
+  <entry word="48-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="48-xxxx-1" class="number" pred="48"/>
+  <entry word="49-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="49-xxxx-1" class="number" pred="49"/>
+  <entry word="50-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="50-xxxx-1" class="number" pred="50"/>
+  <entry word="51-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="51-xxxx-1" class="number" pred="51"/>
+  <entry word="52-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="52-xxxx-1" class="number" pred="52"/>
+  <entry word="53-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="53-xxxx-1" class="number" pred="53"/>
+  <entry word="54-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="54-xxxx-1" class="number" pred="54"/>
+  <entry word="55-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="55-xxxx-1" class="number" pred="55"/>
+  <entry word="56-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="56-xxxx-1" class="number" pred="56"/>
+  <entry word="57-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="57-xxxx-1" class="number" pred="57"/>
+  <entry word="58-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="58-xxxx-1" class="number" pred="58"/>
+  <entry word="59-xxxx-1" macros="@neutral @noun @tc-number" pos="N_II" stem="59-xxxx-1" class="number" pred="59"/>
+  <entry word="sera-xxxx-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="sera-xxxx-1" class="temporal-location" pred="evening"/>
   <entry word="mattina-xxxx-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="mattina-xxxx-1" class="temporal-location" pred="morning"/>
+  <entry word="frecciarossa-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="frecciarossa-xxxx-1" class="non-agentive-physical-object" pred="redarrow"/>
+  <entry word="regionale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="regionale-xxxx-1" class="non-agentive-physical-object" pred="regional"/>
+  <entry word="straordinario-xxxx-1" macros="@neutral @adjc @tc-1 @tc-rmod" pos="ADJ_family" stem="straordinario-xxxx-1" class="abstract-quality" pred="special"/>
   <entry word="arrivare-2835-2" macros="@verb" pos="InTransV_I" stem="arrivare-2835-2" class="achievement" pred="arrive"/>
   <entry word="partire-xxxx-1" macros="@verb" pos="InTransV_I" stem="partire-xxxx-1" class="achievement" pred="leave"/>
   <entry word="andare-xxxx-1" macros="@verb @tc-1 @tc-relcl-red" pos="InTransV_I" stem="andare-xxxx-1" class="achievement" pred="togo"/>
@@ -137,6 +172,20 @@
   <macro name="@dcl">
     <fs id="1">
       <feat attr="kind" val="dcl"/>
+    </fs>
+  </macro>
+  <macro name="@determiner">
+    <fs id="1">
+      <feat attr="PoS" val="determiner"/>
+    </fs>
+    <fs id="2">
+      <feat attr="PoS" val="determiner"/>
+    </fs>
+    <fs id="3">
+      <feat attr="PoS" val="determiner"/>
+    </fs>
+    <fs id="5">
+      <feat attr="PoS" val="determiner"/>
     </fs>
   </macro>
   <macro name="@dx">
@@ -398,28 +447,6 @@
       <feat attr="TC-TYPE" val="tc-number"/>
     </fs>
   </macro>
-  <macro name="@tc-number-0">
-    <fs id="2">
-      <feat attr="TC-TYPE" val="tc-number-0"/>
-    </fs>
-    <fs id="3">
-      <feat attr="TC-TYPE" val="tc-number-0"/>
-    </fs>
-    <fs id="5">
-      <feat attr="TC-TYPE" val="tc-number-0"/>
-    </fs>
-  </macro>
-  <macro name="@tc-number-1">
-    <fs id="2">
-      <feat attr="TC-TYPE" val="tc-number-1"/>
-    </fs>
-    <fs id="3">
-      <feat attr="TC-TYPE" val="tc-number-1"/>
-    </fs>
-    <fs id="5">
-      <feat attr="TC-TYPE" val="tc-number-1"/>
-    </fs>
-  </macro>
   <macro name="@tc-relcl-red">
     <fs id="2">
       <feat attr="TC-RELATION" val="tc-relcl-red"/>
@@ -429,6 +456,17 @@
     </fs>
     <fs id="5">
       <feat attr="TC-RELATION" val="tc-relcl-red"/>
+    </fs>
+  </macro>
+  <macro name="@tc-rmod">
+    <fs id="2">
+      <feat attr="TC-RELATION" val="tc-rmod"/>
+    </fs>
+    <fs id="3">
+      <feat attr="TC-RELATION" val="tc-rmod"/>
+    </fs>
+    <fs id="5">
+      <feat attr="TC-RELATION" val="tc-rmod"/>
     </fs>
   </macro>
   <macro name="@tc-rmod-loc">

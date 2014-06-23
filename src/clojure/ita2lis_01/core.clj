@@ -2,7 +2,8 @@
    (:gen-class))
 
 
-(require '[net.cgrand.enlive-html :as html])
+(require '[net.cgrand.enlive-html :as html]
+         '[clojure.data.csv :as csv])
 ;;(net.cgrand.reload/auto-reload *ns*)
 
 ;;; Algorithm
@@ -11,7 +12,7 @@
 ;;; 3. Discover the sentence containing the train message
 ;;; 4. Extract (and post-format, e.g. train number) the semantic values in the train message
 ;;; 5. Return the hash-map containingt the semantic values
-
+;;; 6. Use the semantic values to fill the template corresponding to the specific message class
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -31,6 +32,13 @@
 (def oggi-fermate-dictionary-re (re-pattern (str "(OGGI IL TRENO ARRIVA FINO A " stazioni-dictionary "|OGGI IL TRENO ARRIVA A " stazioni-dictionary "INVECE CHE A" stazioni-dictionary ")")))
 
 
+(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
+(defn read-lexicon
+  ""
+  [file-lexicon]
+  (with-open [in-file (clojure.java.io/reader file-lexicon)]
+    (let [ ar (doall (csv/read-csv in-file))]
+      (zipmap (map #(nth % 0) ar) (map #(nth % 2) ar)))))
 
 ;;;String functions to pre-process the input
 (def sentece-general-delimeters #"\. ")
@@ -47,8 +55,6 @@
   [sentence]
   (clojure.string/replace sentence #" +" ""))
 
-
-
 (defn split-sentences
   "Split one single sentences into an array of sentences"
   [one-sentence]
@@ -56,8 +62,43 @@
    (comp reduce-whites rm-useless-chars capitalize clojure.string/trim time-format-normalize)
    (clojure.string/split one-sentence sentece-general-delimeters)))
 
+(defn lc-values
+  "lowercase the values in a hash"
+  [hhh]
+  (into {} (for [[k v] hhh] [k (if (string? v) (.toLowerCase v) v) ])))
+
+;;; Auxiliary functions
+(defn map-vals
+  "apply a function to the vals of a hash"
+  [hhh fff]
+  (zipmap (keys hhh) (map fff (vals hhh))))
+(defn ita-lex-sem
+  "Returns the semantics of a specific italian word"
+  [sem-hash lexicon]
+  (map-vals sem-hash #(if (get lexicon %) (get lexicon %) %)))
+
+
+(defn hm2ampm_hh_mm
+  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}"
+  [hhmm]
+  (let [[hs mm] (clojure.string/split hhmm #":")
+        h (Integer/parseInt hs)
+        ampm (if (<=  h 12) "morning" "afternoon")
+        hh (str (if (<= h 12) h (- h 12)))
+        ]
+    {:ampm ampm :hh hh :mm mm}
+    ;(hash-map :ampm ampm :hh hh :mm mm)
+    ))
 
 ;;;Functions to extract the semantics from italian sentence
+(defn emerge-semantic-values
+  "express expicitely the hidden semantic values in the hash. (nomore necessary lower-case)"
+  [semantic-hash]
+
+  (let [semantic-hash-temp (ita-lex-sem semantic-hash lexicon-ita2sem)]
+    (if (:ora_arrivo semantic-hash)
+               (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_arrivo semantic-hash)))
+               (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_partenza semantic-hash))))))
 
 (defn infer-message-type
   "Given a train message returns a hash-map containing the the MAS type (e.g. A1, A2,...,P1, P2, ...) and all the semantic values"
@@ -305,7 +346,7 @@
 
 
 (defn ita2sem
-  "Given an Italian sentence returns a hash containing the semantic values.m The slot names are derived from the MAS manual"
+  "Given an Italian sentence returns a hash containing the semantic values. The slot names are derived from the MAS manual"
   [italian-sentence]
   (let [semantic-slot-types {
                              :straordinario #"(STRAORDINARIO)"
@@ -313,10 +354,10 @@
                              :numero  #"((\d+ ?)+)"
                              :impresa_ferroviaria imprese_ferroviarie-dictionary-re
                              :ora_arrivo  #"(\d\d:\d\d)"
-                             :località_di_provenienza  stazioni-dictionary-re
-                             :località_di_arrivo  stazioni-dictionary-re
-                             :numero_del_binario  #"(\d+)"
-                             :ora_partenza  #"(\d\d:\d\d)"
+                             :località_di_provenienza stazioni-dictionary-re
+                             :località_di_arrivo stazioni-dictionary-re
+                             :numero_del_binario #"(\d+)"
+                             :ora_partenza #"(\d\d:\d\d)"
                              :relazioni_di_percorrenza  #"(\w+)"
                              :in_ritardo #"(IN RITARDO)"
                              :fermate fermate-dictionary-re
@@ -327,8 +368,7 @@
                              :scuse_disagio #"(CI SCUSIAMO PER IL DISAGIO)"
                              :prestare_attenzione #"(INVITIAMO I VIAGGIATORI A PRESTARE ATTENZIONE A SUCCESSIVE COMUNICAZIONI DI PARTENZA)"
                              }]
-    (infer-message-type italian-sentence semantic-slot-types)
-    ))
+    (infer-message-type italian-sentence semantic-slot-types)))
 
 
 
@@ -379,125 +419,47 @@
 (defn prova-enlive [] (println (reduce str (lf-p1-simplified sample-hash))))
 
 
-(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-02.xml"
+(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-03.xml"
   [post]
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
-  [:prop#train-time-ampm] (html/remove-attr :id )
+  ;;[:prop#train-time-ampm] (html/remove-attr :id )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
-  [:prop#train-time-hh] (html/remove-attr :id )
+  ;;[:prop#train-time-hh] (html/remove-attr :id )
   [:prop#train-time-mm] (html/set-attr :name  (:mm post) )
-  [:prop#train-time-mm] (html/remove-attr :id )
-  [:prop#train-categ] (html/set-attr :name  (:categ post) )
-  [:prop#train-categ] (html/remove-attr :id )
-  [:prop#train-number] (html/set-attr :name  (:train-number post) )
-  [:prop#train-number] (html/remove-attr :id )
-  [:prop#rail-number] (html/set-attr :name  (:rail-number post) )
-  [:prop#rail-number] (html/remove-attr :id )
-  [:prop#train-destination] (html/set-attr :name  (:train-destination post) )
-  [:prop#train-destination] (html/remove-attr :id )
-
-
+  ;;[:prop#train-time-mm] (html/remove-attr :id )
+  [:prop#train-categ] (html/set-attr :name  (:categoria post) )
+  ;;[:prop#train-categ] (html/remove-attr :id )
+  [:prop#train-number] (html/set-attr :name  (:numero post) )
+  ;;[:prop#train-number] (html/remove-attr :id )
+  [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
+  ;;[:prop#rail-number] (html/remove-attr :id )
+  [:prop#train-destination] (html/set-attr :name  (:località_di_arrivo post) )
+  ;;[:prop#train-destination] (html/remove-attr :id )
+  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
+  ;;[:prop#train-company] (html/remove-attr :id )
   ;;TODOHERE
- )
-(def hash-test-p1  {:ampm "morning" :hh "1" :mm "2" :categ "redarrow" :train-number "7" :rail-number "4" :train-destination "salerno"})
+  )
+
+;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
+(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "11", :mm "10", :numero "40", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
 (defn prova-enlive-2 [] (reduce str (lf-p1 hash-test-p1)))
+(defn prova-enlive-3 [] (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2))))))))
+
+
 
 (defn build-branch-for-number
   "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))    "
   [cifre]
   (if (== 1 (count cifre))
     (str )
-
-
-    )
-
-  )
-
+;;TODO
+    ))
+(defn build-branch-for-composie-station
+  "milano+center -> milano center"
+  [])
 
 ;;
 
-(def template-xml-01
-  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<xml>
-  <lf>
-    <satop nom=\"y6:meteo-status-situation\">
-      <prop name=\"exceed\"/>
-      <diamond mode=\"SYN-OBJ\">
-        <nom name=\"x8:evaluable-entity\"/>
-        <prop name=\"value\"/>
-        <diamond mode=\"SYN-RMOD\">
-          <nom name=\"y9:evaluable-entity\"/>
-          <prop name=\"average\"/>
-        </diamond>
-      </diamond>
-      <diamond mode=\"SYN-SUBJ\">
-        <nom name=\"x5:evaluable-entity\"/>
-        <prop name=\"temperature\"/>
-      </diamond>
-    </satop>
-  </lf>
-</xml>")
-
-
-(def test-xml-01
-  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<xml>
-  <lf>
-    <satop nom=\"a1:achievement\">
-      <prop name=\"arrive\"/>
-      <diamond mode=\"SYN-SUBJ\">
-        <nom name=\"t1:station-objects\"/>
-        <prop name=\"train\"/>
-      </diamond>
-    </satop>
-  </lf>
-  <target>treno-2456-2 arrivare-2835-2</target>
-</xml>")
-
-(def template-a1-xml-01
-  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<xml>
-  <lf>
-    <satop nom=\"x1:message-a1\">
-      <prop name=\"arrivare\"/>
-      <diamond mode=\"AUX-TENSE\">
-        <nom name=\"x2:future/>
-        <prop name=\"fut_prog\"/>
-      </diamond>
-      <diamond mode=\"VERB-SUBJ\">
-        <nom name=\"x3:train\"/>
-        <prop name=\"treno\"/>
-        <diamond mode=\"NOUN-APP\">
-          <nom name=\"x4:type-train/>
-          <prop name=\"frecciarossa\"/>
-        </diamond>
-        <diamond mode=\"NOUN-APP\">
-          <nom name=\"x5:quality\"/>
-          <prop name=\"numero\"/>
-          <diamond mode=\"NOUN-APP-DEN\">
-            <nom name=\"x6:number-train\"/>
-            <prop name=\"9572\"/>
-          </diamond>
-        </diamond>
-      </diamond>
-      <diamond mode=\"NOUN-RMOD\">
-        <nom name=\"x7:rail\"/>
-        <prop name=\"binario\"/>
-        <diamond mode=\"NOUN-APP\">
-          <nom name=\"x8:quality\"/>
-          <prop name=\"number\"/>
-          <diamond mode=\"NOUN-APP-DEN\">
-            <nom name=\"x9:number-rail\"/>
-            <prop name=\"12\"/>
-          </diamond>
-        </diamond>
-      </diamond>
-    </satop>
-  </lf>
-</xml>")
-
-(def template-a1-plain-01
- )
 
 (defn create-lis-sentence-naive
   "A very naive sentence realizer based on the semnatic values of the input.
@@ -532,9 +494,15 @@
    ])
 
 
+
+
+
+
+
 (defn total-test
   "call all the chain"
   []
-  ;;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
-  (test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-01.xml"))
+  ;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
+  ;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-03.xml"))
+  (test-ATLASRealizer (prova-enlive-2))
   )
