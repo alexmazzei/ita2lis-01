@@ -165,7 +165,9 @@ public class ATLASRealizer {
 
 	//	System.out.println(dc.toDonna());
 	//System.out.println(dc.toAVM_TUT());
-	return outGen + "\n dc.toString()= " +  dc.toString() + "\n dc.toAEWLIS()= " + dc.toAEWLIS() + "\n dc.toAVM_TUT()= " + dc.toAVM_TUT();
+
+	//return outGen + "\n dc.toString()= " +  dc.toString() + "\n dc.toAEWLIS()= " + dc.toAEWLIS() + "\n dc.toAVM_TUT()= " + dc.toAVM_TUT();
+        return outGen + "\n" + dc.toAEWLIS();
     }
 
 

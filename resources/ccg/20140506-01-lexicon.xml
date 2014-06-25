@@ -109,7 +109,7 @@
     <member stem="milano-xxxx-1" pred="milano"/>
     <member stem="salerno-xxxx-1" pred="salerno"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
-    <member stem="0-xxxx-1"/>
+    <member stem="0-xxxx-1" pred="zero"/>
     <member stem="1-xxxx-1" pred="1"/>
     <member stem="2-xxxx-1" pred="2"/>
     <member stem="3-xxxx-1" pred="3"/>
@@ -191,6 +191,7 @@
     <member stem="mattina-xxxx-1" pred="morning"/>
     <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
     <member stem="regionale-xxxx-1" pred="regional"/>
+    <member stem="centrale-xxxx-1" pred="centrale"/>
     <member stem="straordinario-xxxx-1" pred="special"/>
   </family>
   <family name="InTransV_I" pos="InTransV_I" closed="true">

@@ -10,7 +10,7 @@
   <entry word="milano-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="milano-xxxx-1" class="space-region" pred="milano"/>
   <entry word="salerno-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="salerno-xxxx-1" class="space-region" pred="salerno"/>
   <entry word="chivasso-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="chivasso-xxxx-1" class="space-region" pred="chivasso"/>
-  <entry word="0-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="0-xxxx-1" class="digit" pred="0"/>
+  <entry word="0-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="0-xxxx-1" class="digit" pred="zero"/>
   <entry word="1-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="1-xxxx-1" class="digit" pred="1"/>
   <entry word="2-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="2-xxxx-1" class="digit" pred="2"/>
   <entry word="3-xxxx-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="3-xxxx-1" class="digit" pred="3"/>
@@ -74,6 +74,7 @@
   <entry word="mattina-xxxx-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="mattina-xxxx-1" class="temporal-location" pred="morning"/>
   <entry word="frecciarossa-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="frecciarossa-xxxx-1" class="non-agentive-physical-object" pred="redarrow"/>
   <entry word="regionale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="regionale-xxxx-1" class="non-agentive-physical-object" pred="regional"/>
+  <entry word="centrale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="centrale-xxxx-1" class="non-agentive-physical-object" pred="centrale"/>
   <entry word="straordinario-xxxx-1" macros="@neutral @adjc @tc-1 @tc-rmod" pos="ADJ_family" stem="straordinario-xxxx-1" class="abstract-quality" pred="special"/>
   <entry word="arrivare-2835-2" macros="@verb" pos="InTransV_I" stem="arrivare-2835-2" class="achievement" pred="arrive"/>
   <entry word="partire-xxxx-1" macros="@verb" pos="InTransV_I" stem="partire-xxxx-1" class="achievement" pred="leave"/>

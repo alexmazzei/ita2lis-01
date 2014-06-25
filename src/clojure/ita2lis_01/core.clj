@@ -11,7 +11,7 @@
 ;;; 2. Split the whole sentence into a number of semantic notable subsentences
 ;;; 3. Discover the sentence containing the train message
 ;;; 4. Extract (and post-format, e.g. train number) the semantic values in the train message
-;;; 5. Return the hash-map containingt the semantic values
+;;; 5. Return the hash-map containingt the semantic values (emerge it)
 ;;; 6. Use the semantic values to fill the template corresponding to the specific message class
 
 (defn -main
@@ -72,22 +72,36 @@
   "apply a function to the vals of a hash"
   [hhh fff]
   (zipmap (keys hhh) (map fff (vals hhh))))
+
 (defn ita-lex-sem
   "Returns the semantics of a specific italian word"
   [sem-hash lexicon]
   (map-vals sem-hash #(if (get lexicon %) (get lexicon %) %)))
 
-
 (defn hm2ampm_hh_mm
-  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}"
+  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}. I use zero instead of 0 because openccg does not accept 0 as semantic value"
   [hhmm]
-  (let [[hs mm] (clojure.string/split hhmm #":")
+  (let [[hs ms] (clojure.string/split hhmm #":")
         h (Integer/parseInt hs)
         ampm (if (<=  h 12) "morning" "afternoon")
-        hh (str (if (<= h 12) h (- h 12)))
+        hhh (if (<= h 12) h (- h 12))
+        hh (if (== 0 hhh) "zero" (str hhh))
+        m (Integer/parseInt ms)
+        mm (if (== 0 m) "zero" (str m))
         ]
     {:ampm ampm :hh hh :mm mm}
     ;(hash-map :ampm ampm :hh hh :mm mm)
+    ))
+
+(defn unescape-chars
+  "Remove escape html AND 0 with ZERO!!!!!!!!!"
+  [tag-string]
+  (.. #^String tag-string
+    (replace  "&amp;" "&")
+    (replace "&lt;" "<")
+    (replace "&gt;" ">")
+    (replace "&quot;" "\"")
+    (replace  "name=\"0\"" "name=\"zero\"")
     ))
 
 ;;;Functions to extract the semantics from italian sentence
@@ -411,49 +425,73 @@
 ;(def ^:dynamic html/self-closing-tags #{:prop :nom})
 (intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom})
 
-(html/deftemplate lf-p1-simplified "templates-xml-lf/lf-p1-simplified.xml"
+(html/deftemplate lf-p1-simplified "templates-xml-lf/prova-num-00.xml"
   [post]
-  [:prop#agent] (html/set-attr :name (:name post) )
-  [:prop#agent] (html/remove-attr :id )  )
-(def sample-hash {:type :P1 :name "boat3"})
-(defn prova-enlive [] (println (reduce str (lf-p1-simplified sample-hash))))
+  [:prop#train-number]
+  (html/do-> (html/set-attr :name  (str (first (:numero post))))
+             (if (rest (:numero post)) (html/after (build-branch-for-number (rest (map str (:numero post))))))
+             ;;(if (rest (:numero post)) (html/after (html/emit* (build-branch-for-number-2 (rest (map str (:numero post)))))))
+             )
+  )
+(def sample-hash {:numero "123"})
+(defn prova-enlive [] (reduce str (lf-p1-simplified sample-hash)))
 
 
 (html/deftemplate lf-p1 "templates-xml-lf/lf-p1-03.xml"
   [post]
+  [:diamond#train-special] (if (empty? (:straordinario post))
+                            (html/substitute "" ))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
-  ;;[:prop#train-time-ampm] (html/remove-attr :id )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
-  ;;[:prop#train-time-hh] (html/remove-attr :id )
   [:prop#train-time-mm] (html/set-attr :name  (:mm post) )
-  ;;[:prop#train-time-mm] (html/remove-attr :id )
   [:prop#train-categ] (html/set-attr :name  (:categoria post) )
-  ;;[:prop#train-categ] (html/remove-attr :id )
-  [:prop#train-number] (html/set-attr :name  (:numero post) )
-  ;;[:prop#train-number] (html/remove-attr :id )
+  [:prop#train-number]
+  (html/do-> (html/set-attr :name  (str (first (:numero post))))
+             (if (not-empty (rest (:numero post)))
+               (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
+  ;;(html/set-attr :name  (:numero post) )
   [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
-  ;;[:prop#rail-number] (html/remove-attr :id )
-  [:prop#train-destination] (html/set-attr :name  (:località_di_arrivo post) )
-  ;;[:prop#train-destination] (html/remove-attr :id )
+  [:prop#train-destination]
+  (let
+      [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
+      (html/do-> (html/set-attr :name  (first seq-nomi))
+                 (html/after (if (not-empty (rest seq-nomi))
+                               (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")
+                               ""))))
+  ;;(html/set-attr :name  (:località_di_arrivo post) )
   [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
   ;;[:prop#train-company] (html/remove-attr :id )
-  ;;TODOHERE
-  )
+)
 
 ;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
-(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "11", :mm "10", :numero "40", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
-(defn prova-enlive-2 [] (reduce str (lf-p1 hash-test-p1)))
-(defn prova-enlive-3 [] (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2))))))))
+(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "zero", :mm "59", :numero "4001", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
+(defn prova-enlive-2 [] (unescape-chars (reduce str (lf-p1 hash-test-p1))))
+(defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
+
+(defn build-branch
+  ""
+  [lista-elementi rel]
+  (let [n (count lista-elementi)
+        pre (str "\n                <diamond mode=\"" rel " \">\n                 <nom name=\"w"
+                 (java.util.UUID/randomUUID)
+                 "\"/>\n                 <prop name=\""
+                 (first lista-elementi)
+                 "\"/>\n")
+        post  "                </diamond>\n"]
+    (str pre (if (> n 1) (build-branch (rest lista-elementi) rel) "")  post)))
+
+(defn build-branch-for-number-2
+  "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))"
+  [lista-cifre]
+  (let [inside (str (if (> (count lista-cifre) 1) (build-branch-for-number-2 (rest lista-cifre)) ""))]
+    {:tag "diamond" :attrs {"mode" "SYN-NOUN-CONTIN-DENOM"}
+     :content
+     ( {:tag "nom"  :attrs {"name" (str (java.util.UUID/randomUUID) ":digit")}}
+       {:tag "prop" :attrs {"name" (first lista-cifre)} }
+       inside)}
+    ) )
 
 
-
-(defn build-branch-for-number
-  "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))    "
-  [cifre]
-  (if (== 1 (count cifre))
-    (str )
-;;TODO
-    ))
 (defn build-branch-for-composie-station
   "milano+center -> milano center"
   [])
@@ -482,7 +520,7 @@
   ;;"Given the number of the line returns the corresponding string"
   ["AVVISIAMO CHE LE VETTURE IN TESTA AL TRENO  REGIONALE  10 4 2 9  DI  TRENITALIA  PER  ALESSANDRIA,  DELLE ORE  00,25  SONO  FUORI SERVIZIO.  SI INVITANO I VIAGGIATORI A PORTARSI VERSO LE  VETTURE  DI CENTRO  E  CODA TRENO.  OGGI  IL  TRENO  VIAGGIA  CON  VETTURE  DI  SOLA  SECONDA CLASSE.  CI SCUSIAMO PER IL DISAGIO" ;??
    "Il treno REGIONALE VELOCE, 20 32, di TRENITALIA, delle ore 00.10, proveniente da MILANO CENTRALE, è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla." ;A1
-   "Il treno REGIONALE, 40 93, di TRENITALIA, delle ore 00.20, per CHIVASSO, è in partenza dal binario 6.   Ferma in tutte le stazioni." ;P1
+   "Il treno REGIONALE, 40 93, di TRENITALIA, delle ore 00.20, per MILANO CENTRALE, è in partenza dal binario 6.   Ferma in tutte le stazioni." ;P1
    "Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 10 0 1 9, di TRENITALIA, delle ore 17.42, proveniente da BARDONECCHIA, è in arrivo al binario 12, invece che al binario 19. Attenzione! Allontanarsi dalla linea gialla. ." ;A2
    "Annuncio ritardo! Il treno REGIONALE VELOCE, 20 06, di TRENITALIA, delle ore 09.10, proveniente da MILANO CENTRALE, arriverà con un ritardo previsto di 10 MINUTI ." ;A3
    "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7, 41 17, di TRENITALIA, previsto in partenza alle ore 13.00, per FOSSANO, oggi non sarà effettuato Ci scusiamo per il disagio." ;P9
@@ -504,5 +542,4 @@
   []
   ;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
   ;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-03.xml"))
-  (test-ATLASRealizer (prova-enlive-2))
-  )
+  (test-ATLASRealizer (prova-enlive-3)))

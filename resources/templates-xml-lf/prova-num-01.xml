@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><xml>
+  <lf>
+    <satop nom="w6:achievement">
+      <prop name="future_prog"/>
+      <diamond mode="SYN-VERB+MODAL-INDCOMPL">
+        <nom name="w5:achievement"/>
+        <prop name="leave"/>
+        <diamond mode="SYN-SUBJ">
+          <nom name="w0:non-agentive-physical-object"/>
+          <prop name="train"/>
+          <diamond mode="SYN-NOUN-APPOSITION">
+            <nom name="w1:feature"/>
+            <prop name="pre-number"/>
+            <diamond mode="SYN-NUM-APPOSITION-DENOM">
+              <nom name="w2:digit"/>
+              <prop name="9"/>
+              <diamond mode="SYN-NOUN-CONTIN-DENOM">
+                <nom name="w3:digit"/>
+                <prop name="8"/>
+                <diamond mode="SYN-NOUN-CONTIN-DENOM">
+                  <nom name="w4:digit"/>
+                  <prop name="7"/>
+                </diamond>
+              </diamond>
+            </diamond>
+          </diamond>
+        </diamond>
+      </diamond>
+    </satop>
+  </lf>
+  <target>treno-2456-2 numero-xxxx-1 9-xxxx-1  8-xxxx-1  7-xxxx-1  partire-xxxx-1 futuro_prog-xxxx-1</target>
+</xml>
