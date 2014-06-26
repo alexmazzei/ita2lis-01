@@ -1,11 +1,57 @@
-REGIONALE,bn:08848799n,regional,
-FRECCIAROSSA,bn:04004282n,redarrow,
-TRENITALIA,bn:03826734n,trainitaly,
-NTV,bn:00733298n,nsv,
-SALERNO,bn:01442468n,salerno,
-CHIVASSO,bn:02442178n,chivasso,
-MILANO CENTRALE,bn:01819378n,milano+centrale,
-STRORDINARIO,bn:00059918n,special,
-ARRIVARE,bn:00082788v,arrive,
-PARTIRE,bn:00088939v,leave,
-ANDARE,bn:00086600v,togo
+ACQUI TERME,bn:04298726n,rail_station,??,??
+ALBENGA,bn:04290482n,rail_station,??,??
+ALESSANDRIA,bn:02365391n,rail_station,??,??
+AOSTA,bn:02352638n,rail_station,??,??
+ARQUATA SCRIVIA,bn:04290676n,rail_station,??,??
+ASTI,bn:02364642n,rail_station,??,??
+BARDONECCHIA,??,rail_station,??,??
+BOLOGNA CENTRALE,bn:00305671n,rail_station,??,??
+BRA,bn:08948689n,rail_station,??,??
+BUSSOLENO,bn:08961507n,rail_station,??,??
+CEVA,bn:08932755n,rail_station,??,??
+CHIVASSO,bn:02442178n,rail_station,chivasso,??
+CUNEO,bn:02361243n,rail_station,??,??
+FOSSANO,bn:08848811n,rail_station,??,??
+GENOVA BRIGNOLE,bn:01761612n,rail_station,??,??
+GENOVA NERVI,bn:04290497n,rail_station,??,??
+GENOVA PIAZZA PRINCIPE,bn:01761612n,rail_station,??,??
+IMPERIA ONEGLIA,bn:08963697n,rail_station,??,??
+IVREA,??,rail_station,??,??
+LA SPEZIA CENTRALE,bn:01916861n,rail_station,??,??
+LECCE,bn:02382572n,rail_station,??,??
+MILANO CENTRALE,bn:01819378n,rail_station,milano+central,??
+MILANO PORTA GARIBALDI,bn:01949504n,rail_station,??,??
+NAPOLI CENTRALE,bn:01440501n,rail_station,??,??
+NOVARA,bn:02360837n,rail_station,??,??
+NOVI LIGURE,bn:04298425n,rail_station,??,??
+PIACENZA,bn:02422723n,rail_station,??,??
+REGGIO CALABRIA CENTRALE, bn:02394126n,rail_station,??,??
+ROMA TERMINI,bn:03639722n,rail_station,??,??
+SALBERTRAND,??,rail_station,??,??
+SALERNO,bn:01442468n,rail_station,salerno,??
+SAVONA,bn:02357621n,rail_station,??,??
+SUSA,??,rail_station,??,??
+TRIESTE CENTRALE,bn:02343967n,rail_station,??,??
+VENEZIA SANTA LUCIA,bn:03876026n,rail_station,??,??
+VENTIMIGLIA,bn:01768076n,rail_station,??,??
+VOGHERA,bn:02424890n,rail_station,??,??
+TORINO PORTA NUOVA,bn:01460962n,rail_station,??,??
+FIRENZE SANTA MARIA NOVELLA,bn:01511512,rail_station,??,??
+ROMA TIBURTINA,bn:03640178n,rail_station,??,??
+MILANO CADORNA,bn:01190210n,rail_station,??,??
+VENEZIA MESTRE,bn:02228132n,rail_station,??,??
+VERONA PORTA NUOVA,bn:01944001n,rail_station,??,??
+PADOVA,bn:02358853n,rail_station,??,??
+PALERMO CENTRALE,bn:01783146n,rail_station,??,??
+NAPOLI CAMPI FLEGREI,bn:02383877n,rail_station,??,??
+PISA CENTRALE,bn:01905617n,rail_station,??,??
+BARI CENTRALE,bn:01783168n,rail_station,??,??
+CATANIA CENTRALE,bn:02380108n,rail_station,??,??
+STRORDINARIO,bn:00059918n,train_category,special,??
+REGIONALE,bn:08848799n,train_category,regional,??
+FRECCIAROSSA,bn:04004282n,train_category,redarrow,??
+TRENITALIA,bn:03826734n,train_company,trainitaly,??
+NTV,bn:00733298n,train_company,nsv,??
+ARRIVARE,bn:00082788v,??,arrive,??
+PARTIRE,bn:00088939v,??,leave,??
+ANDARE,bn:00086600v,??,togo,??

@@ -28,7 +28,7 @@ feature  {
   ap <5 1>: non-body {sx dx neutral} body;
   PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron determiner;
   TC-TYPE<2 3 5>: tc-noun  tc-apposition tc-apposition-denom tc-apposition-number tc-denom-contin tc-number tc-digit tc-0 tc-1 tc-2;
-  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2;
+  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-bis tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2;
   tense<E>: past present future;
 
   ontology:
@@ -249,8 +249,8 @@ adj(mattina-xxxx-1,morning,temporal-location,adjc,tc-1,)
 #Categorie
 adj(frecciarossa-xxxx-1,redarrow,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(regionale-xxxx-1,regional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
-adj(centrale-xxxx-1,centrale,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(straordinario-xxxx-1,special,abstract-quality,adjc,tc-1,tc-rmod)
+adj(centrale-xxxx-1,central,abstract-quality,adjc,tc-1,tc-noun-apposition-bis)
 
 
 
@@ -292,8 +292,10 @@ rule {
 
     #typechange: adj <5> [X tc-1] => n <~5> [X tc-1 noun tc-noun-apposition] ;
 
-    typechange: adj <5> [X tc-1 tc-noun-apposition] => n <3> [Y noun tc-0] \* n <~3> [Y] : Y( <SYN-NOUN-APPOSITION> X);
+    typechange: adj <5> [X tc-1 tc-noun-apposition] => n <3> [Y noun tc-0] \* n <~3> [Y tc-0] : Y( <SYN-NOUN-APPOSITION> X);
+    typechange: adj <5> [X tc-1 tc-noun-apposition-bis] => n <3> [Y noun tc-1] \* n <~3> [Y tc-1] : Y( <SYN-NOUN-APPOSITION> X);
     typechange: adj <5> [X tc-1 tc-rmod] => n <3> [Y noun tc-0] \* n <~3> [Y tc-0] : Y( <SYN-NOUN-RMOD> X);
+
 
 
     #typechange: adj <5> [X tc-1 tc-noun-apposition] => n <~5> [Y tc-0] \* n <~5> [Y tc-0] : Y( <SYN-NOUN-APPOSITION> X);

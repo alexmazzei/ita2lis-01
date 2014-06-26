@@ -1,7 +1,6 @@
 (ns ita2lis-01.core
    (:gen-class))
 
-
 (require '[net.cgrand.enlive-html :as html]
          '[clojure.data.csv :as csv])
 ;;(net.cgrand.reload/auto-reload *ns*)
@@ -20,25 +19,37 @@
   (println "Hello, World!"))
 
 ;;; Constants
+
+(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
+
+
 (def file-stazioni "./resources/elenco-stazioni-01.txt")
+(defn read-stazioni
+  ""
+  [file-lexicon]
+  (with-open [in-file (clojure.java.io/reader file-lexicon)]
+    (let [ar (doall (csv/read-csv in-file))]
+      (map #(if (= (nth % 2) "rail_station") (nth % 0)) ar))))
+
 (def stazioni-dictionary
-;  "(CHIVASSO|MILANO CENTRALE|FIRENZE|BARDONECCHIA|FOSSANO|IVREA|SUSA|IMPERIA ONEGLIA)"
-  (str "(" (clojure.string/replace (clojure.string/replace (slurp file-stazioni) #"\n$" "") #"\s*\n\s*" "|" ) ")" ) )
+  ;;"(CHIVASSO|MILANO CENTRALE|FIRENZE|BARDONECCHIA|FOSSANO|IVREA|SUSA|IMPERIA ONEGLIA)"
+  ;;(str "(" (clojure.string/replace (clojure.string/replace (slurp file-stazioni) #"\n$" "") #"\s*\n\s*" "|" ) ")" )
+  (str "(" (clojure.string/join "|" (remove #(nil? %)  (read-stazioni "./resources/ita2sem2lis-lis4all-01.csv"))) ")"))
 
 (def stazioni-dictionary-re (re-pattern stazioni-dictionary))
-(def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7)")
-(def imprese_ferroviarie-dictionary-re #"(TRENITALIA|NSV)")
+(def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7|ESPRESSO|EUROCITY|EURONIGHT|TGV|FRECCIARGENTO|FRECCIABIANCA|ITALO|INTERCITY|INTERCITY NOTTE|SUBURBANO|REGIOEXPRESS|MALPENSA EXPRESS|TRENO METROPOLITANO|ACCELERATO|DIRETTO|DIRETTISSIMO)")
+(def imprese_ferroviarie-dictionary-re #"(TRENITALIA|NSV|GTT|TRENORD|SAD|ENTE AURONOMO VOLTURNO)")
 (def fermate-dictionary-re (re-pattern (str "(FERMA IN TUTTE LE STAZIONI|FERMA A " stazioni-dictionary "+|IN TUTTE LE STAZIONI ECCETTO A " stazioni-dictionary "+|NON SONO PREVISTE FERMATE INTERMEDIE|OGGI FERMA ANCHE A " stazioni-dictionary  "+)")))
 (def oggi-fermate-dictionary-re (re-pattern (str "(OGGI IL TRENO ARRIVA FINO A " stazioni-dictionary "|OGGI IL TRENO ARRIVA A " stazioni-dictionary "INVECE CHE A" stazioni-dictionary ")")))
 
 
-(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
 (defn read-lexicon
   ""
   [file-lexicon]
   (with-open [in-file (clojure.java.io/reader file-lexicon)]
     (let [ ar (doall (csv/read-csv in-file))]
-      (zipmap (map #(nth % 0) ar) (map #(nth % 2) ar)))))
+      (zipmap (map #(nth % 0) ar) (map #(nth % 3) ar)))))
+(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
 
 ;;;String functions to pre-process the input
 (def sentece-general-delimeters #"\. ")
@@ -105,6 +116,30 @@
     ))
 
 ;;;Functions to extract the semantics from italian sentence
+(defn extract-content-words-2
+  ""
+  []
+  ;;(clojure.string/join "\n" (rest (sort
+  (set (map #(let [mat-1 (re-matcher (re-pattern (str "proveniente da ([^,]+),")) %)
+                    mat-2 (re-matcher (re-pattern (str "direto a ([^,]+),")) %)]
+                (cond (re-find mat-1) ((re-groups mat-1) 1)
+                      (re-find mat-2) ((re-groups mat-1) 1)))
+             (clojure.string/split (slurp "./resources/Annunci-CSV.csv") #"\n"))))
+
+(defn extract-content-words
+  "extract the content words from PN messages"
+  []
+  (with-open [in-file (clojure.java.io/reader "./resources/Annunci-CSV-50.csv")]
+    (let [result #{}]
+      (doseq [line (line-seq in-file)]
+          (let [
+                mat-1 (re-matcher (re-pattern (str "proveniente da ([^,]+),")) line)
+                mat-2 (re-matcher (re-pattern (str "direto a ([^,]+),")) line)]
+            (cond (re-find mat-1) (def result (conj result ((re-groups mat-1) 1)))
+                  (re-find mat-2) (def result (conj result ((re-groups mat-2) 1))))))
+        (println result))))
+
+
 (defn emerge-semantic-values
   "express expicitely the hidden semantic values in the hash. (nomore necessary lower-case)"
   [semantic-hash]
@@ -429,7 +464,7 @@
   [post]
   [:prop#train-number]
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
-             (if (rest (:numero post)) (html/after (build-branch-for-number (rest (map str (:numero post))))))
+             (if (rest (:numero post)) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM")))
              ;;(if (rest (:numero post)) (html/after (html/emit* (build-branch-for-number-2 (rest (map str (:numero post)))))))
              )
   )
@@ -472,31 +507,15 @@
   ""
   [lista-elementi rel]
   (let [n (count lista-elementi)
-        pre (str "\n                <diamond mode=\"" rel " \">\n                 <nom name=\"w"
+        pre (str "\n                <diamond mode=\""
+                 rel
+                 "\">\n                 <nom name=\"w"
                  (java.util.UUID/randomUUID)
-                 "\"/>\n                 <prop name=\""
+                 ":sem-obj\"/>\n                 <prop name=\""
                  (first lista-elementi)
                  "\"/>\n")
         post  "                </diamond>\n"]
     (str pre (if (> n 1) (build-branch (rest lista-elementi) rel) "")  post)))
-
-(defn build-branch-for-number-2
-  "cifre is an array of strings with digits: e.g. [\"1\" \"2\" ...]. Call it with (rest (clojure.string/split \"123\"))"
-  [lista-cifre]
-  (let [inside (str (if (> (count lista-cifre) 1) (build-branch-for-number-2 (rest lista-cifre)) ""))]
-    {:tag "diamond" :attrs {"mode" "SYN-NOUN-CONTIN-DENOM"}
-     :content
-     ( {:tag "nom"  :attrs {"name" (str (java.util.UUID/randomUUID) ":digit")}}
-       {:tag "prop" :attrs {"name" (first lista-cifre)} }
-       inside)}
-    ) )
-
-
-(defn build-branch-for-composie-station
-  "milano+center -> milano center"
-  [])
-
-;;
 
 
 (defn create-lis-sentence-naive

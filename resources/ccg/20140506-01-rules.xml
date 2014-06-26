@@ -35,6 +35,7 @@
                 <nomvar name="Y"/>
               </lf>
             </feat>
+            <feat attr="TC-TYPE" val="tc-0"/>
           </fs>
         </atomcat>
         <lf>
@@ -48,6 +49,54 @@
     </result>
   </typechanging>
   <typechanging name="typechange-2">
+    <arg>
+      <atomcat type="adj">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+          <feat attr="TC-TYPE" val="tc-1"/>
+          <feat attr="TC-RELATION" val="tc-noun-apposition-bis"/>
+        </fs>
+      </atomcat>
+    </arg>
+    <result>
+      <complexcat>
+        <atomcat type="n">
+          <fs id="3">
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+            <feat attr="PoS" val="noun"/>
+            <feat attr="TC-TYPE" val="tc-1"/>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs inheritsFrom="3">
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+            <feat attr="TC-TYPE" val="tc-1"/>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="Y">
+            <diamond mode="SYN-NOUN-APPOSITION">
+              <nomvar name="X"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </result>
+  </typechanging>
+  <typechanging name="typechange-3">
     <arg>
       <atomcat type="adj">
         <fs id="5">
@@ -95,7 +144,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-3">
+  <typechanging name="typechange-4">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -127,7 +176,7 @@
       </atomcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-4">
+  <typechanging name="typechange-5">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -159,7 +208,7 @@
       </atomcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-5">
+  <typechanging name="typechange-6">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -206,7 +255,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-6">
+  <typechanging name="typechange-7">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -253,7 +302,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-7">
+  <typechanging name="typechange-8">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -300,7 +349,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-8">
+  <typechanging name="typechange-9">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -347,7 +396,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-9">
+  <typechanging name="typechange-10">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -373,7 +422,7 @@
       </atomcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-10">
+  <typechanging name="typechange-11">
     <arg>
       <atomcat type="n">
         <fs id="5">
@@ -419,7 +468,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-11">
+  <typechanging name="typechange-12">
     <arg>
       <complexcat>
         <atomcat type="s">
@@ -478,7 +527,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-12">
+  <typechanging name="typechange-13">
     <arg>
       <atomcat type="n">
         <fs>
@@ -545,7 +594,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-13">
+  <typechanging name="typechange-14">
     <arg>
       <atomcat type="n">
         <fs>
@@ -620,7 +669,7 @@
       </complexcat>
     </result>
   </typechanging>
-  <typechanging name="typechange-14">
+  <typechanging name="typechange-15">
     <arg>
       <atomcat type="n">
         <fs>

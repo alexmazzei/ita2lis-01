@@ -191,8 +191,8 @@
     <member stem="mattina-xxxx-1" pred="morning"/>
     <member stem="frecciarossa-xxxx-1" pred="redarrow"/>
     <member stem="regionale-xxxx-1" pred="regional"/>
-    <member stem="centrale-xxxx-1" pred="centrale"/>
     <member stem="straordinario-xxxx-1" pred="special"/>
+    <member stem="centrale-xxxx-1" pred="central"/>
   </family>
   <family name="InTransV_I" pos="InTransV_I" closed="true">
     <entry name="Entry-1">

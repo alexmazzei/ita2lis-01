@@ -6,6 +6,7 @@
   <type name="adj" parents="kind"/>
   <type name="TC-RELATION"/>
   <type name="tc-noun-apposition" parents="TC-RELATION"/>
+  <type name="tc-noun-apposition-bis" parents="TC-RELATION"/>
   <type name="tc-noun-apposition-denom" parents="TC-RELATION"/>
   <type name="tc-noun-rmod" parents="TC-RELATION"/>
   <type name="tc-relcl-red" parents="TC-RELATION"/>

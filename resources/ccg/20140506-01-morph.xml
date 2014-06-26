@@ -74,8 +74,8 @@
   <entry word="mattina-xxxx-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="mattina-xxxx-1" class="temporal-location" pred="morning"/>
   <entry word="frecciarossa-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="frecciarossa-xxxx-1" class="non-agentive-physical-object" pred="redarrow"/>
   <entry word="regionale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="regionale-xxxx-1" class="non-agentive-physical-object" pred="regional"/>
-  <entry word="centrale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="centrale-xxxx-1" class="non-agentive-physical-object" pred="centrale"/>
   <entry word="straordinario-xxxx-1" macros="@neutral @adjc @tc-1 @tc-rmod" pos="ADJ_family" stem="straordinario-xxxx-1" class="abstract-quality" pred="special"/>
+  <entry word="centrale-xxxx-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition-bis" pos="ADJ_family" stem="centrale-xxxx-1" class="abstract-quality" pred="central"/>
   <entry word="arrivare-2835-2" macros="@verb" pos="InTransV_I" stem="arrivare-2835-2" class="achievement" pred="arrive"/>
   <entry word="partire-xxxx-1" macros="@verb" pos="InTransV_I" stem="partire-xxxx-1" class="achievement" pred="leave"/>
   <entry word="andare-xxxx-1" macros="@verb @tc-1 @tc-relcl-red" pos="InTransV_I" stem="andare-xxxx-1" class="achievement" pred="togo"/>
@@ -413,6 +413,17 @@
     </fs>
     <fs id="5">
       <feat attr="TC-RELATION" val="tc-noun-apposition"/>
+    </fs>
+  </macro>
+  <macro name="@tc-noun-apposition-bis">
+    <fs id="2">
+      <feat attr="TC-RELATION" val="tc-noun-apposition-bis"/>
+    </fs>
+    <fs id="3">
+      <feat attr="TC-RELATION" val="tc-noun-apposition-bis"/>
+    </fs>
+    <fs id="5">
+      <feat attr="TC-RELATION" val="tc-noun-apposition-bis"/>
     </fs>
   </macro>
   <macro name="@tc-noun-apposition-denom">
