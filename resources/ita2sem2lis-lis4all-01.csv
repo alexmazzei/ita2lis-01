@@ -1,4 +1,4 @@
-ACQUI TERME,bn:04298726n,rail_station,??,??
+ACQUI TERME,bn:04298726n,rail_station,cartello*ACQUI_TERME,??
 ALBENGA,bn:04290482n,rail_station,??,??
 ALESSANDRIA,bn:02365391n,rail_station,??,??
 AOSTA,bn:02352638n,rail_station,??,??
@@ -48,10 +48,14 @@ PISA CENTRALE,bn:01905617n,rail_station,??,??
 BARI CENTRALE,bn:01783168n,rail_station,??,??
 CATANIA CENTRALE,bn:02380108n,rail_station,??,??
 STRORDINARIO,bn:00059918n,train_category,special,??
-REGIONALE,bn:08848799n,train_category,regional,??
-FRECCIAROSSA,bn:04004282n,train_category,redarrow,??
-TRENITALIA,bn:03826734n,train_company,trainitaly,??
-NTV,bn:00733298n,train_company,nsv,??
-ARRIVARE,bn:00082788v,??,arrive,??
-PARTIRE,bn:00088939v,??,leave,??
-ANDARE,bn:00086600v,??,togo,??
+REGIONALE,bn:08848799n,train_category,regional,??,??
+REGIONALE VELOCE,bn:08975672n,train_category,fastregional,treno_regionale_veloce,80084
+FRECCIAROSSA,bn:04004282n,train_category,redarrow,frecciarossa,80094
+TRENITALIA,bn:03826734n,train_company,trainitaly,trenitalia,80126
+NTV,bn:00733298n,train_company,nsv,??,??
+ARRIVARE,bn:00082788v,??,arrive,arrivare,80008
+PARTIRE,bn:00088939v,??,leave,??,??
+ANDARE,bn:00086600v,??,togo,??,??
+PROVENIRE,??,??,tocome,venire_provenire,80128
+RITARDO,??,??,late,in_ritardo,80032
+ESSO,??,??,it,ix_3,80127

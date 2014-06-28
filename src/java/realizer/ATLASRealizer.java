@@ -127,7 +127,9 @@ public class ATLASRealizer {
 	    //Document inputDocRealizer  = builder.build(inputURL);
 	    Document inputDocRealizer  = builder.build(new StringReader(xmlString));
 	    LF lf = CCGrealizer.getLfFromDoc(inputDocRealizer);
-	    Edge bestEdge = CCGrealizer.realize(lf);
+	    //Edge bestEdge = CCGrealizer.realize(lf);
+            Edge bestEdge = CCGrealizer.realize(lf,null,300,true);
+
 
 	    result = bestEdge.getSign().getOrthography() + "\n"
 		+ bestEdge.getSign().getBracketedString() + "\n"

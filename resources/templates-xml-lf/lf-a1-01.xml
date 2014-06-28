@@ -4,7 +4,7 @@
       <prop name="future_prog"/>
       <diamond mode="SYN-VERB+MODAL-INDCOMPL">
         <nom name="w16:achievement"/>
-        <prop name="leave"/>
+        <prop name="arrive"/>
         <diamond mode="SYN-SUBJ">
           <nom name="w15:physical-object"/>
           <prop name="possesive"/>
@@ -57,10 +57,10 @@
             </diamond>
             <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
               <nom name="w10:achievement"/>
-              <prop name="togo"/>
+              <prop name="tocome"/>
               <diamond mode="SYN-RMOD-LOC">
                 <nom name="w9:space-region"/>
-                <prop id="train-destination" name="salerno"/>
+                <prop id="train-origin" name="salerno"/>
               </diamond>
               <diamond mode="SYN-SUBJ">
                 <nom name="w0:non-agentive-physical-object"/>

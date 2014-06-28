@@ -20,7 +20,23 @@
 
 ;;; Constants
 
-(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
+(def examples
+  ;;"Given the number of the line returns the corresponding string"
+  ["AVVISIAMO CHE LE VETTURE IN TESTA AL TRENO  REGIONALE  10 4 2 9  DI  TRENITALIA  PER  ALESSANDRIA,  DELLE ORE  00,25  SONO  FUORI SERVIZIO.  SI INVITANO I VIAGGIATORI A PORTARSI VERSO LE  VETTURE  DI CENTRO  E  CODA TRENO.  OGGI  IL  TRENO  VIAGGIA  CON  VETTURE  DI  SOLA  SECONDA CLASSE.  CI SCUSIAMO PER IL DISAGIO" ;??
+   "Il treno REGIONALE VELOCE, 20 32, di TRENITALIA, delle ore 00.10, proveniente da MILANO CENTRALE, è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla." ;A1
+   "Il treno STRAORDINARIO REGIONALE, 40 93, di TRENITALIA, delle ore 00.20, per MILANO CENTRALE, è in partenza IN RITARDO dal binario 6.   Ferma in tutte le stazioni." ;P1
+   "Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 10 0 1 9, di TRENITALIA, delle ore 17.42, proveniente da BARDONECCHIA, è in arrivo al binario 12, invece che al binario 19. Attenzione! Allontanarsi dalla linea gialla. ." ;A2
+   "Annuncio ritardo! Il treno REGIONALE VELOCE, 20 06, di TRENITALIA, delle ore 09.10, proveniente da MILANO CENTRALE, arriverà con un ritardo previsto di 10 MINUTI ." ;A3
+   "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7, 41 17, di TRENITALIA, previsto in partenza alle ore 13.00, per FOSSANO, oggi non sarà effettuato Ci scusiamo per il disagio." ;P9
+   "Annuncio ritardo! Il treno REGIONALE, 24 8 2 5, di TRENITALIA,delle ore 17.28, per IVREA, partirà dal binario 15, con un ritardo previsto di 15 MINUTI  Invitiamo i viaggiatori a prestare attenzione a successive comunicazioni di partenza .";P5
+   "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 24 8 4 9, di TRENITALIA, previsto in arrivo da SUSA, alle ore 09.15, oggi non è stato effettuato . . Ci scusiamo per il disagio.";A5
+   "Informiamo i viaggiatori che il treno REGIONALE, 24 8 1 7, di TRENITALIA, delle ore 11.28, per IVREA è in partenza dal binario 18.oggi il treno arriva fino a CHIVASSO,. Ferma a TORINO PORTA SUSA. . Ci scusiamo per il disagio.";P13
+
+   "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
+   ])
+
+
+;;(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
 
 
 (def file-stazioni "./resources/elenco-stazioni-01.txt")
@@ -79,6 +95,22 @@
   (into {} (for [[k v] hhh] [k (if (string? v) (.toLowerCase v) v) ])))
 
 ;;; Auxiliary functions
+(defn ppxml [xml]
+  (let [in (javax.xml.transform.stream.StreamSource.
+            (java.io.StringReader. xml))
+        writer (java.io.StringWriter.)
+        out (javax.xml.transform.stream.StreamResult. writer)
+        transformer (.newTransformer
+                     (javax.xml.transform.TransformerFactory/newInstance))]
+    (.setOutputProperty transformer
+                        javax.xml.transform.OutputKeys/INDENT "yes")
+    (.setOutputProperty transformer
+                        "{http://xml.apache.org/xslt}indent-amount" "2")
+    (.setOutputProperty transformer
+                        javax.xml.transform.OutputKeys/METHOD "xml")
+    (.transform transformer in out)
+    (-> out .getWriter .toString)))
+
 (defn map-vals
   "apply a function to the vals of a hash"
   [hhh fff]
@@ -90,7 +122,7 @@
   (map-vals sem-hash #(if (get lexicon %) (get lexicon %) %)))
 
 (defn hm2ampm_hh_mm
-  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}. I use zero instead of 0 because openccg does not accept 0 as semantic value"
+  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}."
   [hhmm]
   (let [[hs ms] (clojure.string/split hhmm #":")
         h (Integer/parseInt hs)
@@ -100,9 +132,7 @@
         m (Integer/parseInt ms)
         mm (if (== 0 m) "zero" (str m))
         ]
-    {:ampm ampm :hh hh :mm mm}
-    ;(hash-map :ampm ampm :hh hh :mm mm)
-    ))
+    {:ampm ampm :hh (str hhh) :mm (str (Integer/parseInt ms))} ))
 
 (defn unescape-chars
   "Remove escape html AND 0 with ZERO!!!!!!!!!"
@@ -116,6 +146,22 @@
     ))
 
 ;;;Functions to extract the semantics from italian sentence
+(defn build-branch
+  ""
+  [lista-elementi rel]
+  (let [n (count lista-elementi)
+        pre (str "\n                <diamond mode=\""
+                 rel
+                 "\">\n                 <nom name=\"w"
+                 (java.util.UUID/randomUUID)
+                 ":sem-obj\"/>\n                 <prop name=\""
+                 (first lista-elementi)
+                 "\"/>\n")
+        post  "                </diamond>\n"]
+    (str pre (if (> n 1) (build-branch (rest lista-elementi) rel) "")  post)))
+
+
+
 (defn extract-content-words-2
   ""
   []
@@ -384,7 +430,7 @@
     (re-find mat-a5)
     (let  [ar (re-groups mat-a5)] (hash-map :type :A5  :categoria (ar 1) :numero (train-number-format-normalize (ar 2)) :impresa_ferroviaria (ar 5) :località_di_provenienza (ar 6) :ora_arrivo (ar 7)  :località_di_arrivo (ar 8)   :motivo_ritardo (ar 10) :scuse_disagio (ar 11) ) )
     (re-find mat-p1)
-    (let  [ar (re-groups mat-p1)] (hash-map :type :P1 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_partenza (ar 7) :località_di_arrivo (ar 8)  :numero_del_binario (ar 12) :fermate (ar 13) ) )
+    (let  [ar (re-groups mat-p1)] (hash-map :type :P1 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_partenza (ar 7) :località_di_arrivo (ar 8)  :in_ritardo (ar 11) :numero_del_binario (ar 12) :fermate (ar 13) ) )
     (re-find mat-p5)
     (let  [ar (re-groups mat-p5)] (hash-map :type :P5 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_partenza (ar 7) :località_di_arrivo (ar 8)  :numero_del_binario (ar 12) :tempo_ritardo (ar 13) :diversamente (ar 14) :motivo_ritardo (ar 15) :prestare_attenzione (ar 16) :scuse_disagio (ar 17) ) )
     (re-find mat-p9)
@@ -424,25 +470,6 @@
 
 ;;;Call Realizer
 
-(defn create-xml-lf
-  ""
-  [semantic-hash]
-  (cond
-   (= (:type semantic-hash) :P1)
-   "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<xml>
-  <lf>
-    <satop nom=\"a1:achievement\">
-      <prop name=\"arrive\"/>
-      <diamond mode=\"SYN-SUBJ\">
-        <nom name=\"t1:station-objects\"/>
-        <prop name=\"train\"/>
-      </diamond>
-    </satop>
-  </lf>
-</xml>"
-   ))
-
 (defn call-ATLASRealizer
   "call the realizer"
   [logical-form-string]
@@ -472,50 +499,60 @@
 (defn prova-enlive [] (reduce str (lf-p1-simplified sample-hash)))
 
 
-(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-03.xml"
+(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-06.xml"
   [post]
-  [:diamond#train-special] (if (empty? (:straordinario post))
-                            (html/substitute "" ))
+  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
+  [:diamond#train-late] (if (empty? (:in_ritardo post)) (html/substitute "" ) (html/set-attr :train-late "late"))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
-  [:prop#train-time-mm] (html/set-attr :name  (:mm post) )
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; (html/do-> (html/set-attr :name  (str (first (:hh post))))                                                                     ;;
+  ;;            (if (not-empty (rest (:hh post))) (html/after (build-branch (rest (map str (:hh post))) "SYN-NOUN-CONTIN-DENOM")))) ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  [:prop#train-time-mm] ;(html/set-attr :name  (:mm post) )
+  (html/do-> (html/set-attr :name  (str (first (:mm post))))                                                                     ;;
+             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM")))) ;;
   [:prop#train-categ] (html/set-attr :name  (:categoria post) )
-  [:prop#train-number]
+  [:prop#train-number]  ;(html/set-attr :name  (:numero post) )
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
-             (if (not-empty (rest (:numero post)))
-               (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
-  ;;(html/set-attr :name  (:numero post) )
+             (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
   [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
-  [:prop#train-destination]
-  (let
-      [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
-      (html/do-> (html/set-attr :name  (first seq-nomi))
-                 (html/after (if (not-empty (rest seq-nomi))
-                               (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")
-                               ""))))
-  ;;(html/set-attr :name  (:località_di_arrivo post) )
+  [:prop#train-destination] ;(html/set-attr :name  (:località_di_arrivo post) )
+  (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
+    (html/do-> (html/set-attr :name  (first seq-nomi))
+               (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
   [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
   ;;[:prop#train-company] (html/remove-attr :id )
 )
 
+(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-01.xml"
+  [post]
+  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "foo")     )
+  [:diamond#train-late] (if (empty? (:in_ritardo post)) (html/substitute "" ))
+  [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
+  [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
+  [:prop#train-time-mm]
+  (html/do-> (html/set-attr :name  (str (first (:mm post))))                                                                     ;;
+             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM")))) ;;
+  [:prop#train-categ] (html/set-attr :name  (:categoria post) )
+  [:prop#train-number]
+  (html/do-> (html/set-attr :name  (str (first (:numero post))))
+             (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
+  [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
+  [:prop#train-origin]
+  (let [seq-nomi (seq (clojure.string/split (:località_di_provenienza post) #"\+"))]
+    (html/do-> (html/set-attr :name  (first seq-nomi))
+               (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
+  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) ))
+
+
 ;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
-(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "zero", :mm "59", :numero "4001", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
+(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "0", :mm "59", :numero "4001", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
 (defn prova-enlive-2 [] (unescape-chars (reduce str (lf-p1 hash-test-p1))))
 (defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
+(defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 1)))))))))
 
-(defn build-branch
-  ""
-  [lista-elementi rel]
-  (let [n (count lista-elementi)
-        pre (str "\n                <diamond mode=\""
-                 rel
-                 "\">\n                 <nom name=\"w"
-                 (java.util.UUID/randomUUID)
-                 ":sem-obj\"/>\n                 <prop name=\""
-                 (first lista-elementi)
-                 "\"/>\n")
-        post  "                </diamond>\n"]
-    (str pre (if (> n 1) (build-branch (rest lista-elementi) rel) "")  post)))
+
 
 
 (defn create-lis-sentence-naive
@@ -535,20 +572,6 @@
 
 
 
-(def examples
-  ;;"Given the number of the line returns the corresponding string"
-  ["AVVISIAMO CHE LE VETTURE IN TESTA AL TRENO  REGIONALE  10 4 2 9  DI  TRENITALIA  PER  ALESSANDRIA,  DELLE ORE  00,25  SONO  FUORI SERVIZIO.  SI INVITANO I VIAGGIATORI A PORTARSI VERSO LE  VETTURE  DI CENTRO  E  CODA TRENO.  OGGI  IL  TRENO  VIAGGIA  CON  VETTURE  DI  SOLA  SECONDA CLASSE.  CI SCUSIAMO PER IL DISAGIO" ;??
-   "Il treno REGIONALE VELOCE, 20 32, di TRENITALIA, delle ore 00.10, proveniente da MILANO CENTRALE, è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla." ;A1
-   "Il treno REGIONALE, 40 93, di TRENITALIA, delle ore 00.20, per MILANO CENTRALE, è in partenza dal binario 6.   Ferma in tutte le stazioni." ;P1
-   "Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 10 0 1 9, di TRENITALIA, delle ore 17.42, proveniente da BARDONECCHIA, è in arrivo al binario 12, invece che al binario 19. Attenzione! Allontanarsi dalla linea gialla. ." ;A2
-   "Annuncio ritardo! Il treno REGIONALE VELOCE, 20 06, di TRENITALIA, delle ore 09.10, proveniente da MILANO CENTRALE, arriverà con un ritardo previsto di 10 MINUTI ." ;A3
-   "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7, 41 17, di TRENITALIA, previsto in partenza alle ore 13.00, per FOSSANO, oggi non sarà effettuato Ci scusiamo per il disagio." ;P9
-   "Annuncio ritardo! Il treno REGIONALE, 24 8 2 5, di TRENITALIA,delle ore 17.28, per IVREA, partirà dal binario 15, con un ritardo previsto di 15 MINUTI  Invitiamo i viaggiatori a prestare attenzione a successive comunicazioni di partenza .";P5
-   "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 24 8 4 9, di TRENITALIA, previsto in arrivo da SUSA, alle ore 09.15, oggi non è stato effettuato . . Ci scusiamo per il disagio.";A5
-   "Informiamo i viaggiatori che il treno REGIONALE, 24 8 1 7, di TRENITALIA, delle ore 11.28, per IVREA è in partenza dal binario 18.oggi il treno arriva fino a CHIVASSO,. Ferma a TORINO PORTA SUSA. . Ci scusiamo per il disagio.";P13
-
-   "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
-   ])
 
 
 
@@ -561,4 +584,6 @@
   []
   ;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
   ;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-03.xml"))
-  (test-ATLASRealizer (prova-enlive-3)))
+  (test-ATLASRealizer (prova-enlive-3))
+  ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
+  )

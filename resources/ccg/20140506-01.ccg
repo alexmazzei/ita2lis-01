@@ -27,8 +27,8 @@ feature  {
   pers<5>: non-3rd {1st 2nd} 3rd;
   ap <5 1>: non-body {sx dx neutral} body;
   PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron determiner;
-  TC-TYPE<2 3 5>: tc-noun  tc-apposition tc-apposition-denom tc-apposition-number tc-denom-contin tc-number tc-digit tc-0 tc-1 tc-2;
-  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-bis tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2;
+  TC-TYPE<2 3 5>: tc-number tc-digit tc-0 tc-1 tc-2;
+  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-bis tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2 tc-adv-rmod;
   tense<E>: past present future;
 
   ontology:
@@ -128,7 +128,7 @@ def detGenitive(Stem,lf,classe,cat) {
 family Genitive_fam {
     entry: n [X noun tc-0] \ n [Y] \ n [Z] : X:physical-object(* <SYN-DET+GENITIVE-ARG>Y <SYN-DET+GENITIVE-RESTR>Z:physical-object);
 };
-detGenitive(poss-xxxx-1,possesive,mental-object,determiner)
+detGenitive(poss-xxxx-1,possesive,sem-obj,determiner)
 
 
 
@@ -160,8 +160,11 @@ noun-II(treno-2456-2,train,non-agentive-physical-object,noun,tc-0,)
 noun-II(binario-xxxx-1,rail,non-agentive-physical-object,noun,tc-1,tc-noun-rmod)
 noun-II(ora-xxxx-1,time-point,temporal-location,noun,tc-1,tc-rmod-time)
 
+
+noun-II(ix_3-80127-1,it,non-agentive-physical-object,noun,tc-0,)
+
 #imprese
-noun-II(trenitalia-xxxx-1,trainitaly,non-agentive-physical-object,noun,tc-1,tc-0)
+noun-II(trenitalia-80126-1,trainitaly,non-agentive-physical-object,noun,tc-1,tc-0)
 noun-II(ntv-xxxx-1,ntv,non-agentive-physical-object,noun,tc-1,tc-0)
 
 #città
@@ -176,60 +179,31 @@ noun-II(2-xxxx-1,2,digit,noun,tc-digit,)
 noun-II(3-xxxx-1,3,digit,noun,tc-digit,)
 noun-II(4-xxxx-1,4,digit,noun,tc-digit,)
 noun-II(5-xxxx-1,5,digit,noun,tc-digit,)
-noun-II(6-xxxx-1,6,digit,noun,tc-digit,)
-noun-II(7-xxxx-1,7,digit,noun,tc-digit,)
-noun-II(8-xxxx-1,8,digit,noun,tc-digit,)
-noun-II(9-xxxx-1,9,digit,noun,tc-digit,)
-noun-II(10-xxxx-1,10,number,noun,tc-number,)
-noun-II(11-xxxx-1,11,number,noun,tc-number,)
-noun-II(12-xxxx-1,12,number,noun,tc-number,)
-noun-II(13-xxxx-1,13,number,noun,tc-number,)
-noun-II(14-xxxx-1,14,number,noun,tc-number,)
-noun-II(15-xxxx-1,15,number,noun,tc-number,)
-noun-II(16-xxxx-1,16,number,noun,tc-number,)
-noun-II(17-xxxx-1,17,number,noun,tc-number,)
-noun-II(18-xxxx-1,18,number,noun,tc-number,)
-noun-II(19-xxxx-1,19,number,noun,tc-number,)
-noun-II(20-xxxx-1,20,number,noun,tc-number,)
-noun-II(21-xxxx-1,21,number,noun,tc-number,)
-noun-II(22-xxxx-1,22,number,noun,tc-number,)
-noun-II(23-xxxx-1,23,number,noun,tc-number,)
-noun-II(24-xxxx-1,24,number,noun,tc-number,)
-noun-II(25-xxxx-1,25,number,noun,tc-number,)
-noun-II(26-xxxx-1,26,number,noun,tc-number,)
-noun-II(27-xxxx-1,27,number,noun,tc-number,)
-noun-II(28-xxxx-1,28,number,noun,tc-number,)
-noun-II(29-xxxx-1,29,number,noun,tc-number,)
-noun-II(30-xxxx-1,30,number,noun,tc-number,)
-noun-II(31-xxxx-1,31,number,noun,tc-number,)
-noun-II(32-xxxx-1,32,number,noun,tc-number,)
-noun-II(33-xxxx-1,33,number,noun,tc-number,)
-noun-II(34-xxxx-1,34,number,noun,tc-number,)
-noun-II(35-xxxx-1,35,number,noun,tc-number,)
-noun-II(36-xxxx-1,36,number,noun,tc-number,)
-noun-II(37-xxxx-1,37,number,noun,tc-number,)
-noun-II(38-xxxx-1,38,number,noun,tc-number,)
-noun-II(39-xxxx-1,39,number,noun,tc-number,)
-noun-II(40-xxxx-1,40,number,noun,tc-number,)
-noun-II(41-xxxx-1,41,number,noun,tc-number,)
-noun-II(42-xxxx-1,42,number,noun,tc-number,)
-noun-II(43-xxxx-1,43,number,noun,tc-number,)
-noun-II(44-xxxx-1,44,number,noun,tc-number,)
-noun-II(45-xxxx-1,45,number,noun,tc-number,)
-noun-II(46-xxxx-1,46,number,noun,tc-number,)
-noun-II(47-xxxx-1,47,number,noun,tc-number,)
-noun-II(48-xxxx-1,48,number,noun,tc-number,)
-noun-II(49-xxxx-1,49,number,noun,tc-number,)
-noun-II(50-xxxx-1,50,number,noun,tc-number,)
-noun-II(51-xxxx-1,51,number,noun,tc-number,)
-noun-II(52-xxxx-1,52,number,noun,tc-number,)
-noun-II(53-xxxx-1,53,number,noun,tc-number,)
-noun-II(54-xxxx-1,54,number,noun,tc-number,)
-noun-II(55-xxxx-1,55,number,noun,tc-number,)
-noun-II(56-xxxx-1,56,number,noun,tc-number,)
-noun-II(57-xxxx-1,57,number,noun,tc-number,)
-noun-II(58-xxxx-1,58,number,noun,tc-number,)
-noun-II(59-xxxx-1,59,number,noun,tc-number,)
+noun-II(6-80097-1,6,digit,noun,tc-digit,)
+noun-II(7-80098-1,7,digit,noun,tc-digit,)
+noun-II(8-80099-1,8,digit,noun,tc-digit,)
+noun-II(9-80100-1,9,digit,noun,tc-digit,)
+noun-II(10-80101-1,10,number,noun,tc-number,)
+noun-II(11-80102-1,11,number,noun,tc-number,)
+noun-II(12-80103-1,12,number,noun,tc-number,)
+noun-II(13-80104-1,13,number,noun,tc-number,)
+noun-II(14-80105-1,14,number,noun,tc-number,)
+noun-II(15-80106-1,15,number,noun,tc-number,)
+noun-II(16-80107-1,16,number,noun,tc-number,)
+noun-II(17-80108-1,17,number,noun,tc-number,)
+noun-II(18-80109-1,18,number,noun,tc-number,)
+noun-II(19-80110-1,19,number,noun,tc-number,)
+noun-II(20-80111-1,20,number,noun,tc-number,)
+noun-II(21-80112-1,21,number,noun,tc-number,)
+noun-II(22-80113-1,22,number,noun,tc-number,)
+noun-II(23-80114-1,23,number,noun,tc-number,)
+noun-II(24-80115-1,24,number,noun,tc-number,)
+noun-II(25-80116-1,25,number,noun,tc-number,)
+noun-II(26-80117-1,26,number,noun,tc-number,)
+noun-II(27-80118-1,27,number,noun,tc-number,)
+noun-II(28-80119-1,28,number,noun,tc-number,)
+noun-II(29-80120-1,29,number,noun,tc-number,)
+noun-II(30-80121-1,30,number,noun,tc-number,)
 
 
 
@@ -247,8 +221,9 @@ family ADJ_family{
 adj(sera-xxxx-1,evening,temporal-location,adjc,tc-1,)
 adj(mattina-xxxx-1,morning,temporal-location,adjc,tc-1,)
 #Categorie
-adj(frecciarossa-xxxx-1,redarrow,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
+adj(frecciarossa-80094-1,redarrow,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(regionale-xxxx-1,regional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
+adj(regionale_veloce-80084-1,fastregional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(straordinario-xxxx-1,special,abstract-quality,adjc,tc-1,tc-rmod)
 adj(centrale-xxxx-1,central,abstract-quality,adjc,tc-1,tc-noun-apposition-bis)
 
@@ -264,20 +239,36 @@ def verb-I-intr(Stem,lf,classe,cat,tc-type,tc-relation) {
 family InTransV_I {
   entry: s [E] \ n [X] : E:achievement(* <SYN-SUBJ>X:physical-object);
 };
-verb-I-intr(arrivare-2835-2,arrive,achievement,verb,,)
+verb-I-intr(arrivare-80008-1,arrive,achievement,verb,,)
 verb-I-intr(partire-xxxx-1,leave,achievement,verb,,)
 verb-I-intr(andare-xxxx-1,togo,achievement,verb,tc-1,tc-relcl-red)
-
+verb-I-intr(venire_provenire-80128-1,tocome,achievement,verb,tc-1,tc-relcl-red)
 #modal verb
-def verb-mod(Stem,lf,classe,cat,tc-type,tc-relation) {
-   word Stem :verb-mod-fam (classe, pred=lf) : cat tc-type tc-relation;
+def verb-mod-1(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem :verb-mod-fam-1 (classe, pred=lf) : cat tc-type tc-relation;
 }
-family verb-mod-fam {
+family verb-mod-fam-1 {
     entry: s [X] \ s [Y] : X (* <SYN-VERB+MODAL-INDCOMPL> Y);
 };
-verb-mod(futuro_deve-xxxx-1,future,achievement,verb,,)
-verb-mod(futuro_prog-xxxx-1,future_prog,achievement,verb,,)
+verb-mod-1(futuro_deve-xxxx-1,future,achievement,verb,,)
 
+def verb-mod-2(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem :verb-mod-fam-2 (classe, pred=lf) : cat tc-type tc-relation;
+}
+family verb-mod-fam-2 {
+    entry: s [X] \ s [X] : X (<SYN-VERB+MODAL-INDCOMPL> (P *));
+};
+verb-mod-2(futuro_prog-xxxx-1,future_prog,achievement,verb,,)#TODO: 2 categorie diverse!!!!
+
+
+#ADV
+def adverb1(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem :ADV_I (classe, pred=lf) : cat tc-type tc-relation;
+}
+family ADV_I {
+    entry: adv [X] \ n [Y]  : X:sem-obj(* <SYN-SUBJ>Y:sem-obj);
+};
+adverb1(in_ritardo-80032-1,in_late,quality,adve,tc-1,tc-adv-rmod)
 
 
 ######################### Rules #########################
@@ -298,8 +289,9 @@ rule {
 
 
 
-    #typechange: adj <5> [X tc-1 tc-noun-apposition] => n <~5> [Y tc-0] \* n <~5> [Y tc-0] : Y( <SYN-NOUN-APPOSITION> X);
-    #typechange: adj <5> [X tc-1 tc-rmod] => n <~5> [Y tc-0] \* n <~5> [Y tc-0] : Y( <SYN-RMOD> X);
+    #typechange: adv
+
+    typechange: adv <1> [X tc-1 tc-adv-rmod] => s <~1> [Y tc-0] \* s <~1> [Y tc-0] : Y( <SYN-VERB-RMOD> X);
 
 
 #  Typechange to account apposition: used several times. E.G.  "treno-numero" (or "treno frecciarossa" ??)

@@ -14,6 +14,7 @@
   <type name="tc-rmod-loc" parents="TC-RELATION"/>
   <type name="tc-rmod-time" parents="TC-RELATION"/>
   <type name="tc-rmod-time-2" parents="TC-RELATION"/>
+  <type name="tc-adv-rmod" parents="TC-RELATION"/>
   <type name="PoS"/>
   <type name="noun" parents="PoS"/>
   <type name="verb" parents="PoS"/>
@@ -25,11 +26,6 @@
   <type name="pron" parents="PoS"/>
   <type name="determiner" parents="PoS"/>
   <type name="TC-TYPE"/>
-  <type name="tc-noun" parents="TC-TYPE"/>
-  <type name="tc-apposition" parents="TC-TYPE"/>
-  <type name="tc-apposition-denom" parents="TC-TYPE"/>
-  <type name="tc-apposition-number" parents="TC-TYPE"/>
-  <type name="tc-denom-contin" parents="TC-TYPE"/>
   <type name="tc-number" parents="TC-TYPE"/>
   <type name="tc-digit" parents="TC-TYPE"/>
   <type name="tc-0" parents="TC-TYPE"/>

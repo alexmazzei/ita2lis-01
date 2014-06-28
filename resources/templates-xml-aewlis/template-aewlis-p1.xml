@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE ALEAOutput SYSTEM "../../alea.dtd">
+<ALEAOutput><newSentence text="???" italianText="???" writtenLISSentence="???" lemmaNumber="???">
+<newLemma lemma="treno" idAtlasSign="2456">
+<handsNumber>2</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="straordinario" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="regionale" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="binario" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="numero" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="6" idAtlasSign="80097">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="ora" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="0" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="2" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="0" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="mattina" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="milano" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="centrale" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="andare" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="numero" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="4" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="0" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="9" idAtlasSign="80100">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="3" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="trenitalia" idAtlasSign="80126">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="poss" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="partire" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="futuro_prog" idAtlasSign="xxxx">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="ix_3" idAtlasSign="80127">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="in_ritardo" idAtlasSign="80032">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+</newSentence>
+</ALEAOutput>
