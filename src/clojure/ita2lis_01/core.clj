@@ -33,6 +33,7 @@
    "Informiamo i viaggiatori che il treno REGIONALE, 24 8 1 7, di TRENITALIA, delle ore 11.28, per IVREA è in partenza dal binario 18.oggi il treno arriva fino a CHIVASSO,. Ferma a TORINO PORTA SUSA. . Ci scusiamo per il disagio.";P13
 
    "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
+   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da MILANO CENTRALE  E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
    ])
 
 
@@ -54,7 +55,7 @@
 
 (def stazioni-dictionary-re (re-pattern stazioni-dictionary))
 (def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7|ESPRESSO|EUROCITY|EURONIGHT|TGV|FRECCIARGENTO|FRECCIABIANCA|ITALO|INTERCITY|INTERCITY NOTTE|SUBURBANO|REGIOEXPRESS|MALPENSA EXPRESS|TRENO METROPOLITANO|ACCELERATO|DIRETTO|DIRETTISSIMO)")
-(def imprese_ferroviarie-dictionary-re #"(TRENITALIA|NSV|GTT|TRENORD|SAD|ENTE AURONOMO VOLTURNO)")
+(def imprese_ferroviarie-dictionary-re #"(TRENITALIA|NSV|GTT|TRENORD|SAD|ENTE AUTONOMO VOLTURNO)")
 (def fermate-dictionary-re (re-pattern (str "(FERMA IN TUTTE LE STAZIONI|FERMA A " stazioni-dictionary "+|IN TUTTE LE STAZIONI ECCETTO A " stazioni-dictionary "+|NON SONO PREVISTE FERMATE INTERMEDIE|OGGI FERMA ANCHE A " stazioni-dictionary  "+)")))
 (def oggi-fermate-dictionary-re (re-pattern (str "(OGGI IL TRENO ARRIVA FINO A " stazioni-dictionary "|OGGI IL TRENO ARRIVA A " stazioni-dictionary "INVECE CHE A" stazioni-dictionary ")")))
 
@@ -205,11 +206,12 @@
                                     "\\s?"
                                     (:numero semantic-slot-types)
                                     "\\s?(DI)?\\s?"
-                                    (:impresa_ferroviaria semantic-slot-types)                                                          "\\s?DELLE ORE\\s?"
+                                    (:impresa_ferroviaria semantic-slot-types)
+                                    "\\s?DELLE ORE\\s?"
                                     (:ora_arrivo semantic-slot-types)
                                     "\\s?(PROVENIENTE DA)?\\s?"
                                     (:località_di_provenienza semantic-slot-types)
-                                    "?(E DIRETTO A)?\\s?"
+                                    "\\s?(E DIRETTO A)?\\s?"
                                     (:località_di_arrivo semantic-slot-types)
                                     "?\\s?È IN ARRIVO AL BINARIO\\s?"
                                     (:numero_del_binario semantic-slot-types)
@@ -222,7 +224,8 @@
                                     "\\s?"
                                     (:numero semantic-slot-types)
                                     "\\s?(DI)?\\s?"
-                                    (:impresa_ferroviaria semantic-slot-types)                                                          "\\s?DELLE ORE\\s?"
+                                    (:impresa_ferroviaria semantic-slot-types)
+                                    "\\s?DELLE ORE\\s?"
                                     (:ora_arrivo semantic-slot-types)
                                     "\\s?(PROVENIENTE DA)?\\s?"
                                     (:località_di_provenienza semantic-slot-types)
@@ -242,7 +245,8 @@
                                     "\\s?"
                                     (:numero semantic-slot-types)
                                     "\\s?(DI)?\\s?"
-                                    (:impresa_ferroviaria semantic-slot-types)                                                          "\\s?DELLE ORE\\s?"
+                                    (:impresa_ferroviaria semantic-slot-types)
+                                    "\\s?DELLE ORE\\s?"
                                     (:ora_arrivo semantic-slot-types)
                                     "\\s?(PROVENIENTE DA)?\\s?"
                                     (:località_di_provenienza semantic-slot-types)
@@ -422,7 +426,7 @@
     ;;(print "pat-p1=" pattern-p1)
    (cond
     (re-find mat-a1)
-    (let  [ar (re-groups mat-a1)] (hash-map :type :A1 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 10) :numero_del_binario (ar 12) ) )
+    (let  [ar (re-groups mat-a1)] (hash-map :type :A1 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 11) :numero_del_binario (ar 12) ) )
     (re-find mat-a2)
     (let  [ar (re-groups mat-a2)] (hash-map :type :A2 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 10) :numero_del_binario (ar 12) :numero_del_binario_programmato (ar 13) ) )
     (re-find mat-a3)
@@ -517,7 +521,7 @@
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
              (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
   [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
-  [:prop#train-destination] ;(html/set-attr :name  (:località_di_arrivo post) )
+   [:prop#train-destination] ;(html/set-attr :name  (:località_di_arrivo post) )
   (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
     (html/do-> (html/set-attr :name  (first seq-nomi))
                (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
@@ -525,15 +529,14 @@
   ;;[:prop#train-company] (html/remove-attr :id )
 )
 
-(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-01.xml"
+(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-02.xml"
   [post]
-  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "foo")     )
-  [:diamond#train-late] (if (empty? (:in_ritardo post)) (html/substitute "" ))
+  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
   [:prop#train-time-mm]
-  (html/do-> (html/set-attr :name  (str (first (:mm post))))                                                                     ;;
-             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM")))) ;;
+  (html/do-> (html/set-attr :name  (str (first (:mm post))))
+             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM"))))
   [:prop#train-categ] (html/set-attr :name  (:categoria post) )
   [:prop#train-number]
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
@@ -543,14 +546,22 @@
   (let [seq-nomi (seq (clojure.string/split (:località_di_provenienza post) #"\+"))]
     (html/do-> (html/set-attr :name  (first seq-nomi))
                (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
-  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) ))
+  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
+  [:diamond#train-destination-yn] (if (empty? (:località_di_arrivo post)) (html/substitute "" ) (html/set-attr :train-boo "foo"))
+  [:prop#train-destination]
+  (if (empty? (:località_di_arrivo post)) (html/substitute "" )
+      (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
+        (html/do->
+         (html/set-attr :name  (first seq-nomi))
+         (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION"))))))
+  )
 
 
 ;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
 (def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "0", :mm "59", :numero "4001", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
 (defn prova-enlive-2 [] (unescape-chars (reduce str (lf-p1 hash-test-p1))))
 (defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
-(defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 1)))))))))
+(defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 10)))))))))
 
 
 
@@ -584,6 +595,6 @@
   []
   ;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
   ;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-03.xml"))
-  (test-ATLASRealizer (prova-enlive-3))
+  (test-ATLASRealizer (prova-enlive-4))
   ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
   )

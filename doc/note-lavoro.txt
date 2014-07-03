@@ -1,0 +1,2 @@
+per il segno ORA -> in ATLAS c'è ORA e ORARIO, in LIS4ALL c'è ORARIO_1. Quale usare? nel report il segno è ORE
+manca il segno NUMERO -> in ATLAS c'è NUMERARE

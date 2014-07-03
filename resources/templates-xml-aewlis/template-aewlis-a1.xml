@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE ALEAOutput SYSTEM "../../alea.dtd">
+<ALEAOutput><newSentence text="???" italianText="???" writtenLISSentence="???" lemmaNumber="???">
+<newLemma lemma="treno" idAtlasSign="02456">
+<handsNumber>2</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="regionale_veloce" idAtlasSign="80084">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="straordinario" idAtlasSign="02314">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="binario" idAtlasSign="80013">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="numero" idAtlasSign="01547">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="18" idAtlasSign="80109">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="milano" idAtlasSign="01423">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="centrale" idAtlasSign="00445">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="venire_provenire" idAtlasSign="80128">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="salerno" idAtlasSign="80068">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="andare" idAtlasSign="00110">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="arrivare" idAtlasSign="80008">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="futuro_prog" idAtlasSign="80122">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+</newSentence>
+</ALEAOutput>
