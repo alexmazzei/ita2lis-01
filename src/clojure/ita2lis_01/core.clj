@@ -33,6 +33,7 @@
    "Informiamo i viaggiatori che il treno REGIONALE, 24 8 1 7, di TRENITALIA, delle ore 11.28, per IVREA è in partenza dal binario 18.oggi il treno arriva fino a CHIVASSO,. Ferma a TORINO PORTA SUSA. . Ci scusiamo per il disagio.";P13
 
    "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
+   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da SALERNO E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
    "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da MILANO CENTRALE  E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
    ])
 
@@ -314,7 +315,8 @@
                                     "\\s?"
                                     (:numero semantic-slot-types)
                                     "\\s?(DI)?\\s?"
-                                    (:impresa_ferroviaria semantic-slot-types)                                                       "\\s?DELLE ORE\\s?"
+                                    (:impresa_ferroviaria semantic-slot-types)
+                                    "\\s?DELLE ORE\\s?"
                                     (:ora_partenza semantic-slot-types)
                                     "\\s?PER\\s?"
                                     (:località_di_arrivo semantic-slot-types)
@@ -336,7 +338,8 @@
                                     "\\s?"
                                     (:numero semantic-slot-types)
                                     "\\s?(DI)?\\s?"
-                                    (:impresa_ferroviaria semantic-slot-types)                                                          "\\s?DELLE ORE\\s?"
+                                    (:impresa_ferroviaria semantic-slot-types)
+                                    "\\s?DELLE ORE\\s?"
                                     (:ora_partenza semantic-slot-types)
                                     "\\s?PER\\s?"
                                     (:località_di_arrivo semantic-slot-types)
@@ -593,8 +596,8 @@
 (defn total-test
   "call all the chain"
   []
-  ;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
-  ;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-p1-03.xml"))
+  ;;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
+  ;;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-a1-02.xml"))
   (test-ATLASRealizer (prova-enlive-4))
   ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
   )

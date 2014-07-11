@@ -12,10 +12,26 @@
         </diamond>
         <diamond mode="SYN-NOUN-APPOSITION">
           <nom name="p1:feature"/>
-          <prop id="train-number" name="pre-number"/>
+          <prop name="pre-number"/>
           <diamond mode="SYN-NUM-APPOSITION-DENOM">
             <nom name="n1:digit"/>
-            <prop name="7"/>
+            <prop id="train-number" name="7"/>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-RMOD-TIME">
+          <nom name="w5:temporal-location"/>
+          <prop name="time-point"/>
+          <diamond mode="ADJ-RMOD">
+            <nom name="w8:temporal-location"/>
+            <prop id="train-time-ampm" name="morning"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_HH">
+            <nom name="w6:number"/>
+            <prop id="train-time-hh" name="11"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_MM">
+            <nom name="w7:number"/>
+            <prop id="train-time-mm" name="18"/>
           </diamond>
         </diamond>
         <diamond mode="SYN-NOUN-APPOSITION">
@@ -48,9 +64,9 @@
         <diamond id="train-destination-yn" mode="SYN-VERB-RMOD+RELCL-REDUC">
           <nom name="t3:achievement"/>
           <prop name="togo"/>
-          <diamond id="train-destination" mode="SYN-RMOD-LOC">
+          <diamond mode="SYN-RMOD-LOC">
             <nom name="s2:space-region"/>
-            <prop name="salerno"/>
+            <prop id="train-destination"  name="salerno"/>
           </diamond>
           <diamond mode="SYN-SUBJ">
             <nom name="t1:non-agentive-physical-object"/>
