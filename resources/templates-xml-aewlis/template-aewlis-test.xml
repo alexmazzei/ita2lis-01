@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE ALEAOutput SYSTEM "../../alea.dtd">
+<ALEAOutput><newSentence text="???" italianText="???" writtenLISSentence="???" lemmaNumber="???">
+<newLemma lemma="treno" idAtlasSign="02456">
+<handsNumber>2</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+<newLemma lemma="fatto" idAtlasSign="883">
+<handsNumber>1</handsNumber>
+<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>
+</newLemma>
+</newSentence>
+</ALEAOutput>

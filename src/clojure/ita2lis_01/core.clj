@@ -3,6 +3,9 @@
 
 (require '[net.cgrand.enlive-html :as html]
          '[clojure.data.csv :as csv])
+(import '[java.net DatagramSocket
+                   DatagramPacket
+                   InetSocketAddress])
 ;;(net.cgrand.reload/auto-reload *ns*)
 
 ;;; Algorithm
@@ -13,12 +16,22 @@
 ;;; 5. Return the hash-map containingt the semantic values (emerge it)
 ;;; 6. Use the semantic values to fill the template corresponding to the specific message class
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
 
 ;;; Constants
+(def input-port 30001)
+(def output-port 3396);;nuovo interprete
+;;(def output-port 30000);;vecchio interprete
+(def output-host "localhost")
+;(close-sockets-in-out)
+(def socket-output (DatagramSocket. output-port))
+(def socket-input (DatagramSocket. input-port))
+(defn close-sockets-in-out
+  ""
+  []
+  (do
+   (.close socket-input)
+   (.close socket-output)))
+
 
 (def examples
   ;;"Given the number of the line returns the corresponding string"
@@ -39,9 +52,8 @@
 
 
 ;;(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
+;;(def file-stazioni "./resources/elenco-stazioni-01.txt")
 
-
-(def file-stazioni "./resources/elenco-stazioni-01.txt")
 (defn read-stazioni
   ""
   [file-lexicon]
@@ -51,8 +63,8 @@
 
 (def stazioni-dictionary
   ;;"(CHIVASSO|MILANO CENTRALE|FIRENZE|BARDONECCHIA|FOSSANO|IVREA|SUSA|IMPERIA ONEGLIA)"
-  ;;(str "(" (clojure.string/replace (clojure.string/replace (slurp file-stazioni) #"\n$" "") #"\s*\n\s*" "|" ) ")" )
-  (str "(" (clojure.string/join "|" (remove #(nil? %)  (read-stazioni "./resources/ita2sem2lis-lis4all-01.csv"))) ")"))
+  ;;(str "(" (clojure.string/join "|" (remove #(nil? %)  (read-stazioni "./resources/ita2sem2lis-lis4all-01.csv"))) ")")
+  (str "(" (clojure.string/join "|" (remove #(nil? %)  (read-stazioni (clojure.java.io/resource "ita2sem2lis-lis4all-01.csv")))) ")")  )
 
 (def stazioni-dictionary-re (re-pattern stazioni-dictionary))
 (def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7|ESPRESSO|EUROCITY|EURONIGHT|TGV|FRECCIARGENTO|FRECCIABIANCA|ITALO|INTERCITY|INTERCITY NOTTE|SUBURBANO|REGIOEXPRESS|MALPENSA EXPRESS|TRENO METROPOLITANO|ACCELERATO|DIRETTO|DIRETTISSIMO)")
@@ -67,7 +79,11 @@
   (with-open [in-file (clojure.java.io/reader file-lexicon)]
     (let [ ar (doall (csv/read-csv in-file))]
       (zipmap (map #(nth % 0) ar) (map #(nth % 3) ar)))))
-(def lexicon-ita2sem (read-lexicon "./resources/ita2sem2lis-lis4all-01.csv"))
+(def lexicon-ita2sem
+  ;;(read-lexicon "./resources/ita2sem2lis-lis4all-01.csv")
+  (read-lexicon (clojure.java.io/resource "ita2sem2lis-lis4all-01.csv"))
+  )
+
 
 ;;;String functions to pre-process the input
 (def sentece-general-delimeters #"\. ")
@@ -75,10 +91,12 @@
 (defn capitalize [s]  (.toUpperCase s))
 (defn rm-useless-chars [s]  (clojure.string/replace s #"[,.]" " "))
 (defn reduce-whites [s]  (clojure.string/replace s #" +" " "))
+
 (defn time-format-normalize
   "Uniform all the time format to HH:MM"
   [sentence]
   (clojure.string/replace sentence #"(\d\d)[\.,](\d\d)" "$1:$2"))
+
 (defn train-number-format-normalize
   "Uniform all the train number to "
   [sentence]
@@ -97,6 +115,45 @@
   (into {} (for [[k v] hhh] [k (if (string? v) (.toLowerCase v) v) ])))
 
 ;;; Auxiliary functions
+;;aux-udp
+
+(defn send-udp
+"Send a short textual message over a DatagramSocket to the specified host and port. If the string is over 512 bytes long, it will be truncated."
+[^DatagramSocket socket msg host port]
+(let [payload (.getBytes msg)
+            length (min (alength payload) 512)
+            address (InetSocketAddress. host port)
+            packet (DatagramPacket. payload length address)]
+        (.send socket packet)))
+
+(defn receive-udp
+  "Block until a UDP message is received on the given DatagramSocket, and return the payload message as a string."
+  [^DatagramSocket socket]
+  (let [buffer (byte-array 512)
+        packet (DatagramPacket. buffer 512)]
+    (.receive socket packet)
+    (String. (.getData packet)
+             0 (.getLength packet)
+             "UTF8")))
+
+(defn receive-loop-udp
+  "Given a function and DatagramSocket, will (in another thread) wait for the socket to receive a message, and whenever it does, will call the provided function on the incoming message."
+  [socket f]
+  (future (while true (f (receive-udp socket)))))
+
+
+
+(defn send-msg-to-donna
+  "Send a message to donna on the output socket"
+  [msg]
+  (send-udp socket-output msg output-host output-port) )
+
+(defn send-filename-aewlis-to-donna
+  "send the name of a aewlis file, which is in the excution dir, to donna"
+  [file-name-aewlis]
+  (send-msg-to-donna (str "play_aewlis " (System/getProperty "user.dir") "/" file-name-aewlis)))
+
+;;aux-xml
 (defn ppxml [xml]
   (let [in (javax.xml.transform.stream.StreamSource.
             (java.io.StringReader. xml))
@@ -172,30 +229,21 @@
                     mat-2 (re-matcher (re-pattern (str "direto a ([^,]+),")) %)]
                 (cond (re-find mat-1) ((re-groups mat-1) 1)
                       (re-find mat-2) ((re-groups mat-1) 1)))
-             (clojure.string/split (slurp "./resources/Annunci-CSV.csv") #"\n"))))
-
-(defn extract-content-words
-  "extract the content words from PN messages"
-  []
-  (with-open [in-file (clojure.java.io/reader "./resources/Annunci-CSV-50.csv")]
-    (let [result #{}]
-      (doseq [line (line-seq in-file)]
-          (let [
-                mat-1 (re-matcher (re-pattern (str "proveniente da ([^,]+),")) line)
-                mat-2 (re-matcher (re-pattern (str "direto a ([^,]+),")) line)]
-            (cond (re-find mat-1) (def result (conj result ((re-groups mat-1) 1)))
-                  (re-find mat-2) (def result (conj result ((re-groups mat-2) 1))))))
-        (println result))))
+            (clojure.string/split ;;(slurp "./resources/Annunci-CSV.csv")
+             (slurp
+              (clojure.java.io/resource "Annunci-CSV.csv"))
+             #"\n"))))
 
 
 (defn emerge-semantic-values
   "express expicitely the hidden semantic values in the hash. (nomore necessary lower-case)"
   [semantic-hash]
-
-  (let [semantic-hash-temp (ita-lex-sem semantic-hash lexicon-ita2sem)]
-    (if (:ora_arrivo semantic-hash)
-               (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_arrivo semantic-hash)))
-               (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_partenza semantic-hash))))))
+  (if (nil? semantic-hash)
+    {}
+    (let [semantic-hash-temp (ita-lex-sem semantic-hash lexicon-ita2sem)]
+      (if (:ora_arrivo semantic-hash)
+        (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_arrivo semantic-hash)))
+          (merge semantic-hash-temp (hm2ampm_hh_mm (:ora_partenza semantic-hash)))))))
 
 (defn infer-message-type
   "Given a train message returns a hash-map containing the the MAS type (e.g. A1, A2,...,P1, P2, ...) and all the semantic values"
@@ -473,10 +521,8 @@
     (infer-message-type italian-sentence semantic-slot-types)))
 
 
-
-
 ;;;Call Realizer
-
+(def javaRealizer (new realizer.ATLASRealizer))
 (defn call-ATLASRealizer
   "call the realizer"
   [logical-form-string]
@@ -485,9 +531,13 @@
 (defn test-ATLASRealizer
   "call the realizer"
   [logical-form-string]
-  (println (. (new realizer.ATLASRealizer) trialRealization logical-form-string))
-  ;;(. (new realizer.ATLASRealizer) GetRealization "dummmy-string" logical-form-string)
-  )
+  (println (. (new realizer.ATLASRealizer) trialRealization logical-form-string)))
+
+(defn realize-lf
+  ""
+  [logical-form-string]
+  (. javaRealizer trialRealization logical-form-string))
+
 
 ;;;Some examples
 ;;enlive trials
@@ -498,10 +548,7 @@
   [post]
   [:prop#train-number]
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
-             (if (rest (:numero post)) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM")))
-             ;;(if (rest (:numero post)) (html/after (html/emit* (build-branch-for-number-2 (rest (map str (:numero post)))))))
-             )
-  )
+             (if (rest (:numero post)) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM")))))
 (def sample-hash {:numero "123"})
 (defn prova-enlive [] (reduce str (lf-p1-simplified sample-hash)))
 
@@ -567,6 +614,21 @@
 (defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 10)))))))))
 
 
+(defn call-enlive-template
+  ""
+  [semantic-hash]
+  (let
+      [type (get semantic-hash :type )]
+    (cond
+     (identical? type :A1)
+     (unescape-chars (reduce str (lf-a1 semantic-hash)))
+     (identical? type :P1)
+     (unescape-chars (reduce str (lf-p1 semantic-hash)))
+     :else "";;(slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
+     )
+     ))
+
+
 
 
 (defn create-lis-sentence-naive
@@ -584,15 +646,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 (defn total-test
   "call all the chain"
   []
@@ -601,3 +654,38 @@
   (test-ATLASRealizer (prova-enlive-4))
   ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
   )
+
+(defn analyze-and-generate
+  ""
+  [sentence]
+  (let [out-templating (call-enlive-template (emerge-semantic-values (ita2sem (first (split-sentences sentence)))))]
+    (if (empty? out-templating)
+      (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
+      (realize-lf out-templating))))
+
+(defn analyze-and-generate-write-file
+  ""
+  [sentence file-name-aewlis]
+  (spit (str (System/getProperty "user.dir") "/" file-name-aewlis) (analyze-and-generate sentence)))
+
+(defn real-main
+  ""
+  [sentence]
+  (let
+      [file-name-aewlis "out-aewlis.xml"]
+    (do
+      (println "inputSentence:" sentence)
+      (println "semantic values:" (ita2sem (first (split-sentences sentence))))
+      (println "outputTranslation:" (analyze-and-generate sentence))
+      (analyze-and-generate-write-file sentence file-name-aewlis)
+      (send-filename-aewlis-to-donna file-name-aewlis)
+      )))
+
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (do
+    (println "Ready to translate!")
+    (receive-loop-udp socket-input real-main)
+    ))
