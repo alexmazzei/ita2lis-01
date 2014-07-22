@@ -47,7 +47,7 @@
         </lf>
       </complexcat>
     </entry>
-    <member stem="poss-xxxx-1" pred="possesive"/>
+    <member stem="suo-2826-1" pred="possesive"/>
   </family>
   <family name="N_II_arg" pos="N_II_arg" closed="true">
     <entry name="Entry-1">
@@ -109,6 +109,7 @@
     <member stem="ntv-xxxx-1" pred="ntv"/>
     <member stem="milano-01423-1" pred="milano"/>
     <member stem="salerno-80068-1" pred="salerno"/>
+    <member stem="cuneo-80068-1" pred="salerno"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
     <member stem="zero-02617-1" pred="zero"/>
     <member stem="uno-02503-1" pred="1"/>
@@ -162,7 +163,9 @@
     <member stem="sera-02689-1" pred="evening"/>
     <member stem="mattina-02813-1" pred="morning"/>
     <member stem="frecciarossa-80094-1" pred="redarrow"/>
+    <member stem="frecciabianca-80095-1" pred="whitearrow"/>
     <member stem="regionale-01953-1" pred="regional"/>
+    <member stem="veloce-02529-1" pred="fast"/>
     <member stem="regionale_veloce-80084-1" pred="fastregional"/>
     <member stem="straordinario-02314-1" pred="special"/>
     <member stem="centrale-00445-1" pred="central"/>
@@ -305,5 +308,128 @@
       </complexcat>
     </entry>
     <member stem="in_ritardo-80032-1" pred="in_late"/>
+  </family>
+  <family name="ADV_III" pos="ADV_III" closed="true">
+    <entry name="Entry-1">
+      <atomcat type="adve">
+        <fs id="5">
+          <feat attr="index">
+            <lf>
+              <nomvar name="X"/>
+            </lf>
+          </feat>
+        </fs>
+        <lf>
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+          </satop>
+        </lf>
+      </atomcat>
+    </entry>
+    <member stem="al_posto_di_sostitutivo-80043-1" pred="instead"/>
+  </family>
+  <family name="CONJ_I" pos="CONJ_I" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:rail-type">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-CONJ1">
+              <nomvar name="Y:rail-type"/>
+            </diamond>
+            <diamond mode="SYN-CONJ2">
+              <nomvar name="Z:rail-type"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <entry name="Entry-2">
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="adve">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="W"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:rail-type">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-CONJ1">
+              <nomvar name="Y:rail-type"/>
+            </diamond>
+            <diamond mode="SYN-CONJ2">
+              <nomvar name="Z:rail-type"/>
+            </diamond>
+            <diamond mode="SYN-RMOD">
+              <nomvar name="W:sem-obj"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="o-02987-1" pred="xor"/>
   </family>
 </ccg-lexicon>

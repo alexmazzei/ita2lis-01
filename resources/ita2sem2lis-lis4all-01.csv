@@ -10,7 +10,7 @@ BRA,bn:08948689n,rail_station,??,??
 BUSSOLENO,bn:08961507n,rail_station,??,??
 CEVA,bn:08932755n,rail_station,??,??
 CHIVASSO,bn:02442178n,rail_station,chivasso,??
-CUNEO,bn:02361243n,rail_station,??,??
+CUNEO,bn:02361243n,rail_station,cuneo,80048
 FOSSANO,bn:08848811n,rail_station,??,??
 GENOVA BRIGNOLE,bn:01761612n,rail_station,??,??
 GENOVA NERVI,bn:04290497n,rail_station,??,??
@@ -49,8 +49,10 @@ BARI CENTRALE,bn:01783168n,rail_station,??,??
 CATANIA CENTRALE,bn:02380108n,rail_station,??,??
 STRORDINARIO,bn:00059918n,train_category,special,??
 REGIONALE,bn:08848799n,train_category,regional,regional,01953
+VELOCE,??,train_category,fast,veloce,02529
 REGIONALE VELOCE,bn:08975672n,train_category,fastregional,treno_regionale_veloce,80084
 FRECCIAROSSA,bn:04004282n,train_category,redarrow,frecciarossa,80094
+FRECCIABIANCA,bn:08935780n,train_category,whitearrow,frecciarossa,80094
 TRENITALIA,bn:03826734n,train_company,trainitaly,trenitalia,80126
 NTV,bn:00733298n,train_company,nsv,??,??
 ARRIVARE,bn:00082788v,??,arrive,arrivare,80008
@@ -59,9 +61,9 @@ ANDARE,bn:00086600v,??,togo,??,??
 PROVENIRE,??,??,tocome,venire_provenire,80128
 RITARDO,??,??,late,in_ritardo,80032
 ESSO,??,??,it,ix_3,80127
-STRAORDINARIO,??,??,special,straordinario,02314
+STRAORDINARIO,??,abstract-quality,special,straordinario,02314
 BINARIO,??,non-agentive-physical-object,rail,binario_1,80013
-ORA,??,temporal-location,time-point,orario_1,80053
+ORE,??,temporal-location,time-point,orario,02855
 NUMERO,??,feature,pre-number,numerare,01547
 MATTINA,??,temporal-location,morning,mattina,02813
 SERA,??,temporal-location,evening,sera,02689
@@ -69,3 +71,4 @@ MILANO,??,space-region,milano,milano,01423
 CENTRALE,??,abstract-quality,central,centrale,00445
 ANDARE,??,achievement,togo,andare,00110
 ??,??,achievement,futuro_prog,futuro_prog,80122
+??,??,sem-obj,possesive,suo,02826

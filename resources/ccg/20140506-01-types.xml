@@ -15,6 +15,7 @@
   <type name="tc-rmod-time" parents="TC-RELATION"/>
   <type name="tc-rmod-time-2" parents="TC-RELATION"/>
   <type name="tc-adv-rmod" parents="TC-RELATION"/>
+  <type name="tc-none" parents="TC-RELATION"/>
   <type name="PoS"/>
   <type name="noun" parents="PoS"/>
   <type name="verb" parents="PoS"/>
@@ -25,6 +26,7 @@
   <type name="prep" parents="PoS"/>
   <type name="pron" parents="PoS"/>
   <type name="determiner" parents="PoS"/>
+  <type name="conj" parents="PoS"/>
   <type name="TC-TYPE"/>
   <type name="tc-number" parents="TC-TYPE"/>
   <type name="tc-digit" parents="TC-TYPE"/>
@@ -64,6 +66,7 @@
   <type name="physical-object" parents="physical-endurant"/>
   <type name="agentive-physical-object" parents="physical-object"/>
   <type name="non-agentive-physical-object" parents="physical-object"/>
+  <type name="rail-type" parents="non-agentive-physical-object"/>
   <type name="non-physical-object" parents="non-physical-endurant"/>
   <type name="mental-object" parents="non-physical-object"/>
   <type name="social-object" parents="non-physical-object"/>

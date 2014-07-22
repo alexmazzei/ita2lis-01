@@ -9,3 +9,6 @@ pom.xml.asc
 /.nrepl-port
 resources/templates-xml-lf/lf-p1-02.xml~
 out-aewlis.xml
+resources/ccg/STDerrors
+resources/ccg/out.conll
+resources/ccg/temp_01.conll

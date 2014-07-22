@@ -18,19 +18,16 @@
 
 
 ;;; Constants
-(def input-port 30001)
-(def output-port 3396);;nuovo interprete
-;;(def output-port 30000);;vecchio interprete
-(def output-host "localhost")
-;(close-sockets-in-out)
-(def socket-output (DatagramSocket. output-port))
+;; From lis4all.ini file
+(def lis4ll-properties (java.util.Properties.))
+(.load lis4ll-properties (clojure.java.io/reader  "./resources/lis4all.ini"))
+(def input-port (Integer/parseInt(get lis4ll-properties "input-port")))
+(def output-port (Integer/parseInt (get lis4ll-properties "output-port")))
+(def output-host (get lis4ll-properties "output-host"))
+
+(def socket-output (DatagramSocket. ))
+(if (not (nil? (quote socket-input))) (.close socket-input))
 (def socket-input (DatagramSocket. input-port))
-(defn close-sockets-in-out
-  ""
-  []
-  (do
-   (.close socket-input)
-   (.close socket-output)))
 
 
 (def examples
@@ -48,6 +45,7 @@
    "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
    "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da SALERNO E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
    "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da MILANO CENTRALE  E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
+   "Il treno REGIONALE, 10 4 2 8, di TRENITALIA, delle ore 07.25, proveniente da NOVI LIGURE, è in arrivo al binario 2, invece che al binario 12. Attenzione! Allontanarsi dalla linea gialla.";A2
    ])
 
 
@@ -154,21 +152,21 @@
   (send-msg-to-donna (str "play_aewlis " (System/getProperty "user.dir") "/" file-name-aewlis)))
 
 ;;aux-xml
-(defn ppxml [xml]
-  (let [in (javax.xml.transform.stream.StreamSource.
-            (java.io.StringReader. xml))
-        writer (java.io.StringWriter.)
-        out (javax.xml.transform.stream.StreamResult. writer)
-        transformer (.newTransformer
-                     (javax.xml.transform.TransformerFactory/newInstance))]
-    (.setOutputProperty transformer
-                        javax.xml.transform.OutputKeys/INDENT "yes")
-    (.setOutputProperty transformer
-                        "{http://xml.apache.org/xslt}indent-amount" "2")
-    (.setOutputProperty transformer
-                        javax.xml.transform.OutputKeys/METHOD "xml")
-    (.transform transformer in out)
-    (-> out .getWriter .toString)))
+;; (defn ppxml [xml]
+;;   (let [in (javax.xml.transform.stream.StreamSource.
+;;             (java.io.StringReader. xml))
+;;         writer (java.io.StringWriter.)
+;;         out (javax.xml.transform.stream.StreamResult. writer)
+;;         transformer (.newTransformer
+;;                      (javax.xml.transform.TransformerFactory/newInstance))]
+;;     (.setOutputProperty transformer
+;;                         javax.xml.transform.OutputKeys/INDENT "yes")
+;;     (.setOutputProperty transformer
+;;                         "{http://xml.apache.org/xslt}indent-amount" "2")
+;;     (.setOutputProperty transformer
+;;                         javax.xml.transform.OutputKeys/METHOD "xml")
+;;     (.transform transformer in out)
+;;     (-> out .getWriter .toString)))
 
 (defn map-vals
   "apply a function to the vals of a hash"
@@ -178,7 +176,15 @@
 (defn ita-lex-sem
   "Returns the semantics of a specific italian word"
   [sem-hash lexicon]
-  (map-vals sem-hash #(if (get lexicon %) (get lexicon %) %)))
+  (map-vals sem-hash
+            ;;#(if (get lexicon %) (get lexicon %) %)
+            #(let [l (get lexicon %)]
+               ;;(println "DEBUG::>" l "<")
+               (cond
+                (= l "??") (str  "cartello<" % ">")
+                (not (nil? l)) l
+                :else %))
+            ) )
 
 (defn hm2ampm_hh_mm
   "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}."
@@ -620,9 +626,9 @@
   (let
       [type (get semantic-hash :type )]
     (cond
-     (identical? type :A1)
+     (= type :A1)
      (unescape-chars (reduce str (lf-a1 semantic-hash)))
-     (identical? type :P1)
+     (= type :P1)
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
      :else "";;(slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
      )
@@ -654,6 +660,18 @@
   (test-ATLASRealizer (prova-enlive-4))
   ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
   )
+
+
+
+(defn alea2plain
+  ""
+  [xml-alea]
+  (let [pat (re-pattern (str "lemma=\"" "([^\\\"]+)" "\"" ".+"
+                             "Sign=\"" "([^\\\"]+)" "\"" ".+"
+                             ;;">" "([1,2])" "<" ".+";; bug??
+                             ))]
+    (reduce str  (map  (fn [x] (str  (nth x 1) "-" (nth x 2) " ")) (re-seq pat xml-alea)))) )
+
 
 (defn analyze-and-generate
   ""

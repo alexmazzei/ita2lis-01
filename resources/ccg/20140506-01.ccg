@@ -26,9 +26,9 @@ feature  {
   num<5>: sing plur;
   pers<5>: non-3rd {1st 2nd} 3rd;
   ap <5 1>: non-body {sx dx neutral} body;
-  PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron determiner;
+  PoS<1 2 3 5>   : noun verb adjc adjc+ordin adjc+qualif adve prep pron determiner conj;
   TC-TYPE<2 3 5>: tc-number tc-digit tc-0 tc-1 tc-2;
-  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-bis tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2 tc-adv-rmod;
+  TC-RELATION<2 3 5>: tc-noun-apposition tc-noun-apposition-bis tc-noun-apposition-denom tc-noun-rmod tc-relcl-red tc-rmod tc-rmod-loc tc-rmod-time tc-rmod-time-2 tc-adv-rmod tc-none;
   tense<E>: past present future;
 
   ontology:
@@ -46,6 +46,9 @@ feature  {
                     {
                     agentive-physical-object
                     non-agentive-physical-object
+                    {
+                        rail-type
+                    }
                     }
                 }
             non-physical-endurant
@@ -128,7 +131,7 @@ def detGenitive(Stem,lf,classe,cat) {
 family Genitive_fam {
     entry: n [X noun tc-0] \ n [Y] \ n [Z] : X:physical-object(* <SYN-DET+GENITIVE-ARG>Y <SYN-DET+GENITIVE-RESTR>Z:physical-object);
 };
-detGenitive(poss-xxxx-1,possesive,sem-obj,determiner)
+detGenitive(suo-2826-1,possesive,sem-obj,determiner)
 
 
 
@@ -157,7 +160,8 @@ family N_II{
   entry: n<5>[X] : X(*);
 }
 noun-II(treno-02456-2,train,non-agentive-physical-object,noun,tc-0,)
-noun-II(binario-80013-1,rail,non-agentive-physical-object,noun,tc-1,tc-noun-rmod)
+##noun-II(binario-80013-1,rail,non-agentive-physical-object,noun,tc-1,tc-noun-rmod)
+noun-II(binario-80013-1,rail,rail-type,noun,tc-1,tc-noun-rmod)
 noun-II(ora-02855-1,time-point,temporal-location,noun,tc-1,tc-rmod-time)
 
 
@@ -170,6 +174,7 @@ noun-II(ntv-xxxx-1,ntv,non-agentive-physical-object,noun,tc-1,tc-0)
 #città
 noun-II(milano-01423-1,milano,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(salerno-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
+noun-II(cuneo-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(chivasso-xxxx-1,chivasso,space-region,noun,tc-1,tc-rmod-loc)
 
 #numeri
@@ -222,7 +227,9 @@ adj(sera-02689-1,evening,temporal-location,adjc,tc-1,)
 adj(mattina-02813-1,morning,temporal-location,adjc,tc-1,)
 #Categorie
 adj(frecciarossa-80094-1,redarrow,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
-adj(regionale-01953-1,regional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
+adj(frecciabianca-80095-1,whitearrow,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
+adj(regionale-01953-1,regional,abstract-quality,adjc,tc-1,tc-noun-apposition)
+adj(veloce-02529-1,fast,abstract-quality,adjc,tc-1,tc-noun-apposition)
 adj(regionale_veloce-80084-1,fastregional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(straordinario-02314-1,special,abstract-quality,adjc,tc-1,tc-rmod)
 adj(centrale-00445-1,central,abstract-quality,adjc,tc-1,tc-noun-apposition-bis)
@@ -270,6 +277,37 @@ family ADV_I {
 };
 adverb1(in_ritardo-80032-1,in_late,quality,adve,tc-1,tc-adv-rmod)
 
+
+
+# def adverb2(Stem,lf,classe,cat,tc-type,tc-relation) {
+#    word Stem :ADV_II (classe, pred=lf) : cat tc-type tc-relation;
+# }
+# family ADV_II {
+#     entry: (n <5> [X] \* n /* n)  \ (n  \* n /* n )  : X:rail-type(<SYN-RMOD> *);
+# };
+# adverb2(al_posto_di_sostitutivo-80043-1,instead,feature,adve,tc-0,tc-none)
+
+def adverb3(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem :ADV_III (classe, pred=lf) : cat tc-type tc-relation;
+}
+family ADV_III {
+    entry: adve <5> [X] :X(*);
+};
+adverb3(al_posto_di_sostitutivo-80043-1,instead,feature,adve,tc-0,tc-none)
+
+
+#CONJ
+def conj1(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem :CONJ_I (classe, pred=lf) : cat tc-type tc-relation;
+}
+family CONJ_I {
+    ##entry: n [X] \* n [Y] /* n [Z] : X:sem-obj(* <SYN-CONJ1> Y:sem-obj ^  <SYN-CONJ2> Z:sem-obj);
+    ##entry: n [X] \* n [Y] /* n [Z] : X:non-agentive-physical-object( <SYN-CONJ1> Y:non-agentive-physical-object ^ <SYN-CONJ2> Z:non-agentive-physical-object);
+    entry: n <5>[X] \* n [Y] /* n  [Z] : X:rail-type(* <SYN-CONJ1> Y:rail-type ^  <SYN-CONJ2> Z:rail-type);
+    entry: n <5>[X] \* n [Y]  /* n  [Z] /* adve [W]: X:rail-type(* <SYN-CONJ1> Y:rail-type ^  <SYN-CONJ2> Z:rail-type ^ <SYN-RMOD> W:sem-obj);
+};
+conj1(o-02987-1,xor,rail-type,,tc-0,)
+#conj1(o-02987-1,xor,feature,conj,tc-0,tc-none)
 
 ######################### Rules #########################
 
@@ -330,6 +368,6 @@ rule {
 
 testbed {
     "treno-2456-2 arrivare-2835-2" : 1;
-    "treno-2456-2 frecciarossa numero 9 5 7 2 ore 7 40 sera salerno venire binario numero 12 arrivare fut_progr": 1;
+    "treno-2456-2 frecciarossa numero 9 5 7 2 ore 7 40 sera salerno venire binario numero 12 arrivare fut_progr": 1;#a1
     "treno-2456-2 frecciarossa numero 9 5 6 1 ore 6 18 mattina salerno andare binario numero 9 partire fut_prog" : 1;#p1
 }
