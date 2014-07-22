@@ -2,7 +2,8 @@
    (:gen-class))
 
 (require '[net.cgrand.enlive-html :as html]
-         '[clojure.data.csv :as csv])
+         '[clojure.data.csv :as csv]
+         '[clojure.xml :as xml])
 (import '[java.net DatagramSocket
                    DatagramPacket
                    InetSocketAddress])
@@ -139,8 +140,6 @@
   [socket f]
   (future (while true (f (receive-udp socket)))))
 
-
-
 (defn send-msg-to-donna
   "Send a message to donna on the output socket"
   [msg]
@@ -172,6 +171,27 @@
   "apply a function to the vals of a hash"
   [hhh fff]
   (zipmap (keys hhh) (map fff (vals hhh))))
+
+(defn map-kv
+  "Given a map and a function of two arguments, returns the map resulting from applying the function to each of its entries. The provided function must return a pair (a two-element sequence.)"
+  [m f]
+  (into {} (map (fn [[k v]] (f k v)) m)))
+
+(defn extract-cartelli
+  "extract the keys/values corresponding to the cartelli"
+  [semantic-hash]
+  (map-kv semantic-hash (fn [k v]
+                          (if (and (not (nil? v)) (not (keyword? v)) (re-find #"^cartello" v))
+                            (vector k (get (re-find #"^cartello<(.+)>" v) 1))))))
+
+(defn remove-cartelli
+  "replace the values corresponding to the cartelli with their corresponding keys"
+  [semantic-hash]
+  (map-kv semantic-hash (fn [k v]
+                          (if (and (not (nil? v)) (not (keyword? v)) (re-find #"^cartello" v))
+                            (vector k (clojure.string/replace-first (str k) ":" ""))
+                            (vector k v)))))
+
 
 (defn ita-lex-sem
   "Returns the semantics of a specific italian word"
@@ -548,7 +568,7 @@
 ;;;Some examples
 ;;enlive trials
 ;(def ^:dynamic html/self-closing-tags #{:prop :nom})
-(intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom})
+(intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom })
 
 (html/deftemplate lf-p1-simplified "templates-xml-lf/prova-num-00.xml"
   [post]
@@ -609,8 +629,7 @@
       (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
         (html/do->
          (html/set-attr :name  (first seq-nomi))
-         (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION"))))))
-  )
+         (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))))
 
 
 ;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
@@ -619,6 +638,17 @@
 (defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
 (defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 10)))))))))
 
+(defn post-processing-cartelli
+  "replace the correct cartello signs with the correct attribute for spelling"
+  [seq-cartelli xml-out]
+  (if (empty? seq-cartelli)
+    xml-out
+    (recur (rest seq-cartelli)
+           (clojure.string/replace-first
+            xml-out
+            (str  (clojure.string/replace-first (str (get (first seq-cartelli) 0)) ":" "" ) "\"")
+            (str "cartello\" content=\""  (get (first seq-cartelli) 1) "\"")
+            ))))
 
 (defn call-enlive-template
   ""
@@ -630,6 +660,8 @@
      (unescape-chars (reduce str (lf-a1 semantic-hash)))
      (= type :P1)
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
+     (= type :A2)
+     (unescape-chars (reduce str (lf-a1 semantic-hash)))
      :else "";;(slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
      )
      ))
@@ -674,12 +706,19 @@
 
 
 (defn analyze-and-generate
-  ""
+  "Per gestire i cartelli devo fare pre e post processing poiché openccg non gestisce lessici ;aperti'. La gestione dei cartelli avviene in parallelo usando sue hash: l'hash semantico viene modificato, cambiando il value dello slot con il nome dello slot; parallellamente un nuovo hash cartelli viene creato. In post processing viene riassegnato l'attributo giusto in corrispondenza di un segno cartello."
   [sentence]
-  (let [out-templating (call-enlive-template (emerge-semantic-values (ita2sem (first (split-sentences sentence)))))]
+  (let [emerged-semantics (emerge-semantic-values (ita2sem (first (split-sentences sentence))))
+        modified-emerged-semantics (remove-cartelli emerged-semantics)
+        hash-cartelli (extract-cartelli emerged-semantics)
+        out-templating (call-enlive-template modified-emerged-semantics )]
+    ;;(println "DEBUG::" out-templating)
     (if (empty? out-templating)
       (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
-      (realize-lf out-templating))))
+      (post-processing-cartelli
+       (seq  hash-cartelli)
+       (realize-lf out-templating)
+       ))))
 
 (defn analyze-and-generate-write-file
   ""
@@ -704,6 +743,6 @@
   "I don't do a whole lot ... yet."
   [& args]
   (do
-    (println "Ready to translate!")
+    (println "Ready to translate train messages!")
     (receive-loop-udp socket-input real-main)
     ))

@@ -12,6 +12,8 @@
   <entry word="salerno-80068-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="salerno-80068-1" class="space-region" pred="salerno"/>
   <entry word="cuneo-80068-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="cuneo-80068-1" class="space-region" pred="salerno"/>
   <entry word="chivasso-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="chivasso-xxxx-1" class="space-region" pred="chivasso"/>
+  <entry word="località_di_provenienza-80134-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="località_di_provenienza-80134-1" class="space-region" pred="località_di_provenienza"/>
+  <entry word="località_di_arrivo-80134-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="località_di_arrivo-80134-1" class="space-region" pred="località_di_arrivo"/>
   <entry word="zero-02617-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="zero-02617-1" class="digit" pred="zero"/>
   <entry word="uno-02503-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="uno-02503-1" class="digit" pred="1"/>
   <entry word="due-00797-1" macros="@neutral @noun @tc-digit" pos="N_II" stem="due-00797-1" class="digit" pred="2"/>

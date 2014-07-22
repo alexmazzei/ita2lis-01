@@ -111,6 +111,8 @@
     <member stem="salerno-80068-1" pred="salerno"/>
     <member stem="cuneo-80068-1" pred="salerno"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
+    <member stem="località_di_provenienza-80134-1" pred="località_di_provenienza"/>
+    <member stem="località_di_arrivo-80134-1" pred="località_di_arrivo"/>
     <member stem="zero-02617-1" pred="zero"/>
     <member stem="uno-02503-1" pred="1"/>
     <member stem="due-00797-1" pred="2"/>

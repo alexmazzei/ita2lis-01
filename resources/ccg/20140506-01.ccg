@@ -176,6 +176,10 @@ noun-II(milano-01423-1,milano,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(salerno-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(cuneo-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(chivasso-xxxx-1,chivasso,space-region,noun,tc-1,tc-rmod-loc)
+noun-II(località_di_provenienza-80134-1,località_di_provenienza,space-region,noun,tc-1,tc-rmod-loc)
+noun-II(località_di_arrivo-80134-1,località_di_arrivo,space-region,noun,tc-1,tc-rmod-loc)
+
+
 
 #numeri
 noun-II(zero-02617-1,zero,digit,noun,tc-digit,)
