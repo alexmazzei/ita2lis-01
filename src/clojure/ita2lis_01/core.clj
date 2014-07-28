@@ -6,7 +6,8 @@
          '[clojure.xml :as xml])
 (import '[java.net DatagramSocket
                    DatagramPacket
-                   InetSocketAddress])
+                   InetSocketAddress
+                   ServerSocket])
 ;;(net.cgrand.reload/auto-reload *ns*)
 
 ;;; Algorithm
@@ -26,9 +27,6 @@
 (def output-port (Integer/parseInt (get lis4ll-properties "output-port")))
 (def output-host (get lis4ll-properties "output-host"))
 
-(def socket-output (DatagramSocket. ))
-(if (not (nil? (quote socket-input))) (.close socket-input))
-(def socket-input (DatagramSocket. input-port))
 
 
 (def examples
@@ -114,7 +112,12 @@
   (into {} (for [[k v] hhh] [k (if (string? v) (.toLowerCase v) v) ])))
 
 ;;; Auxiliary functions
-;;aux-udp
+;; aux-udp
+;; Constants necessary for UDP sender/receiver
+(def socket-output (DatagramSocket. ))
+(def socket-input (DatagramSocket. ))
+;; (if (not (nil? (quote socket-input))) (.close socket-input))
+;; (def socket-input (DatagramSocket. input-port))
 
 (defn send-udp
 "Send a short textual message over a DatagramSocket to the specified host and port. If the string is over 512 bytes long, it will be truncated."
@@ -149,6 +152,37 @@
   "send the name of a aewlis file, which is in the excution dir, to donna"
   [file-name-aewlis]
   (send-msg-to-donna (str "play_aewlis " (System/getProperty "user.dir") "/" file-name-aewlis)))
+
+;; aux tcp
+(defn receive-tcp
+  "Read a line of textual data from the given socket" [socket]
+  (.readLine (clojure.java.io/reader socket)))
+
+(defn send-tcp
+  "Send the given string message out over the given socket" [socket msg]
+  (let [writer (clojure.java.io/writer socket)]
+    (.write writer msg)
+    (.flush writer)))
+
+(defn serve-tcp [port handler]
+  (with-open [server-sock (ServerSocket. port)
+              sock (.accept server-sock)]
+    (let [msg-in (receive-tcp sock)
+          msg-out (handler msg-in)]
+      (send-tcp sock msg-out))))
+
+(defn serve-tcp-persistent [port handler]
+  "as serve but with a inner-loop thread safe"
+  (let [running (atom true)]
+    (future
+      (with-open [server-sock (ServerSocket. port)]
+        (while @running
+          (with-open [sock (.accept server-sock)]
+            (let [msg-in (receive-tcp sock) msg-out (handler msg-in)]
+              (send-tcp sock msg-out))))))
+    running))
+
+
 
 ;;aux-xml
 ;; (defn ppxml [xml]
@@ -638,18 +672,6 @@
 (defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
 (defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 10)))))))))
 
-(defn post-processing-cartelli
-  "replace the correct cartello signs with the correct attribute for spelling"
-  [seq-cartelli xml-out]
-  (if (empty? seq-cartelli)
-    xml-out
-    (recur (rest seq-cartelli)
-           (clojure.string/replace-first
-            xml-out
-            (str  (clojure.string/replace-first (str (get (first seq-cartelli) 0)) ":" "" ) "\"")
-            (str "cartello\" content=\""  (get (first seq-cartelli) 1) "\"")
-            ))))
-
 (defn call-enlive-template
   ""
   [semantic-hash]
@@ -662,9 +684,35 @@
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
      (= type :A2)
      (unescape-chars (reduce str (lf-a1 semantic-hash)))
-     :else "";;(slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
-     )
-     ))
+     (= type :A3)
+     (unescape-chars (reduce str (lf-a1 semantic-hash)))
+     (= type :P9)
+     (unescape-chars (reduce str (lf-p1 semantic-hash)))
+     (= type :P5)
+     (unescape-chars (reduce str (lf-p1 semantic-hash)))
+     (= type :A5)
+     (unescape-chars (reduce str (lf-a1 semantic-hash)))
+     (= type :P13)
+     (unescape-chars (reduce str (lf-p1 semantic-hash)))
+     :else ""     )))
+
+(defn post-processing-cartelli
+  "replace the correct cartello signs with the correct attribute for spelling"
+  [seq-cartelli xml-out]
+  (if (empty? seq-cartelli)
+    xml-out
+    (recur (rest seq-cartelli)
+           ;; (clojure.string/replace-first
+           ;;  xml-out ;; mettere qui<<<prima un replace di "(str (str (get (first seq-cartelli) 0)) ":" "") " number>")  con "$1 <signboard> (get (first seq-cartelli) 1)<signboard>"
+           ;;  (str  (clojure.string/replace-first (str (get (first seq-cartelli) 0)) ":" "") "\"")
+           ;;  (str "cartello\" content=\""  (get (first seq-cartelli) 1) "\""))
+           (clojure.string/replace-first
+            xml-out
+            (re-pattern
+             (str "(" (clojure.string/replace-first (str (get (first seq-cartelli) 0)) ":" "") ")"
+                  "(\" idAtlasSign=\"\\d+\">\n)(<handsNumber>\\d</handsNumber>)"))
+            (str "cartello$2$3\n"
+                 "<signboard>" (get (first seq-cartelli) 1) "</signboard>")) )))
 
 
 
@@ -693,8 +741,6 @@
   ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
   )
 
-
-
 (defn alea2plain
   ""
   [xml-alea]
@@ -704,7 +750,7 @@
                              ))]
     (reduce str  (map  (fn [x] (str  (nth x 1) "-" (nth x 2) " ")) (re-seq pat xml-alea)))) )
 
-
+;; Main functions
 (defn analyze-and-generate
   "Per gestire i cartelli devo fare pre e post processing poiché openccg non gestisce lessici ;aperti'. La gestione dei cartelli avviene in parallelo usando sue hash: l'hash semantico viene modificato, cambiando il value dello slot con il nome dello slot; parallellamente un nuovo hash cartelli viene creato. In post processing viene riassegnato l'attributo giusto in corrispondenza di un segno cartello."
   [sentence]
@@ -729,13 +775,15 @@
   ""
   [sentence]
   (let
-      [file-name-aewlis "out-aewlis.xml"]
+      [file-name-aewlis (str "out-aewlis-" (System/currentTimeMillis) ".xml")]
     (do
       (println "inputSentence:" sentence)
       (println "semantic values:" (ita2sem (first (split-sentences sentence))))
       (println "outputTranslation:" (analyze-and-generate sentence))
       (analyze-and-generate-write-file sentence file-name-aewlis)
-      (send-filename-aewlis-to-donna file-name-aewlis)
+      (println "generated aewlis:" file-name-aewlis)
+      ;;(send-filename-aewlis-to-donna file-name-aewlis) ;UDP
+      (str file-name-aewlis) ;TCP
       )))
 
 
@@ -744,5 +792,7 @@
   [& args]
   (do
     (println "Ready to translate train messages!")
-    (receive-loop-udp socket-input real-main)
+    ;;(receive-loop-udp socket-input real-main)
+    ;;(serve-tcp input-port real-main)
+    (serve-tcp-persistent input-port real-main)
     ))
