@@ -8,9 +8,8 @@
   <entry word="ix_3-80127-1" macros="@neutral @noun @tc-0" pos="N_II" stem="ix_3-80127-1" class="non-agentive-physical-object" pred="it"/>
   <entry word="trenitalia-80126-1" macros="@neutral @noun @tc-1 @tc-0" pos="N_II" stem="trenitalia-80126-1" class="non-agentive-physical-object" pred="trainitaly"/>
   <entry word="ntv-xxxx-1" macros="@neutral @noun @tc-1 @tc-0" pos="N_II" stem="ntv-xxxx-1" class="non-agentive-physical-object" pred="ntv"/>
-  <entry word="milano-01423-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="milano-01423-1" class="space-region" pred="milano"/>
   <entry word="salerno-80068-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="salerno-80068-1" class="space-region" pred="salerno"/>
-  <entry word="cuneo-80068-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="cuneo-80068-1" class="space-region" pred="salerno"/>
+  <entry word="cuneo-80048-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="cuneo-80048-1" class="space-region" pred="cuneo"/>
   <entry word="chivasso-xxxx-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="chivasso-xxxx-1" class="space-region" pred="chivasso"/>
   <entry word="località_di_provenienza-80134-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="località_di_provenienza-80134-1" class="space-region" pred="località_di_provenienza"/>
   <entry word="località_di_arrivo-80134-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II" stem="località_di_arrivo-80134-1" class="space-region" pred="località_di_arrivo"/>
@@ -45,6 +44,7 @@
   <entry word="28-80119-1" macros="@neutral @noun @tc-number" pos="N_II" stem="28-80119-1" class="number" pred="28"/>
   <entry word="29-80120-1" macros="@neutral @noun @tc-number" pos="N_II" stem="29-80120-1" class="number" pred="29"/>
   <entry word="30-80121-1" macros="@neutral @noun @tc-number" pos="N_II" stem="30-80121-1" class="number" pred="30"/>
+  <entry word="milano-01423-1" macros="@neutral @noun @tc-1 @tc-rmod-loc" pos="N_II-app" stem="milano-01423-1" class="space-region" pred="milano"/>
   <entry word="sera-02689-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="sera-02689-1" class="temporal-location" pred="evening"/>
   <entry word="mattina-02813-1" macros="@neutral @adjc @tc-1" pos="ADJ_family" stem="mattina-02813-1" class="temporal-location" pred="morning"/>
   <entry word="frecciarossa-80094-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="frecciarossa-80094-1" class="non-agentive-physical-object" pred="redarrow"/>
@@ -53,7 +53,7 @@
   <entry word="veloce-02529-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="veloce-02529-1" class="abstract-quality" pred="fast"/>
   <entry word="regionale_veloce-80084-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition" pos="ADJ_family" stem="regionale_veloce-80084-1" class="non-agentive-physical-object" pred="fastregional"/>
   <entry word="straordinario-02314-1" macros="@neutral @adjc @tc-1 @tc-rmod" pos="ADJ_family" stem="straordinario-02314-1" class="abstract-quality" pred="special"/>
-  <entry word="centrale-00445-1" macros="@neutral @adjc @tc-1 @tc-noun-apposition-bis" pos="ADJ_family" stem="centrale-00445-1" class="abstract-quality" pred="central"/>
+  <entry word="centrale-00445-1" macros="@neutral @adjc @tc-0 @tc-none" pos="ADJ_family" stem="centrale-00445-1" class="abstract-quality" pred="central"/>
   <entry word="arrivare-80008-1" macros="@verb" pos="InTransV_I" stem="arrivare-80008-1" class="achievement" pred="arrive"/>
   <entry word="partire-01673-1" macros="@verb" pos="InTransV_I" stem="partire-01673-1" class="achievement" pred="leave"/>
   <entry word="andare-00110-1" macros="@verb @tc-1 @tc-relcl-red" pos="InTransV_I" stem="andare-00110-1" class="achievement" pred="togo"/>

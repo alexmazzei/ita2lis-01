@@ -28,7 +28,7 @@ PIACENZA,bn:02422723n,rail_station,??,??
 REGGIO CALABRIA CENTRALE, bn:02394126n,rail_station,??,??
 ROMA TERMINI,bn:03639722n,rail_station,??,??
 SALBERTRAND,??,rail_station,??,??
-SALERNO,bn:01442468n,rail_station,salerno,??
+SALERNO,bn:01442468n,rail_station,salerno,80068
 SAVONA,bn:02357621n,rail_station,??,??
 SUSA,??,rail_station,??,??
 TRIESTE CENTRALE,bn:02343967n,rail_station,??,??
@@ -47,6 +47,8 @@ NAPOLI CAMPI FLEGREI,bn:02383877n,rail_station,??,??
 PISA CENTRALE,bn:01905617n,rail_station,??,??
 BARI CENTRALE,bn:01783168n,rail_station,??,??
 CATANIA CENTRALE,bn:02380108n,rail_station,??,??
+BORGO VALSUGANA CENTRO E BORGO VALSUGANA EST,??,rail_station,??,??
+MATRICE-MONTAGANO-S.GIOVANNI IN GALDO,??,rail_station,??,??
 STRORDINARIO,bn:00059918n,train_category,special,??
 REGIONALE,bn:08848799n,train_category,regional,regional,01953
 VELOCE,??,train_category,fast,veloce,02529

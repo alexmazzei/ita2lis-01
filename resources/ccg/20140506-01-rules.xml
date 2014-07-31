@@ -52,10 +52,8 @@
     <arg>
       <atomcat type="adj">
         <fs id="5">
-          <feat attr="index">
-            <lf>
-              <nomvar name="X"/>
-            </lf>
+          <feat attr="X">
+            <featvar name="X:abstract-quality"/>
           </feat>
           <feat attr="TC-TYPE" val="tc-1"/>
           <feat attr="TC-RELATION" val="tc-noun-apposition-bis"/>
@@ -66,30 +64,28 @@
       <complexcat>
         <atomcat type="n">
           <fs id="3">
-            <feat attr="index">
-              <lf>
-                <nomvar name="Y"/>
-              </lf>
+            <feat attr="Y">
+              <featvar name="Y:space-region"/>
             </feat>
             <feat attr="PoS" val="noun"/>
-            <feat attr="TC-TYPE" val="tc-1"/>
+            <feat attr="TC-TYPE" val="tc-0"/>
+            <feat attr="TC-RELATION" val="tc-rmod-loc"/>
           </fs>
         </atomcat>
         <slash dir="\" mode="*"/>
         <atomcat type="n">
           <fs inheritsFrom="3">
-            <feat attr="index">
-              <lf>
-                <nomvar name="Y"/>
-              </lf>
+            <feat attr="Y">
+              <featvar name="Y:space-region"/>
             </feat>
-            <feat attr="TC-TYPE" val="tc-1"/>
+            <feat attr="TC-TYPE" val="tc-0"/>
+            <feat attr="TC-RELATION" val="tc-rmod-loc"/>
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="Y">
+          <satop nomvar="Y:space-region">
             <diamond mode="SYN-NOUN-APPOSITION">
-              <nomvar name="X"/>
+              <nomvar name="X:abstract-quality"/>
             </diamond>
           </satop>
         </lf>
@@ -609,7 +605,7 @@
             </feat>
           </fs>
         </atomcat>
-        <slash dir="/" mode="&gt;"/>
+        <slash dir="/" mode="*"/>
         <complexcat>
           <atomcat type="s">
             <fs>

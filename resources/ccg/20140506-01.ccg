@@ -172,13 +172,12 @@ noun-II(trenitalia-80126-1,trainitaly,non-agentive-physical-object,noun,tc-1,tc-
 noun-II(ntv-xxxx-1,ntv,non-agentive-physical-object,noun,tc-1,tc-0)
 
 #città
-noun-II(milano-01423-1,milano,space-region,noun,tc-1,tc-rmod-loc)
+#noun-II(milano-01423-1,milano,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(salerno-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
-noun-II(cuneo-80068-1,salerno,space-region,noun,tc-1,tc-rmod-loc)
+noun-II(cuneo-80048-1,cuneo,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(chivasso-xxxx-1,chivasso,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(località_di_provenienza-80134-1,località_di_provenienza,space-region,noun,tc-1,tc-rmod-loc)
 noun-II(località_di_arrivo-80134-1,località_di_arrivo,space-region,noun,tc-1,tc-rmod-loc)
-
 
 
 #numeri
@@ -216,6 +215,15 @@ noun-II(30-80121-1,30,number,noun,tc-number,)
 
 
 
+def noun-II-app(Stem,lf,classe,cat,tc-type,tc-relation) {
+   word Stem:N_II-app (classe, pred=lf){
+     Stem  : neutral cat tc-type tc-relation;
+   }
+}
+family N_II-app{
+    entry: n<5>[tc-1 X] / adj [Y]: X(* <SYN-NOUN-APPOSITION> Y:abstract-quality);
+}
+noun-II-app(milano-01423-1,milano,space-region,noun,tc-1,tc-rmod-loc)
 
 
 #Adjective (4)
@@ -236,8 +244,8 @@ adj(regionale-01953-1,regional,abstract-quality,adjc,tc-1,tc-noun-apposition)
 adj(veloce-02529-1,fast,abstract-quality,adjc,tc-1,tc-noun-apposition)
 adj(regionale_veloce-80084-1,fastregional,non-agentive-physical-object,adjc,tc-1,tc-noun-apposition)
 adj(straordinario-02314-1,special,abstract-quality,adjc,tc-1,tc-rmod)
-adj(centrale-00445-1,central,abstract-quality,adjc,tc-1,tc-noun-apposition-bis)
-
+#adj(centrale-00445-1,central,abstract-quality,adjc,tc-1,tc-noun-apposition-bis)
+adj(centrale-00445-1,central,abstract-quality,adjc,tc-0,tc-none)
 
 
 #Verb (5)
@@ -300,7 +308,7 @@ family ADV_III {
 adverb3(al_posto_di_sostitutivo-80043-1,instead,feature,adve,tc-0,tc-none)
 
 
-#CONJ
+#CONJ TODO per A2
 def conj1(Stem,lf,classe,cat,tc-type,tc-relation) {
    word Stem :CONJ_I (classe, pred=lf) : cat tc-type tc-relation;
 }
@@ -312,6 +320,8 @@ family CONJ_I {
 };
 conj1(o-02987-1,xor,rail-type,,tc-0,)
 #conj1(o-02987-1,xor,feature,conj,tc-0,tc-none)
+
+
 
 ######################### Rules #########################
 
@@ -326,7 +336,9 @@ rule {
     #typechange: adj <5> [X tc-1] => n <~5> [X tc-1 noun tc-noun-apposition] ;
 
     typechange: adj <5> [X tc-1 tc-noun-apposition] => n <3> [Y noun tc-0] \* n <~3> [Y tc-0] : Y( <SYN-NOUN-APPOSITION> X);
-    typechange: adj <5> [X tc-1 tc-noun-apposition-bis] => n <3> [Y noun tc-1] \* n <~3> [Y tc-1] : Y( <SYN-NOUN-APPOSITION> X);
+    typechange: adj <5> [X:abstract-quality tc-1 tc-noun-apposition-bis] => n <3> [Y:space-region noun tc-0 tc-rmod-loc] \* n <~3> [Y:space-region tc-0 tc-rmod-loc] : Y:space-region( <SYN-NOUN-APPOSITION> X:abstract-quality);#problemi computazionali di attachment :(
+
+
     typechange: adj <5> [X tc-1 tc-rmod] => n <3> [Y noun tc-0] \* n <~3> [Y tc-0] : Y( <SYN-NOUN-RMOD> X);
 
 
@@ -352,9 +364,12 @@ rule {
    #Typechange to account for rel-cl-red
     typechange: s [E tc-1 tc-relcl-red] \ n [X]  => n [X tc-0]  \ n [X tc-0]: X (<SYN-VERB-RMOD+RELCL-REDUC>E);
 
+    #PROVA
+    ##typechange: s [E] \ n [X]  =>   (s [E] \ n  [X]) / (s [F] \ n [Y]) : E (<SYN-COORD> F);
+
     #Typechange to account for rmod-loc
     ##Use this with Bx>
-    typechange: n [X tc-1 tc-rmod-loc] => (s [E] \ n [Y]) / (s [E] \ n [Y]) : E:achievement(<SYN-RMOD-LOC> X:space-region);
+    typechange: n [X tc-1 tc-rmod-loc] => (s [E] \ n [Y]) /* (s [E] \ n [Y]) : E:achievement(<SYN-RMOD-LOC> X:space-region);
 
     #Typechange to account for rmod-time
     typechange: n [X tc-1 tc-rmod-time] =>  n [X tc-rmod-time-2] /* adj [W tc-1]  /* n [Y tc-number] /* n [Z tc-number] : X ( <NOUN-APPOSITION-DENOM_MM> Y ^  <NOUN-APPOSITION-DENOM_HH> Z ^ <ADJ-RMOD> W);

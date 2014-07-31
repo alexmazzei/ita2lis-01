@@ -20,6 +20,14 @@
 
 
 ;;; Constants
+(def ^:dynamic indice 100)
+(defn getNewInteger
+  "Returns the value of indice and then increments it"
+  []
+  (let [ret indice]
+    (def indice (inc indice))
+    ret))
+
 ;; From lis4all.ini file
 (def lis4ll-properties (java.util.Properties.))
 (.load lis4ll-properties (clojure.java.io/reader  "./resources/lis4all.ini"))
@@ -40,10 +48,10 @@
    "Annuncio ritardo! Il treno REGIONALE, 24 8 2 5, di TRENITALIA,delle ore 17.28, per IVREA, partirà dal binario 15, con un ritardo previsto di 15 MINUTI  Invitiamo i viaggiatori a prestare attenzione a successive comunicazioni di partenza .";P5
    "Annuncio cancellazione treno! Il treno SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3, 24 8 4 9, di TRENITALIA, previsto in arrivo da SUSA, alle ore 09.15, oggi non è stato effettuato . . Ci scusiamo per il disagio.";A5
    "Informiamo i viaggiatori che il treno REGIONALE, 24 8 1 7, di TRENITALIA, delle ore 11.28, per IVREA è in partenza dal binario 18.oggi il treno arriva fino a CHIVASSO,. Ferma a TORINO PORTA SUSA. . Ci scusiamo per il disagio.";P13
-
    "Il treno REGIONALE VELOCE, 18 38, di TRENITALIA, delle ore 22.50, proveniente da IMPERIA ONEGLIA, è in arrivo al binario 10, invece che al binario 6. Attenzione! Allontanarsi dalla linea gialla. ."
-   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da SALERNO E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
-   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da MILANO CENTRALE  E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
+   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da MILANO CENTRALE E DIRETTO A   SALERNO   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
+   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da SALERNO  E DIRETTO A MILANO CENTRALE   è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
+   "Il treno STRAORDINARIO REGIONALE VELOCE 20 32 di TRENITALIA delle ore 00.10, proveniente da SALERNO  E DIRETTO A NOVI LIGURE è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla.";A1
    "Il treno REGIONALE, 10 4 2 8, di TRENITALIA, delle ore 07.25, proveniente da NOVI LIGURE, è in arrivo al binario 2, invece che al binario 12. Attenzione! Allontanarsi dalla linea gialla.";A2
    ])
 
@@ -86,8 +94,11 @@
 (def sentece-general-delimeters #"\. ")
 
 (defn capitalize [s]  (.toUpperCase s))
-(defn rm-useless-chars [s]  (clojure.string/replace s #"[,.]" " "))
+(defn rm-useless-chars [s]  (clojure.string/replace s #"[,]|[.] | [.]" " "))
 (defn reduce-whites [s]  (clojure.string/replace s #" +" " "))
+(defn delete-aewlis-000 [s]  (clojure.string/replace s "<signSpatialLocation>0.0 0.0 0.0 </signSpatialLocation>\n" ""))
+
+
 
 (defn time-format-normalize
   "Uniform all the time format to HH:MM"
@@ -266,13 +277,16 @@
 
 ;;;Functions to extract the semantics from italian sentence
 (defn build-branch
-  ""
+  "Build a xml branch with several nodes"
   [lista-elementi rel]
   (let [n (count lista-elementi)
         pre (str "\n                <diamond mode=\""
                  rel
                  "\">\n                 <nom name=\"w"
-                 (java.util.UUID/randomUUID)
+                 ;;(java.util.UUID/randomUUID)
+                 ;;(+ 100 (rand-int 300))
+                 ;;(System/currentTimeMillis)
+                 (getNewInteger)
                  ":sem-obj\"/>\n                 <prop name=\""
                  (first lista-elementi)
                  "\"/>\n")
@@ -639,7 +653,7 @@
   ;;[:prop#train-company] (html/remove-attr :id )
 )
 
-(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-02.xml"
+(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-03.xml"
   [post]
   [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
@@ -744,11 +758,16 @@
 (defn alea2plain
   ""
   [xml-alea]
-  (let [pat (re-pattern (str "lemma=\"" "([^\\\"]+)" "\"" ".+"
-                             "Sign=\"" "([^\\\"]+)" "\"" ".+"
+  (let [pat (re-pattern (str "lemma=\"" "([^\\\"]+)" "\""
+                             ".+"
+                             "Sign=\"" "([^\\\"]+)" "\""
+                             ".+\\\n.+\\\n"
+                             "(<signboard>(.+)</signboard>)?"
                              ;;">" "([1,2])" "<" ".+";; bug??
                              ))]
-    (reduce str  (map  (fn [x] (str  (nth x 1) "-" (nth x 2) " ")) (re-seq pat xml-alea)))) )
+    (reduce str  (map  (fn [x] (str  (nth x 1)
+                                    (if (not (empty? (nth x 4)))  (str "<" (str  (nth x 4)) ">"))
+                                    "-" (nth x 2) " ")) (re-seq pat xml-alea)))) )
 
 ;; Main functions
 (defn analyze-and-generate
@@ -757,13 +776,14 @@
   (let [emerged-semantics (emerge-semantic-values (ita2sem (first (split-sentences sentence))))
         modified-emerged-semantics (remove-cartelli emerged-semantics)
         hash-cartelli (extract-cartelli emerged-semantics)
-        out-templating (call-enlive-template modified-emerged-semantics )]
-    ;;(println "DEBUG::" out-templating)
+        out-templating (call-enlive-template modified-emerged-semantics)]
+    ;;(println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
+    ;;(println "DEBUG:: OUT-enlive=" out-templating)
     (if (empty? out-templating)
       (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
       (post-processing-cartelli
        (seq  hash-cartelli)
-       (realize-lf out-templating)
+       (delete-aewlis-000 (realize-lf out-templating))
        ))))
 
 (defn analyze-and-generate-write-file

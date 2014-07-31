@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+    <lf>
+    <satop nom="a1:achievement">
+      <prop name="arrive" />
+      <diamond mode="SYN-SUBJ">
+        <nom name="w16:physical-object" />
+        <prop name="possesive" />
+        <diamond mode="SYN-DET+GENITIVE-ARG">
+          <nom name="t1:non-agentive-physical-object" />
+          <prop name="train" />
+          <diamond mode="SYN-NOUN-APPOSITION">
+            <nom name="r1:non-agentive-physical-object" />
+            <prop name="fastregional" id="train-categ" />
+          </diamond>
+          <diamond mode="SYN-NOUN-APPOSITION">
+            <nom name="p1:feature" />
+            <prop name="pre-number" />
+            <diamond mode="SYN-NUM-APPOSITION-DENOM">
+              <nom name="n1:digit" />
+              <prop name="2" id="train-number" />
+                <diamond mode="SYN-NOUN-CONTIN-DENOM">
+                 <nom name="w1406630919078:sem-obj"/>
+                 <prop name="zero"/>
+
+                <diamond mode="SYN-NOUN-CONTIN-DENOM">
+                 <nom name="w1406630919078:sem-obj"/>
+                 <prop name="3"/>
+
+                <diamond mode="SYN-NOUN-CONTIN-DENOM">
+                 <nom name="w1406630919078:sem-obj"/>
+                 <prop name="2"/>
+                </diamond>
+                </diamond>
+                </diamond>
+
+            </diamond>
+          </diamond>
+          <diamond mode="SYN-RMOD-TIME">
+            <nom name="w5:temporal-location" />
+            <prop name="time-point" />
+            <diamond mode="ADJ-RMOD">
+              <nom name="w8:temporal-location" />
+              <prop name="morning" id="train-time-ampm" />
+            </diamond>
+            <diamond mode="NOUN-APPOSITION-DENOM_HH">
+              <nom name="w6:number" />
+              <prop name="zero" id="train-time-hh" />
+            </diamond>
+            <diamond mode="NOUN-APPOSITION-DENOM_MM">
+              <nom name="w7:number" />
+              <prop name="1" id="train-time-mm" />
+
+            </diamond>
+          </diamond>
+          <diamond mode="SYN-NOUN-APPOSITION">
+            <nom name="r2:non-agentive-physical-object" />
+            <prop name="rail" />
+            <diamond mode="SYN-NOUN-APPOSITION">
+              <nom name="p2:feature" />
+              <prop name="pre-number" />
+              <diamond mode="SYN-NUM-APPOSITION-DENOM">
+                <nom name="n2:digit" />
+                <prop name="18" id="rail-number" />
+              </diamond>
+            </diamond>
+          </diamond>
+          <diamond train-special="special" mode="SYN-NOUN-RMOD" id="train-special">
+            <nom name="s1:abstract-quality" />
+            <prop name="special" />
+          </diamond>
+          <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
+            <nom name="t2:achievement" />
+            <prop name="tocome" />
+            <diamond mode="SYN-RMOD-LOC">
+              <nom name="m1:space-region" />
+              <prop name="salerno" id="train-origin" />
+            </diamond>
+            <diamond mode="SYN-SUBJ">
+              <nom name="t1:non-agentive-physical-object" />
+            </diamond>
+          </diamond>
+          <diamond train-boo="foo" mode="SYN-VERB-RMOD+RELCL-REDUC" id="train-destination-yn">
+            <nom name="t3:achievement" />
+            <prop name="togo" />
+            <diamond mode="SYN-RMOD-LOC">
+              <nom name="s2:space-region" />
+              <prop name="milano" id="train-destination" />
+            </diamond>
+            <diamond mode="SYN-SUBJ">
+              <nom name="t1:non-agentive-physical-object" />
+            </diamond>
+          </diamond>
+        </diamond>
+      <diamond mode="SYN-DET+GENITIVE-RESTR">
+        <nom name="w15:non-agentive-physical-object" />
+        <prop name="trainitaly" id="train-company" />
+      </diamond>
+      </diamond>
+    <diamond mode="SYN-VERB+MODAL-INDCOMPL">
+      <nom name="f1:achievement" />
+      <prop name="future_prog" />
+    </diamond>
+  </satop>
+</lf>
+</xml>

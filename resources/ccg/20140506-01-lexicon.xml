@@ -107,9 +107,8 @@
     <member stem="ix_3-80127-1" pred="it"/>
     <member stem="trenitalia-80126-1" pred="trainitaly"/>
     <member stem="ntv-xxxx-1" pred="ntv"/>
-    <member stem="milano-01423-1" pred="milano"/>
     <member stem="salerno-80068-1" pred="salerno"/>
-    <member stem="cuneo-80068-1" pred="salerno"/>
+    <member stem="cuneo-80048-1" pred="cuneo"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
     <member stem="località_di_provenienza-80134-1" pred="località_di_provenienza"/>
     <member stem="località_di_arrivo-80134-1" pred="località_di_arrivo"/>
@@ -144,6 +143,41 @@
     <member stem="28-80119-1" pred="28"/>
     <member stem="29-80120-1" pred="29"/>
     <member stem="30-80121-1" pred="30"/>
+  </family>
+  <family name="N_II-app" pos="N_II-app" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="n">
+          <fs id="5">
+            <feat attr="TC-TYPE" val="tc-1"/>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="&gt;"/>
+        <atomcat type="adj">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-NOUN-APPOSITION">
+              <nomvar name="Y:abstract-quality"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="milano-01423-1" pred="milano"/>
   </family>
   <family name="ADJ_family" pos="ADJ_family" closed="true">
     <entry name="Entry-1">
