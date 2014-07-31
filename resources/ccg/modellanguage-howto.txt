@@ -1,0 +1,72 @@
+;;;;;N-GRAM standard
+
+ccg2xml.py 20140506-01.ccg
+cp 20140506-01-testbed.xml testbed.xml
+ccg-test -g 20120110-01-grammar.xml -text tb.txt
+/Users/mazzei/lavori/Projects/ATLAS/softExt/SRILM/srilm/bin/macosx/ngram-count -order 2 -unk -text tb.txt -lm n.2bo -gt1min 1 -gt2min 1 -ndiscount1 -ndiscount
+ccg-test -g 20120110-01-grammar.xml -ngramorder 2 -lm n.2bo
+
+
+;;;;;FACTORED N-GRAM standard
+ccg2xml.py 20140506-01.ccg
+cp 20140506-01-testbed.xml testbed.xml
+ccg-test -g 20120110-01-grammar.xml -textfsc tb-fsc.txt
+
+/Users/mazzei/lavori/Projects/ATLAS/softExt/SRILM/srilm/bin/macosx/fngram-count -factor-file spec.flm -text tb-fsc.txt -lm -unk
+
+ccg-test -g 20120110-01-grammar.xml -flmsc spec.flm
+
+
+
+P -> PoS
+S -> wordform
+C -> semantic (ontological) category
+T -> ccg category
+A -> accent
+
+
+GC -> gesture class ?
+GI -> gesture instance ?
+
+domani-2652-1:
+S-domani-2652-1:
+P-Adv-when:T-s/s:
+C-deictic-day-description
+
+
+sud-2329-1:
+S-sud-2329-1:
+P-N-II:
+T-n:
+C-it-region pioggia-1767-2:S-pioggia-1767-2:P-N-II:T-n:C-precipitation
+
+
+
+
+<s> domani-2652-1:S-domani-2652-1:P-Adv-when:T-s/s:C-deictic-day-description sud-2329-1:S-sud-2329-1:P-N-II:T-n:C-it-region pioggia-1767-2:S-pioggia-1767-2:P-N-II:T-n:C-precipitation </s>
+<s> liguria-2810-1:S-liguria-2810-1:P-N-II:T-n:C-it-region previsione-2678-1:S-previsione-2678-1:P-N-II:T-n:C-meteo-status-situation temporale-2697-2:S-temporale-2697-2:P-N-II:T-n:C-precipitation </s>
+<s> periodo-02817-2:S-periodo-02817-2:P-Prep-when:T-s/s/np:C-time-interval giorno-1052-1:S-giorno-1052-1:P-N-II:T-n:C-day centro-2649-1:S-centro-2649-1:P-N-II:T-n:C-it-region nuvola-02667-2:S-nuvola-02667-2:P-N-II:T-n:C-weather-event nuvola_aumentare-2888-2:S-nuvola_aumentare-2888-2:P-TransV_III-A-s_nuvola-aumentare:T-s\np:C-meteo-status-situation </s>
+<s> oggi-2669-2:S-oggi-2669-2:P-Adv-when:T-s/s:C-deictic-day-description italia-1207-1:S-italia-1207-1:P-N-II:T-n:C-geographic-area tempo-2696-1:S-tempo-2696-1:P-N-II:T-n:C-weather-event brutto-0316-1:S-brutto-0316-1:P-Adj-II:T-s\np:C-weather-status-situation </s>
+<s> dopodomani-0783-1:S-dopodomani-0783-1:P-Adv-when:T-s/s:C-deictic-day-description temperatura-2998-2:S-temperatura-2998-2:P-N-II:T-n:C-evaluable-entity alto-3006-1:S-alto-3006-1:P-Adj-II:T-s\np:C-weather-status-situation </s>
+<s> oggi-2669-2:S-oggi-2669-2:P-Adv-when:T-np/np:C-deictic-day-description mese-1398-2:S-mese-1398-2:P-N-II:T-n:C-month giugno-3056-1:S-giugno-3056-1:P-N_I:T-n:C-month-description giorno-1052-1:S-giorno-1052-1:P-N-II:T-n:C-day ultimo-2747-1:S-ultimo-2747-1:P-Adj-II:T-n\n:C-sem-obj </s>
+<s> temperatura-2998-2:S-temperatura-2998-2:P-N-II:T-n:C-evaluable-entity valore_valere-80020-2:S-valore_valere-80020-2:P-N-II:T-n:C-evaluable-entity media-3072-2:S-media-3072-2:P-N-II:T-n:C-evaluable-entity superiore-3168-2:S-superiore-3168-2:P-TransV_III-B:T-s\np\np:C-meteo-status-situation </s>
+<s> significare-03155-2:S-significare-03155-2:P-TransV_I-Relative:T-s/s:C-action domani-2652-1:S-domani-2652-1:P-Adv-when:T-s/s:C-deictic-day-description nord-1533-1:S-nord-1533-1:P-N-II:T-n:C-it-region nuvola-02667-2:S-nuvola-02667-2:P-N-II:T-n:C-weather-event nuvola_aumentare-2888-2:S-nuvola_aumentare-2888-2:P-TransV_III-A-s_nuvola-aumentare:T-s\np:C-meteo-status-situation </s>
+<s> domani-2652-1:S-domani-2652-1:P-Adv-when:T-s/s:C-deictic-day-description fascia_adriatica-02721-1:S-fascia_adriatica-02721-1:P-N-II:T-n:C-it-region previsione-2678-1:S-previsione-2678-1:P-N-II:T-n:C-meteo-status-situation quale-01905-2:S-quale-01905-2:P-Pronoun-relative:T-s\np/s cielo-00491-2:S-cielo-00491-2:P-N-II:T-n:C-weather-event sereno-2741-2:S-sereno-2741-2:P-Adj-II:T-s\np:C-weather-status-situation </s>
+<s> domani-2652-1:S-domani-2652-1:P-Adv-when:T-s/s:C-deictic-day-description pioggia-1767-2:S-pioggia-1767-2:P-N-II:T-n:C-precipitation </s>
+<s> toscana-3177-1:S-toscana-3177-1:P-N-II:T-n:C-it-region pioggia-1767-2:S-pioggia-1767-2:P-N-II:T-n:C-precipitation liguria-2810-1:S-liguria-2810-1:P-N-II:T-n:C-it-region pioggia-1767-2:S-pioggia-1767-2:P-N-II:T-n:C-precipitation </s>
+<s> italia-1207-1:S-italia-1207-1:P-N-II:T-n:C-geographic-area instabilita-02724-1:S-instabilita-02724-1:P-N-II:T-n:C-weather-status-situation </s>
+
+
+
+
+Alessandro-Mazzeis-MacBook-Pro:comic mazzei$ head tb-fsc.txt
+<s> here:A-L+H*:S-here:P-Adv:T-s[fronted]/s[dcl] LH%:S-LH%:P-BT:T-s$\(s$) we:S-pro1:P-Pro:T-np:C-animate-being have:S-have:P-V:T-s[dcl]\np/(s[adj]\np)/np a:S-a:P-Det:T-np/n design:S-design:P-N:T-n:C-mental-obj in:S-in:P-Adj:T-s[adj]\np/np the:S-the:P-Det:T-np/n classic:A-H*:S-classic:P-Adj:T-n/n:C-style style:S-style:P-N:T-n:C-abstraction LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> here:S-here:P-Expl:T-s/(s\np_expl[here]) is:S-be:P-V:T-s[dcl]\np_expl[here]/np another:A-H*:S-another:P-PDet:T-np/n modern:S-modern:P-Adj:T-n/n:C-style design:S-design:P-N:T-n:C-mental-obj LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> this:A-H*:S-this:P-PDet:T-np/n design:A-H*:S-design:P-N:T-n:C-mental-obj is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) in:S-in:P-Adj:T-s[adj]\np/np the:S-the:P-Det:T-np/n country:A-H*:S-country:P-Adj:T-n/n:C-style style:S-style:P-N:T-n:C-abstraction LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> this:A-H*:S-this:P-PDet:T-np/n design:A-H*:S-design:P-N:T-n:C-mental-obj is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) classic:A-H*:S-classic:P-Adj:T-s[adj]\np:C-style LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> this:A-H*:S-this:P-PDet:T-np/n design:A-H*:S-design:P-N:T-n:C-mental-obj is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) also:A-H*:S-also:P-Adv:T-s\s classic:S-classic:P-Adj:T-s[adj]\np:C-style LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> this:A-H*:S-this:P-PDet:T-np/n design:A-H*:S-design:P-N:T-n:C-mental-obj is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) also:A-H*:S-also:P-Adv:T-s\np/(s\np) in:S-in:P-Adj:T-s[adj]\np/np the:S-the:P-Det:T-np/n family:S-family:P-Adj:T-n/n:C-style style:S-style:P-N:T-n:C-abstraction LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> once_again:A-L+H*:S-once_again:P-Adv:T-s[fronted]/s[dcl] LH%:S-LH%:P-BT:T-s$\(s$) this:A-H*:S-this:P-PDet:T-np/n design:A-H*:S-design:P-N:T-n:C-mental-obj is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) modern:S-modern:P-Adj:T-s[adj]\np:C-style LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> once_again:A-L+H*:S-once_again:P-Adv:T-s[fronted]/s[dcl] LH%:S-LH%:P-BT:T-s$\(s$) it:S-pro3n:P-Pro:T-np is:S-be:P-V:T-s[dcl]\np/(s[adj]\np) in:S-in:P-Adj:T-s[adj]\np/np the:S-the:P-Det:T-np/n modern:A-H*:S-modern:P-Adj:T-n/n:C-style style:S-style:P-N:T-n:C-abstraction LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> it:S-pro3n:P-Pro:T-np draws:S-draw:P-V:T-s[dcl]\np/pp[from] from:S-from:P-Prep:T-pp[from]/np SERIES:A-H*:S-SERIES:P-NNP:T-np:C-series LL%:S-LL%:P-BT:T-s$\(s$) ,:S-,:P-,:T-s\s/(s[adj]\np) by:S-by:P-Prep:T-s[adj]\np/np MANUFACTURER:A-H*:S-MANUFACTURER:P-NNP:T-np:C-manufacturer LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>
+<s> it:S-pro3n:P-Pro:T-np also:A-H*:S-also:P-Adv:T-s\np/(s\np) draws:S-draw:P-V:T-s[dcl]\np/pp[from] from:S-from:P-Prep:T-pp[from]/np SERIES:S-SERIES:P-NNP:T-np:C-series LL%:S-LL%:P-BT:T-s$\(s$) .:S-.:P-.:T-sent\s[dcl-base] </s>

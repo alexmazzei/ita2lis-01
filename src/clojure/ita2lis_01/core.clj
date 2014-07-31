@@ -767,7 +767,8 @@
                              ))]
     (reduce str  (map  (fn [x] (str  (nth x 1)
                                     (if (not (empty? (nth x 4)))  (str "<" (str  (nth x 4)) ">"))
-                                    "-" (nth x 2) " ")) (re-seq pat xml-alea)))) )
+                                    "-" (nth x 2) "-1 "))
+                       (re-seq pat xml-alea)))) )
 
 ;; Main functions
 (defn analyze-and-generate
@@ -778,7 +779,7 @@
         hash-cartelli (extract-cartelli emerged-semantics)
         out-templating (call-enlive-template modified-emerged-semantics)]
     ;;(println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
-    ;;(println "DEBUG:: OUT-enlive=" out-templating)
+    (println "DEBUG:: OUT-enlive=\n" out-templating)
     (if (empty? out-templating)
       (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
       (post-processing-cartelli

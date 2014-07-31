@@ -35,6 +35,7 @@ import opennlp.ccg.realize.Realizer;
 import opennlp.ccg.synsem.LF;
 import opennlp.ccg.ngrams.StandardNgramModel;
 import opennlp.ccg.ngrams.FactoredNgramModelFamily;
+import opennlp.ccg.realize.NBestPruningStrategy;
 
 import opennlp.ccg.synsem.Sign;
 import opennlp.ccg.parse.DerivationHistory;
@@ -95,6 +96,7 @@ public class ATLASRealizer {
 	    //langModFile=/Users/mazzei/lavori/Projects/ATLAS/softwareMazzei/generatoreAtlas/lispSentenceDesigner/data-files-tmp/2012-01-16/spec-02.flm
 	    //--> modello basato sui trigrammi e bigrammi di glosse e semantic ontology class
 	    CCGrealizer.signScorer = new FactoredNgramModelFamily(languageModelFile,true);
+            //CCGrealizer.pruningStrategy = new NBestPruningStrategy(1);
 
         } catch (Exception ex) {
             Logger.getLogger(ATLASRealizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,6 +130,7 @@ public class ATLASRealizer {
 	    Document inputDocRealizer  = builder.build(new StringReader(xmlString));
 	    LF lf = CCGrealizer.getLfFromDoc(inputDocRealizer);
 	    //Edge bestEdge = CCGrealizer.realize(lf);
+            //Edge bestEdge = CCGrealizer.realize(lf,CCGrealizer.signScorer,200,true); //OK 300
             Edge bestEdge = CCGrealizer.realize(lf,null,300,true);
 
 

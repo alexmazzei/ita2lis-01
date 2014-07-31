@@ -101,7 +101,7 @@
         </lf>
       </atomcat>
     </entry>
-    <member stem="treno-02456-2" pred="train"/>
+    <member stem="treno-02456-1" pred="train"/>
     <member stem="binario-80013-1" pred="rail"/>
     <member stem="ora-02855-1" pred="time-point"/>
     <member stem="ix_3-80127-1" pred="it"/>
@@ -110,6 +110,7 @@
     <member stem="salerno-80068-1" pred="salerno"/>
     <member stem="cuneo-80048-1" pred="cuneo"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
+    <member stem="cartello-80134-1" pred="località_di_arrivo"/>
     <member stem="località_di_provenienza-80134-1" pred="località_di_provenienza"/>
     <member stem="località_di_arrivo-80134-1" pred="località_di_arrivo"/>
     <member stem="zero-02617-1" pred="zero"/>
