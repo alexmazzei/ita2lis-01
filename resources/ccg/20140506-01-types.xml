@@ -67,6 +67,8 @@
   <type name="agentive-physical-object" parents="physical-object"/>
   <type name="non-agentive-physical-object" parents="physical-object"/>
   <type name="rail-type" parents="non-agentive-physical-object"/>
+  <type name="train-prototype" parents="non-agentive-physical-object"/>
+  <type name="train-company" parents="non-agentive-physical-object"/>
   <type name="non-physical-object" parents="non-physical-endurant"/>
   <type name="mental-object" parents="non-physical-object"/>
   <type name="social-object" parents="non-physical-object"/>

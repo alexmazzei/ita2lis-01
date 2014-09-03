@@ -16,7 +16,7 @@
               <prop name="pre-number"/>
               <diamond mode="SYN-NUM-APPOSITION-DENOM">
                 <nom name="w14:digit"/>
-                <prop name="9"/>
+                <prop id="rail-number" name="9"/>
               </diamond>
             </diamond>
           </diamond>
@@ -45,11 +45,11 @@
             </diamond>
             <diamond mode="NOUN-APPOSITION-DENOM_HH">
               <nom name="w6:digit"/>
-              <prop name="zero"/>
+              <prop id="train-time-hh" name="zero"/>
             </diamond>
             <diamond mode="NOUN-APPOSITION-DENOM_MM">
               <nom name="w7:number"/>
-              <prop name="18"/>
+              <prop id="train-time-mm" name="18"/>
             </diamond>
           </diamond>
           <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">

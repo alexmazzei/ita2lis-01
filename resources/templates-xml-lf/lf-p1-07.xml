@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+  <lf>
+    <satop nom="l1:achievement">
+      <prop name="leave"/>
+      <diamond mode="SYN-SUBJ">
+        <nom name="t1:train-prototype"/>
+        <prop name="train"/>
+        <diamond mode="SYN-NOUN-APPOSITION">
+          <nom name="r1:non-agentive-physical-object"/>
+          <prop id="train-categ" name="redarrow"/>
+        </diamond>
+        <diamond mode="SYN-NOUN-APPOSITION">
+          <nom name="p1:feature"/>
+          <prop name="pre-number"/>
+          <diamond mode="SYN-NUM-APPOSITION-DENOM">
+            <nom name="n1:number"/>
+            <prop id="train-number" name="12"/>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-NOUN-RMOD">
+          <nom name="r2:rail-type"/>
+          <prop name="rail"/>
+          <diamond mode="SYN-NOUN-RMOD">
+            <nom name="p2:feature"/>
+            <prop name="pre-number"/>
+            <diamond mode="SYN-NUM-APPOSITION-DENOM">
+              <nom name="n2:digit"/>
+              <prop id="rail-number" name="9"/>
+            </diamond>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-RMOD-TIME">
+          <nom name="t2:temporal-location"/>
+          <prop name="time-point"/>
+          <diamond mode="ADJ-RMOD">
+            <nom name="m1:temporal-location"/>
+            <prop id="train-time-ampm" name="morning"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_HH">
+            <nom name="z1:digit"/>
+            <prop id="train-time-hh" name="zero"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_MM">
+            <nom name="n3:number"/>
+            <prop id="train-time-mm" name="18"/>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
+          <nom name="t3:achievement"/>
+          <prop name="togo"/>
+          <diamond mode="SYN-RMOD-LOC">
+            <nom name="m2:space-region"/>
+            <prop id="train-destination"  name="milano"/>
+          </diamond>
+          <diamond mode="SYN-SUBJ">
+            <nom name="t1:train-prototype"/>
+          </diamond>
+        </diamond>
+      </diamond>
+      <diamond mode="SYN-VERB+MODAL-INDCOMPL">
+        <nom name="f1:achievement"/>
+        <prop name="future_prog"/>
+      </diamond>
+    </satop>
+  </lf>
+  <target>treno-02456-1 frecciarossa-80094-1 numero-01547-1 12-80103-1 ora-02855-1 zero-02617-1 18-80109-1 mattina-02813-1 milano-01423-1 centrale-00445-1 andare-00110-1 binario-80013-1 numero-01547-1 9-80100-1 partire-01673-1 futuro_prog-80122-1</target>
+</xml>

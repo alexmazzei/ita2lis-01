@@ -39,7 +39,7 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="Y">
+          <satop nomvar="Y:train-prototype">
             <diamond mode="SYN-NOUN-APPOSITION">
               <nomvar name="X"/>
             </diamond>
@@ -131,7 +131,7 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="Y">
+          <satop nomvar="Y:train-prototype">
             <diamond mode="SYN-NOUN-RMOD">
               <nomvar name="X"/>
             </diamond>
@@ -289,7 +289,7 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="X">
+          <satop nomvar="X:train-prototype">
             <diamond mode="SYN-NOUN-APPOSITION">
               <nomvar name="Y"/>
             </diamond>
@@ -336,7 +336,7 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="X">
+          <satop nomvar="X:train-prototype">
             <diamond mode="SYN-NOUN-RMOD">
               <nomvar name="Y"/>
             </diamond>
@@ -563,7 +563,7 @@
         <lf>
           <satop nomvar="X">
             <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
-              <nomvar name="E"/>
+              <nomvar name="E:achievement"/>
             </diamond>
           </satop>
         </lf>
@@ -750,7 +750,7 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="Y">
+          <satop nomvar="Y:train-prototype">
             <diamond mode="SYN-RMOD-TIME">
               <nomvar name="X"/>
             </diamond>

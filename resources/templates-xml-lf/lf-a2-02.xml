@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+  <lf>
+    <satop nom="a1:achievement">
+      <prop name="arrive"/>
+      <diamond mode="SYN-SUBJ">
+        <nom name="t1:train-prototype"/>
+        <prop name="train"/>
+        <diamond mode="SYN-NOUN-APPOSITION">
+          <nom name="f1:non-agentive-physical-object"/>
+          <prop id="train-categ" name="fastregional"/>
+        </diamond>
+        <diamond mode="SYN-NOUN-APPOSITION">
+          <nom name="p1:feature"/>
+          <prop name="pre-number"/>
+          <diamond mode="SYN-NUM-APPOSITION-DENOM">
+            <nom name="n1:digit"/>
+            <prop id="train-number" name="1"/>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-NOUN-RMOD">
+          <nom name="x1:rail-type"/>
+          <prop name="xor"/>
+          <diamond mode="SYN-RMOD">
+            <nom name="i1:feature"/>
+            <prop name="instead"/>
+          </diamond>
+          <diamond mode="SYN-CONJ1">
+            <nom name="r1:rail-type"/>
+            <prop name="rail"/>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nom name="p2:feature"/>
+              <prop name="pre-number"/>
+              <diamond mode="SYN-NUM-APPOSITION-DENOM">
+                <nom name="n5:digit"/>
+                <prop id="rail-number-old" name="5"/>
+              </diamond>
+            </diamond>
+          </diamond>
+          <diamond mode="SYN-CONJ2">
+            <nom name="r2:rail-type"/>
+            <prop name="rail"/>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nom name="p3:feature"/>
+              <prop name="pre-number"/>
+              <diamond mode="SYN-NUM-APPOSITION-DENOM">
+                <nom name="n6:digit"/>
+                <prop id="rail-number-new" name="6"/>
+              </diamond>
+            </diamond>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-RMOD-TIME">
+          <nom name="t2:temporal-location"/>
+          <prop name="time-point"/>
+          <diamond mode="ADJ-RMOD">
+            <nom name="e1:temporal-location"/>
+            <prop id="train-time-ampm" name="evening"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_HH">
+            <nom name="n7:number"/>
+            <prop id="train-time-hh" name="11"/>
+          </diamond>
+          <diamond mode="NOUN-APPOSITION-DENOM_MM">
+            <nom name="n8:digit"/>
+            <prop id="train-time-mm" name="2"/>
+          </diamond>
+        </diamond>
+        <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
+          <nom name="t3:achievement"/>
+          <prop name="tocome"/>
+          <diamond mode="SYN-RMOD-LOC">
+            <nom name="c1:space-region"/>
+            <prop id="train-origin" name="cuneo"/>
+          </diamond>
+          <diamond mode="SYN-SUBJ">
+            <nom name="t1:train-prototype"/>
+          </diamond>
+        </diamond>
+      </diamond>
+      <diamond mode="SYN-VERB+MODAL-INDCOMPL">
+        <nom name="f2:achievement"/>
+        <prop name="future_prog"/>
+      </diamond>
+    </satop>
+  </lf>
+  <target>treno-02456-1 regionale_veloce-80084-1 numero-01547-1 uno-02503-1 zero-02617-1 due-00797-1 due-00797-1 uno-02503-1 ora-02855-1 11-80102-1 due-00797-1 cinque-00497-1 sera-02689-1 cuneo-80048-1 venire_provenire-80128-1 binario-80013-1 numero-01547-1 cinque-00497-1 o-02987-1 al_posto_di_sostitutivo-80043-1  binario-80013-1 numero-01547-1 6-80097-1  arrivare-80008-1 futuro_prog-80122-1</target>
+</xml>

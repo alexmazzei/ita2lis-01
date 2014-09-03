@@ -35,13 +35,13 @@
           </fs>
         </atomcat>
         <lf>
-          <satop nomvar="X:physical-object">
+          <satop nomvar="X:train-prototype">
             <prop name="[*DEFAULT*]"/>
             <diamond mode="SYN-DET+GENITIVE-ARG">
-              <nomvar name="Y"/>
+              <nomvar name="Y:train-prototype"/>
             </diamond>
             <diamond mode="SYN-DET+GENITIVE-RESTR">
-              <nomvar name="Z:physical-object"/>
+              <nomvar name="Z:train-company"/>
             </diamond>
           </satop>
         </lf>
@@ -102,8 +102,8 @@
       </atomcat>
     </entry>
     <member stem="treno-02456-1" pred="train"/>
-    <member stem="binario-80013-1" pred="rail"/>
     <member stem="ora-02855-1" pred="time-point"/>
+    <member stem="minuto-01431-1" pred="minute"/>
     <member stem="ix_3-80127-1" pred="it"/>
     <member stem="trenitalia-80126-1" pred="trainitaly"/>
     <member stem="ntv-xxxx-1" pred="ntv"/>
@@ -180,6 +180,104 @@
     </entry>
     <member stem="milano-01423-1" pred="milano"/>
   </family>
+  <family name="N_II_rail" pos="N_II_rail" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="n">
+          <fs id="2">
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC-TYPE" val="tc-1"/>
+            <feat attr="TC-RELATION" val="tc-noun-rmod"/>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+            <feat attr="TC-TYPE" val="tc-1"/>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:rail-type">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nomvar name="Z:feature"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="binario-80013-1" pred="rail"/>
+  </family>
+  <family name="N_II_late" pos="N_II_late" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="s">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC-TYPE" val="tc-0"/>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="adj">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="W"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="X:achievement">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nomvar name="Y:number"/>
+            </diamond>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nomvar name="Z:temporal-location"/>
+            </diamond>
+            <diamond mode="SYN-NOUN-RMOD">
+              <nomvar name="W"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="ritardo-80065-1" pred="late"/>
+  </family>
   <family name="ADJ_family" pos="ADJ_family" closed="true">
     <entry name="Entry-1">
       <atomcat type="adj">
@@ -205,6 +303,7 @@
     <member stem="veloce-02529-1" pred="fast"/>
     <member stem="regionale_veloce-80084-1" pred="fastregional"/>
     <member stem="straordinario-02314-1" pred="special"/>
+    <member stem="previsione-02678-1" pred="prediction"/>
     <member stem="centrale-00445-1" pred="central"/>
   </family>
   <family name="InTransV_I" pos="InTransV_I" closed="true">
@@ -312,6 +411,53 @@
     </entry>
     <member stem="futuro_prog-80122-1" pred="future_prog"/>
   </family>
+  <family name="TransV_I" pos="TransV_I" closed="true">
+    <entry name="Entry-1">
+      <complexcat>
+        <atomcat type="s">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="E"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="&lt;"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="&gt;"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <lf>
+          <satop nomvar="E:achievement">
+            <prop name="[*DEFAULT*]"/>
+            <diamond mode="SYN-SUBJ">
+              <nomvar name="X"/>
+            </diamond>
+            <diamond mode="SYN-OBJ">
+              <nomvar name="Y"/>
+            </diamond>
+          </satop>
+        </lf>
+      </complexcat>
+    </entry>
+    <member stem="prevedere-02677-1" pred="predict"/>
+  </family>
   <family name="ADV_I" pos="ADV_I" closed="true">
     <entry name="Entry-1">
       <complexcat>
@@ -348,20 +494,81 @@
   </family>
   <family name="ADV_III" pos="ADV_III" closed="true">
     <entry name="Entry-1">
-      <atomcat type="adve">
-        <fs id="5">
-          <feat attr="index">
-            <lf>
-              <nomvar name="X"/>
-            </lf>
-          </feat>
-        </fs>
+      <complexcat>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="X"/>
+              </lf>
+            </feat>
+            <feat attr="TC-TYPE" val="tc-1"/>
+            <feat attr="TC-RELATION" val="tc-noun-rmod"/>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Y"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="/" mode="*"/>
+        <atomcat type="n">
+          <fs>
+            <feat attr="index">
+              <lf>
+                <nomvar name="Z"/>
+              </lf>
+            </feat>
+          </fs>
+        </atomcat>
+        <slash dir="\" mode="*"/>
+        <complexcat>
+          <atomcat type="n">
+            <fs>
+              <feat attr="index">
+                <lf>
+                  <nomvar name="X"/>
+                </lf>
+              </feat>
+              <feat attr="TC-TYPE" val="tc-1"/>
+              <feat attr="TC-RELATION" val="tc-noun-rmod"/>
+            </fs>
+          </atomcat>
+          <slash dir="\" mode="*"/>
+          <atomcat type="n">
+            <fs>
+              <feat attr="index">
+                <lf>
+                  <nomvar name="Y"/>
+                </lf>
+              </feat>
+            </fs>
+          </atomcat>
+          <slash dir="/" mode="*"/>
+          <atomcat type="n">
+            <fs>
+              <feat attr="index">
+                <lf>
+                  <nomvar name="Z"/>
+                </lf>
+              </feat>
+            </fs>
+          </atomcat>
+        </complexcat>
         <lf>
-          <satop nomvar="X">
-            <prop name="[*DEFAULT*]"/>
+          <satop nomvar="X:rail-type">
+            <diamond mode="SYN-RMOD">
+              <nomvar name="P"/>
+              <prop name="[*DEFAULT*]"/>
+            </diamond>
           </satop>
         </lf>
-      </atomcat>
+      </complexcat>
     </entry>
     <member stem="al_posto_di_sostitutivo-80043-1" pred="instead"/>
   </family>
@@ -410,10 +617,13 @@
         </lf>
       </complexcat>
     </entry>
-    <entry name="Entry-2">
+    <member stem="o-02987-1" pred="xor"/>
+  </family>
+  <family name="CONJ_II" pos="CONJ_II" closed="true">
+    <entry name="Entry-1">
       <complexcat>
-        <atomcat type="n">
-          <fs id="5">
+        <atomcat type="s">
+          <fs id="1">
             <feat attr="index">
               <lf>
                 <nomvar name="X"/>
@@ -422,7 +632,7 @@
           </fs>
         </atomcat>
         <slash dir="\" mode="*"/>
-        <atomcat type="n">
+        <atomcat type="s">
           <fs>
             <feat attr="index">
               <lf>
@@ -432,7 +642,7 @@
           </fs>
         </atomcat>
         <slash dir="/" mode="*"/>
-        <atomcat type="n">
+        <atomcat type="s">
           <fs>
             <feat attr="index">
               <lf>
@@ -441,32 +651,19 @@
             </feat>
           </fs>
         </atomcat>
-        <slash dir="/" mode="*"/>
-        <atomcat type="adve">
-          <fs>
-            <feat attr="index">
-              <lf>
-                <nomvar name="W"/>
-              </lf>
-            </feat>
-          </fs>
-        </atomcat>
         <lf>
-          <satop nomvar="X:rail-type">
+          <satop nomvar="X:achievement">
             <prop name="[*DEFAULT*]"/>
             <diamond mode="SYN-CONJ1">
-              <nomvar name="Y:rail-type"/>
+              <nomvar name="Y:achievement"/>
             </diamond>
             <diamond mode="SYN-CONJ2">
-              <nomvar name="Z:rail-type"/>
-            </diamond>
-            <diamond mode="SYN-RMOD">
-              <nomvar name="W:sem-obj"/>
+              <nomvar name="Z:achievement"/>
             </diamond>
           </satop>
         </lf>
       </complexcat>
     </entry>
-    <member stem="o-02987-1" pred="xor"/>
+    <member stem="invece-02659-1" pred="instead2"/>
   </family>
 </ccg-lexicon>

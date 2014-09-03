@@ -37,32 +37,41 @@
               <prop id="train-time-mm" name="18"/>
             </diamond>
           </diamond>
-          <diamond mode="SYN-NOUN-APPOSITION">
-            <nom name="r2:non-agentive-physical-object"/>
-            <prop name="rail"/>
-            <diamond mode="SYN-NOUN-APPOSITION">
-              <nom name="p2:feature"/>
-              <prop name="pre-number"/>
-              <diamond mode="SYN-NUM-APPOSITION-DENOM">
-                <nom name="n2:digit"/>
-                <prop id="rail-number"  name="6"/>
+          <diamond mode="SYN-NOUN-RMOD">
+            <nom name="x1:rail-type"/>
+            <prop name="xor"/>
+            <diamond mode="SYN-CONJ1">
+              <nom name="r1:rail-type"/>
+              <prop name="rail"/>
+              <diamond mode="SYN-NOUN-APPOSITION">
+                <nom name="p1:feature"/>
+                <prop name="pre-number"/>
+                <diamond mode="SYN-NUM-APPOSITION-DENOM">
+                  <nom name="n1:digit"/>
+                  <prop name="6"/>
+                </diamond>
               </diamond>
+            </diamond>
+            <diamond mode="SYN-CONJ2">
+              <nom name="r2:rail-type"/>
+              <prop name="rail"/>
+              <diamond mode="SYN-NOUN-APPOSITION">
+                <nom name="p2:feature"/>
+                <prop name="pre-number"/>
+                <diamond mode="SYN-NUM-APPOSITION-DENOM">
+                  <nom name="n2:digit"/>
+                  <prop name="7"/>
+                </diamond>
+              </diamond>
+            </diamond>
+            <diamond mode="SYN-RMOD">
+              <nom name="i1:feature"/>
+              <prop name="instead"/>
             </diamond>
           </diamond>
           <diamond id="train-special" mode="SYN-NOUN-RMOD">
             <nom name="s1:abstract-quality"/>
             <prop name="special"/>
-          </diamond>
-          <diamond mode="SYN-VERB-RMOD+RELCL-REDUC">
-            <nom name="t2:achievement"/>
-            <prop name="tocome"/>
-            <diamond mode="SYN-RMOD-LOC">
-              <nom name="m1:space-region"/>
-              <prop id="train-origin" name="milano"/>
-            </diamond>
-            <diamond mode="SYN-SUBJ">
-              <nom name="t1:non-agentive-physical-object"/>
-            </diamond>
           </diamond>
           <diamond id="train-destination-yn" mode="SYN-VERB-RMOD+RELCL-REDUC">
             <nom name="t3:achievement"/>

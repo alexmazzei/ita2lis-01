@@ -252,11 +252,11 @@
             ) )
 
 (defn hm2ampm_hh_mm
-  "The input is a time string hh:mm, the ouput is {:ampm morning/afternoon :hh hh :mm mm}."
+  "The input is a time string hh:mm, the ouput is {:ampm morning/evening :hh hh :mm mm}."
   [hhmm]
   (let [[hs ms] (clojure.string/split hhmm #":")
         h (Integer/parseInt hs)
-        ampm (if (<=  h 12) "morning" "afternoon")
+        ampm (if (<=  h 12) "morning" "evening")
         hhh (if (<= h 12) h (- h 12))
         hh (if (== 0 hhh) "zero" (str hhh))
         m (Integer/parseInt ms)
@@ -555,7 +555,7 @@
     (re-find mat-a2)
     (let  [ar (re-groups mat-a2)] (hash-map :type :A2 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 10) :numero_del_binario (ar 12) :numero_del_binario_programmato (ar 13) ) )
     (re-find mat-a3)
-    (let  [ar (re-groups mat-a3)] (hash-map :type :A3 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 10)  ) )
+    (let  [ar (re-groups mat-a3)] (hash-map :type :A3 :straordinario (ar 1) :categoria (ar 2) :numero (train-number-format-normalize (ar 3)) :impresa_ferroviaria (ar 6) :ora_arrivo (ar 7) :località_di_provenienza (ar 9) :località_di_arrivo (ar 10)  :tempo_ritardo (ar 12)) )
     (re-find mat-a5)
     (let  [ar (re-groups mat-a5)] (hash-map :type :A5  :categoria (ar 1) :numero (train-number-format-normalize (ar 2)) :impresa_ferroviaria (ar 5) :località_di_provenienza (ar 6) :ora_arrivo (ar 7)  :località_di_arrivo (ar 8)   :motivo_ritardo (ar 10) :scuse_disagio (ar 11) ) )
     (re-find mat-p1)
@@ -615,22 +615,12 @@
 
 ;;;Some examples
 ;;enlive trials
-;(def ^:dynamic html/self-closing-tags #{:prop :nom})
+;;(def ^:dynamic html/self-closing-tags #{:prop :nom})
 (intern 'net.cgrand.enlive-html 'self-closing-tags #{:prop :nom })
 
-(html/deftemplate lf-p1-simplified "templates-xml-lf/prova-num-00.xml"
-  [post]
-  [:prop#train-number]
-  (html/do-> (html/set-attr :name  (str (first (:numero post))))
-             (if (rest (:numero post)) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM")))))
-(def sample-hash {:numero "123"})
-(defn prova-enlive [] (reduce str (lf-p1-simplified sample-hash)))
 
-
-(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-06.xml"
+(html/deftemplate lf-p1 "templates-xml-lf/lf-p1-07.xml"
   [post]
-  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
-  [:diamond#train-late] (if (empty? (:in_ritardo post)) (html/substitute "" ) (html/set-attr :train-late "late"))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -645,17 +635,18 @@
   (html/do-> (html/set-attr :name  (str (first (:numero post))))
              (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
   [:prop#rail-number] (html/set-attr :name  (:numero_del_binario post) )
-   [:prop#train-destination] ;(html/set-attr :name  (:località_di_arrivo post) )
+  [:prop#train-destination] ;(html/set-attr :name  (:località_di_arrivo post) )
   (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
     (html/do-> (html/set-attr :name  (first seq-nomi))
                (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
-  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
-  ;;[:prop#train-company] (html/remove-attr :id )
+  ;;[:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
+  ;;[:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
+  ;;[:diamond#train-late] (if (empty? (:in_ritardo post)) (html/substitute "" ) (html/set-attr :train-late "late"))
+
 )
 
-(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-03.xml"
+(html/deftemplate lf-a1 "templates-xml-lf/lf-a1-04.xml"
   [post]
-  [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
   [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
   [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
   [:prop#train-time-mm]
@@ -670,21 +661,60 @@
   (let [seq-nomi (seq (clojure.string/split (:località_di_provenienza post) #"\+"))]
     (html/do-> (html/set-attr :name  (first seq-nomi))
                (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))
-  [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
-  [:diamond#train-destination-yn] (if (empty? (:località_di_arrivo post)) (html/substitute "" ) (html/set-attr :train-boo "foo"))
-  [:prop#train-destination]
-  (if (empty? (:località_di_arrivo post)) (html/substitute "" )
-      (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
-        (html/do->
-         (html/set-attr :name  (first seq-nomi))
-         (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION")))))))
+  ;; [:diamond#train-special] (if (empty? (:straordinario post)) (html/substitute "" ) (html/set-attr :train-special "special"))
+  ;; [:prop#train-company] (html/set-attr :name  (:impresa_ferroviaria post) )
+  ;; [:diamond#train-destination-yn] (if (empty? (:località_di_arrivo post)) (html/substitute "" ) (html/set-attr :train-boo "foo"))
+  ;; [:prop#train-destination]
+  ;; (if (empty? (:località_di_arrivo post)) (html/substitute "" )
+  ;;     (let [seq-nomi (seq (clojure.string/split (:località_di_arrivo post) #"\+"))]
+  ;;       (html/do->
+  ;;        (html/set-attr :name  (first seq-nomi))
+  ;;        (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION"))))))
+  )
 
 
-;;(def hash-test-p1  {:ampm "evening" :hh "1" :mm "2" :categoria "redarrow" :numero "7" :numero_del_binario "4" :località_di_arrivo "salerno" :impresa_ferroviaria "trenitalia"})
-(def hash-test-p1 {:fermate nil, :ampm "morning", :numero_del_binario "6", :ora_partenza "00:20", :straordinario nil, :categoria "regional", :hh "0", :mm "59", :numero "4001", :type :P1, :località_di_arrivo "chivasso", :impresa_ferroviaria "trainitaly"})
-(defn prova-enlive-2 [] (unescape-chars (reduce str (lf-p1 hash-test-p1))))
-(defn prova-enlive-3 [] (unescape-chars (reduce str (lf-p1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 2)))))))))
-(defn prova-enlive-4 [] (unescape-chars (reduce str (lf-a1 (emerge-semantic-values (ita2sem (first (split-sentences (examples 10)))))))))
+;;:numero_del_binario_programmato
+(html/deftemplate lf-a2 "templates-xml-lf/lf-a2-02.xml"
+  [post]
+  [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
+  [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
+  [:prop#train-time-mm]
+  (html/do-> (html/set-attr :name  (str (first (:mm post))))
+             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM"))))
+  [:prop#train-categ] (html/set-attr :name  (:categoria post) )
+  [:prop#train-number]
+  (html/do-> (html/set-attr :name  (str (first (:numero post))))
+             (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
+  [:prop#rail-number-old] (html/set-attr :name  (:numero_del_binario post) )
+  [:prop#rail-number-new] (html/set-attr :name  (:numero_del_binario_programmato post) )
+  [:prop#train-origin]
+  (let [seq-nomi (seq (clojure.string/split (:località_di_provenienza post) #"\+"))]
+    (html/do-> (html/set-attr :name  (first seq-nomi))
+               (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION"))))) )
+
+(html/deftemplate lf-a3 "templates-xml-lf/lf-a3-02.xml"
+  [post]
+  [:prop#train-time-ampm] (html/set-attr :name (:ampm post) )
+  [:prop#train-time-hh] (html/set-attr :name  (:hh post) )
+  [:prop#train-time-mm]
+  (html/do-> (html/set-attr :name  (str (first (:mm post))))
+             (if (not-empty (rest (:mm post))) (html/after (build-branch (rest (map str (:mm post))) "SYN-NOUN-CONTIN-DENOM"))))
+  [:prop#train-categ] (html/set-attr :name  (:categoria post) )
+  [:prop#train-number]
+  (html/do-> (html/set-attr :name  (str (first (:numero post))))
+             (if (not-empty (rest (:numero post))) (html/after (build-branch (rest (map str (:numero post))) "SYN-NOUN-CONTIN-DENOM"))))
+  [:prop#late-amount]
+  (if (< (Integer/parseInt (:tempo_ritardo post)) 31)
+    (html/set-attr :name  (:tempo_ritardo post) )
+    (html/do-> (html/set-attr :name  (str (first (:tempo_ritardo post))))
+               (if (not-empty (rest (:tempo_ritardo post))) (html/after (build-branch (rest (map str (:tempo_ritardo  post))) "SYN-NOUN-CONTIN-DENOM")))))
+  [:prop#train-origin]
+  (let [seq-nomi (seq (clojure.string/split (:località_di_provenienza post) #"\+"))]
+    (html/do-> (html/set-attr :name  (first seq-nomi))
+               (html/after (if (not-empty (rest seq-nomi)) (build-branch (rest seq-nomi) "SYN-NOUN-APPOSITION"))))) )
+
+
+
 
 (defn call-enlive-template
   ""
@@ -697,14 +727,14 @@
      (= type :P1)
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
      (= type :A2)
-     (unescape-chars (reduce str (lf-a1 semantic-hash)))
+     (unescape-chars (reduce str (lf-a2 semantic-hash)))
      (= type :A3)
-     (unescape-chars (reduce str (lf-a1 semantic-hash)))
-     (= type :P9)
+     (unescape-chars (reduce str (lf-a3 semantic-hash)))
+     (= type :P9) ;; SOPPRIMERE? -->ANNULLATO
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
-     (= type :P5)
+     (= type :P5) ;;
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
-     (= type :A5)
+     (= type :A5) ;; SOPPRIMERE?
      (unescape-chars (reduce str (lf-a1 semantic-hash)))
      (= type :P13)
      (unescape-chars (reduce str (lf-p1 semantic-hash)))
@@ -745,15 +775,6 @@
           ) ) ) )
 
 
-
-(defn total-test
-  "call all the chain"
-  []
-  ;;(test-ATLASRealizer (create-xml-lf (ita2sem (first (split-sentences (examples 2))))))
-  ;;(test-ATLASRealizer (slurp  "./resources/templates-xml-lf/lf-a1-02.xml"))
-  (test-ATLASRealizer (prova-enlive-4))
-  ;;(test-ATLASRealizer (slurp "./resources/templates-xml-lf/prova.xml"))
-  )
 
 (defn alea2plain
   ""
