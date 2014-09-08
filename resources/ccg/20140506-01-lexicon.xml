@@ -110,7 +110,7 @@
     <member stem="salerno-80068-1" pred="salerno"/>
     <member stem="cuneo-80048-1" pred="cuneo"/>
     <member stem="chivasso-xxxx-1" pred="chivasso"/>
-    <member stem="cartello-80134-1" pred="località_di_arrivo"/>
+    <member stem="cartello-80134-1" pred="localita_di_arrivo"/>
     <member stem="località_di_provenienza-80134-1" pred="località_di_provenienza"/>
     <member stem="località_di_arrivo-80134-1" pred="località_di_arrivo"/>
     <member stem="zero-02617-1" pred="zero"/>

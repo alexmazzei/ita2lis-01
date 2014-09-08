@@ -88,15 +88,17 @@ public class ATLASRealizer {
 	    CCGgrammar  = new Grammar(grammarURL);
 	    CCGrealizer = new Realizer(CCGgrammar);
 
-
 	    //langModFile=/Users/mazzei/lavori/Projects/ATLAS/softwareMazzei/generatoreAtlas/lispSentenceDesigner/data-files-tmp/2012-01-16/n.2bo
 	    //--> modello basato sui bigrammi di glosse
-	    //CCGrealizer.signScorer = new StandardNgramModel(2,languageModelFile);
+            // CGrealizer.signScorer = new StandardNgramModel(2,languageModelFile);
 
-	    //langModFile=/Users/mazzei/lavori/Projects/ATLAS/softwareMazzei/generatoreAtlas/lispSentenceDesigner/data-files-tmp/2012-01-16/spec-02.flm
-	    //--> modello basato sui trigrammi e bigrammi di glosse e semantic ontology class
-	    CCGrealizer.signScorer = new FactoredNgramModelFamily(languageModelFile,true);
-            //CCGrealizer.pruningStrategy = new NBestPruningStrategy(1);
+            //CCGrealizer.signScorer = new StandardNgramModel(4, languageModelFile);
+            //CCGrealizer.pruningStrategy = new NBestPruningStrategy(10);
+
+            //--> modello basato sui trigrammi e bigrammi di glosse e semantic ontology class
+            CCGrealizer.signScorer = new FactoredNgramModelFamily(languageModelFile,true);
+            CCGrealizer.pruningStrategy = new NBestPruningStrategy(10);
+
 
         } catch (Exception ex) {
             Logger.getLogger(ATLASRealizer.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +133,7 @@ public class ATLASRealizer {
 	    LF lf = CCGrealizer.getLfFromDoc(inputDocRealizer);
 	    //Edge bestEdge = CCGrealizer.realize(lf);
             //Edge bestEdge = CCGrealizer.realize(lf,CCGrealizer.signScorer,200,true); //OK 300
-            Edge bestEdge = CCGrealizer.realize(lf,null,300,true);
+            Edge bestEdge = CCGrealizer.realize(lf,CCGrealizer.signScorer,300,true);
 
 
 	    result = bestEdge.getSign().getOrthography() + "\n"

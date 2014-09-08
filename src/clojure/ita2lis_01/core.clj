@@ -799,7 +799,7 @@
         modified-emerged-semantics (remove-cartelli emerged-semantics)
         hash-cartelli (extract-cartelli emerged-semantics)
         out-templating (call-enlive-template modified-emerged-semantics)]
-    ;;(println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
+    (println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
     (println "DEBUG:: OUT-enlive=\n" out-templating)
     (if (empty? out-templating)
       (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
@@ -833,7 +833,8 @@
   "I don't do a whole lot ... yet."
   [& args]
   (do
-    (println "Ready to translate train messages!")
+    (println "Version 14.09.03: translate A1, P1, A2, A3 templates (85%)")
+    (println "Ready to translate the train messages!")
     ;;(receive-loop-udp socket-input real-main)
     ;;(serve-tcp input-port real-main)
     (serve-tcp-persistent input-port real-main)
