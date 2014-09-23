@@ -1,5 +1,5 @@
 (ns ita2lis-01.core
-   (:gen-class))
+  (:gen-class))
 
 (require '[net.cgrand.enlive-html :as html]
          '[clojure.data.csv :as csv]
@@ -7,7 +7,11 @@
 (import '[java.net DatagramSocket
                    DatagramPacket
                    InetSocketAddress
-                   ServerSocket])
+          ServerSocket])
+
+(require '[ita2lis-01.gui-lis4all-demo :as gui] )
+(use 'seesaw.core)
+
 ;;(net.cgrand.reload/auto-reload *ns*)
 
 ;;; Algorithm
@@ -20,7 +24,9 @@
 
 
 ;;; Constants
-(def ^:dynamic indice 100)
+(def
+  ^:dynamic
+  indice 100)
 (defn getNewInteger
   "Returns the value of indice and then increments it"
   []
@@ -799,8 +805,8 @@
         modified-emerged-semantics (remove-cartelli emerged-semantics)
         hash-cartelli (extract-cartelli emerged-semantics)
         out-templating (call-enlive-template modified-emerged-semantics)]
-    (println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
-    (println "DEBUG:: OUT-enlive=\n" out-templating)
+    ;;(println "DEBUG:: MODIFIED Semantics=" modified-emerged-semantics)
+    ;;(println "DEBUG:: OUT-enlive=\n" out-templating)
     (if (empty? out-templating)
       (slurp (clojure.java.io/resource "templates-xml-aewlis/template-aewlis-test.xml"))
       (post-processing-cartelli
@@ -837,5 +843,41 @@
     (println "Ready to translate the train messages!")
     ;;(receive-loop-udp socket-input real-main)
     ;;(serve-tcp input-port real-main)
+    ;;(println "DEBUG:: >>")
+    ;;(println  (analyze-and-generate "Il treno REGIONALE VELOCE, 20 32, di TRENITALIA, delle ore 00.10, proveniente da NOVI LIGURE, è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla."))
+    ;;(println "DEBUG:: <<")
     (serve-tcp-persistent input-port real-main)
     ))
+;;GUI section
+
+(defn translate!
+  "Function called when the button translate! is pressed"
+  [sentence]
+  (let
+      [
+       emerged-semantics (emerge-semantic-values (ita2sem (first (split-sentences sentence))))
+       modified-emerged-semantics (remove-cartelli emerged-semantics)
+       ;;hash-cartelli (extract-cartelli emerged-semantics)
+       out-templating (call-enlive-template modified-emerged-semantics)
+       aewlis (analyze-and-generate sentence)
+       file-name-aewlis (str "out-aewlis-tmp.xml")
+       ]
+    (do
+      (gui/setText gui/areaTextSemantics (str  emerged-semantics))
+      (gui/setText gui/areaTextOutGen out-templating)
+      (gui/setText gui/areaTextAEWLIS aewlis)
+      (analyze-and-generate-write-file sentence file-name-aewlis)
+      (send-filename-aewlis-to-donna file-name-aewlis))
+    ))
+
+(defn signItAgain!
+  ""
+  []
+  (let
+      [file-name-aewlis (str "out-aewlis-tmp.xml")]
+    (do
+      (spit (str (System/getProperty "user.dir") "/" file-name-aewlis) (text gui/areaTextAEWLIS))
+      (send-filename-aewlis-to-donna file-name-aewlis))))
+
+(listen gui/b5 :action (fn [e] (translate! (text gui/areaMsg)))); in core
+(listen gui/b6 :action (fn [e] (signItAgain!)))

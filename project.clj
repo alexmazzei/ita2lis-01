@@ -1,5 +1,5 @@
 (defproject ita2lis-01 "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+  :description "Analyzer and generator for LIS4ALL project"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
@@ -10,7 +10,8 @@
                  [org.clojars.nakkaya/jdom "1.1.2"]
                  [enlive "1.1.5"]
                  [openccg "0.9.4"]
-                 [org.clojure/data.csv "0.1.2"]]
+                 [org.clojure/data.csv "0.1.2"]
+                 [seesaw "1.4.2"]]
   :main ^:skip-aot ita2lis-01.core
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
