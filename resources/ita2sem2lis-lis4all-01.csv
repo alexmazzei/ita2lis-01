@@ -54,6 +54,8 @@ REGIONALE,bn:08848799n,train_category,regional,regional,01953
 VELOCE,??,train_category,fast,veloce,02529
 REGIONALE VELOCE,bn:08975672n,train_category,fastregional,treno_regionale_veloce,80084
 FRECCIAROSSA,bn:04004282n,train_category,redarrow,frecciarossa,80094
+ALTA VELOCITA` FRECCIAROSSA,bn:04004282n,train_category,redarrow,frecciarossa,80094
+ALTA VELOCITÀ FRECCIAROSSA,bn:04004282n,train_category,redarrow,frecciarossa,80094
 FRECCIABIANCA,bn:08935780n,train_category,whitearrow,frecciarossa,80094
 TRENITALIA,bn:03826734n,train_company,trainitaly,trenitalia,80126
 NTV,bn:00733298n,train_company,nsv,??,??

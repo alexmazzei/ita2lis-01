@@ -1,15 +1,20 @@
 (ns ita2lis-01.core
   (:gen-class))
 
-(require '[net.cgrand.enlive-html :as html]
+(require '[ita2lis-01.gui-lis4all-demo :as gui]
+         '[net.cgrand.enlive-html :as html]
          '[clojure.data.csv :as csv]
-         '[clojure.xml :as xml])
+         '[clojure.xml :as xml]
+         '[clj-http.lite.client :as http]
+         '[clojure.java.shell :as shell]
+         '[clj-commons-exec :as exec])
+
 (import '[java.net DatagramSocket
                    DatagramPacket
                    InetSocketAddress
           ServerSocket])
 
-(require '[ita2lis-01.gui-lis4all-demo :as gui] )
+
 (use 'seesaw.core)
 
 ;;(net.cgrand.reload/auto-reload *ns*)
@@ -78,7 +83,7 @@
   (str "(" (clojure.string/join "|" (remove #(nil? %)  (read-stazioni (clojure.java.io/resource "ita2sem2lis-lis4all-01.csv")))) ")")  )
 
 (def stazioni-dictionary-re (re-pattern stazioni-dictionary))
-(def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7|ESPRESSO|EUROCITY|EURONIGHT|TGV|FRECCIARGENTO|FRECCIABIANCA|ITALO|INTERCITY|INTERCITY NOTTE|SUBURBANO|REGIOEXPRESS|MALPENSA EXPRESS|TRENO METROPOLITANO|ACCELERATO|DIRETTO|DIRETTISSIMO)")
+(def categorie-dictionary-re #"(REGIONALE|REGIONALE VELOCE|FRECCIAROSSA|ALTA VELOCITA` FRECCIAROSSA|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 3|SERVIZIO FERROVIARIO METROPOLITANO - LINEA 7|ESPRESSO|EUROCITY|EURONIGHT|TGV|FRECCIARGENTO|FRECCIABIANCA|ITALO|INTERCITY|INTERCITY NOTTE|SUBURBANO|REGIOEXPRESS|MALPENSA EXPRESS|TRENO METROPOLITANO|ACCELERATO|DIRETTO|DIRETTISSIMO)")
 (def imprese_ferroviarie-dictionary-re #"(TRENITALIA|NSV|GTT|TRENORD|SAD|ENTE AUTONOMO VOLTURNO)")
 (def fermate-dictionary-re (re-pattern (str "(FERMA IN TUTTE LE STAZIONI|FERMA A " stazioni-dictionary "+|IN TUTTE LE STAZIONI ECCETTO A " stazioni-dictionary "+|NON SONO PREVISTE FERMATE INTERMEDIE|OGGI FERMA ANCHE A " stazioni-dictionary  "+)")))
 (def oggi-fermate-dictionary-re (re-pattern (str "(OGGI IL TRENO ARRIVA FINO A " stazioni-dictionary "|OGGI IL TRENO ARRIVA A " stazioni-dictionary "INVECE CHE A" stazioni-dictionary ")")))
@@ -127,6 +132,16 @@
   "lowercase the values in a hash"
   [hhh]
   (into {} (for [[k v] hhh] [k (if (string? v) (.toLowerCase v) v) ])))
+
+(defn pp-dictionary
+  ""
+  [dic]
+  (clojure.string/replace
+   (clojure.string/replace (str dic) #"," (println-str ""))
+   #"[{}]"
+   " "))
+
+
 
 ;;; Auxiliary functions
 ;; aux-udp
@@ -198,6 +213,19 @@
             (let [msg-in (receive-tcp sock) msg-out (handler msg-in)]
               (send-tcp sock msg-out))))))
     running))
+
+
+
+;;aux-http-post
+(defn utf8-to-iso88591 "" [x] (String. (byte-array (map (comp unchecked-byte int) x)) "ISO-8859-1"))
+(defn utf8-to-bytes "" [x] (byte-array (map (comp unchecked-byte int) x)))
+(defn sendSentence2CSP
+  ""
+  [sentence]
+  (http/post "http://flussonic.csp.it:8000/api/1.0/play/12" {:headers {"content-type" "text/plain"}  :content-type "text/plain" :body (utf8-to-bytes sentence)}))
+ ;;(exec/sh-pipe ["cat"]   ["curl" "-X" "POST" "-H" "'Content-type: text/plain'" "--data-binary" "@-" "http://flussonic.csp.it:8000/api/1.0/play/12"] {:in sentence})
+  ;;(shell/sh "curl" "-X" "POST" "-H" "'Content-type: text/plain'" "--data-binary" "@-" "http://flussonic.csp.it:8000/api/1.0/play/12" :in (utf8-to-bytes sentence) )
+  ;;(shell/sh "curl" "-X" "POST" "-H" "'Content-type: text/plain'" "--data-binary" "@-" "http://flussonic.csp.it:8000/api/1.0/play/12" :in (utf8-to-iso88591 sentence) )
 
 
 
@@ -841,12 +869,10 @@
   (do
     (println "Version 14.09.03: translate A1, P1, A2, A3 templates (85%)")
     (println "Ready to translate the train messages!")
-    ;;(receive-loop-udp socket-input real-main)
+    ;;(receive-loop-udp socket-input real-main);; udp server
     ;;(serve-tcp input-port real-main)
-    ;;(println "DEBUG:: >>")
-    ;;(println  (analyze-and-generate "Il treno REGIONALE VELOCE, 20 32, di TRENITALIA, delle ore 00.10, proveniente da NOVI LIGURE, è in arrivo al binario 18. Attenzione! Allontanarsi dalla linea gialla."))
-    ;;(println "DEBUG:: <<")
-    (serve-tcp-persistent input-port real-main)
+    (serve-tcp-persistent input-port real-main) ;; for server side
+    ;;(gui/visualize) ;; For visual demo 
     ))
 ;;GUI section
 
@@ -860,12 +886,15 @@
        ;;hash-cartelli (extract-cartelli emerged-semantics)
        out-templating (call-enlive-template modified-emerged-semantics)
        aewlis (analyze-and-generate sentence)
+       plain-aewlis (alea2plain aewlis)
+       pp-plain-aewlis (clojure.string/replace plain-aewlis #" " (println-str ""))
        file-name-aewlis (str "out-aewlis-tmp.xml")
        ]
     (do
-      (gui/setText gui/areaTextSemantics (str  emerged-semantics))
+      (gui/setText gui/areaTextSemantics (pp-dictionary (str  emerged-semantics)) )
       (gui/setText gui/areaTextOutGen out-templating)
       (gui/setText gui/areaTextAEWLIS aewlis)
+      (gui/setText gui/areaTextPlain pp-plain-aewlis)
       (analyze-and-generate-write-file sentence file-name-aewlis)
       (send-filename-aewlis-to-donna file-name-aewlis))
     ))

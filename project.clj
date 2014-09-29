@@ -11,7 +11,11 @@
                  [enlive "1.1.5"]
                  [openccg "0.9.4"]
                  [org.clojure/data.csv "0.1.2"]
-                 [seesaw "1.4.2"]]
+                 [seesaw "1.4.2" :exclusions [org.clojure/clojure]]
+                 [org.clojars.hozumi/clj-commons-exec "1.1.0"]
+                 ;;[clj-http "1.0.0"]
+                 [clj-http-lite "0.2.0"]
+                 ]
   :main ^:skip-aot ita2lis-01.core
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]

@@ -4,9 +4,6 @@
 <newLemma lemma="treno" idAtlasSign="02456">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="regionale_veloce" idAtlasSign="80084">
-<handsNumber>1</handsNumber>
-</newLemma>
 <newLemma lemma="numero" idAtlasSign="01547">
 <handsNumber>1</handsNumber>
 </newLemma>
@@ -16,28 +13,35 @@
 <newLemma lemma="zero" idAtlasSign="02617">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="due" idAtlasSign="00797">
-<handsNumber>1</handsNumber>
-</newLemma>
 <newLemma lemma="zero" idAtlasSign="02617">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="tre" idAtlasSign="02444">
+<newLemma lemma="uno" idAtlasSign="02503">
+<handsNumber>1</handsNumber>
+</newLemma>
+<newLemma lemma="quattro" idAtlasSign="01915">
 <handsNumber>1</handsNumber>
 </newLemma>
 <newLemma lemma="ora" idAtlasSign="02855">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="7" idAtlasSign="80098">
-<handsNumber>1</handsNumber>
-</newLemma>
 <newLemma lemma="due" idAtlasSign="00797">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="cinque" idAtlasSign="00497">
+<newLemma lemma="uno" idAtlasSign="02503">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="mattina" idAtlasSign="02813">
+<newLemma lemma="6" idAtlasSign="80097">
+<handsNumber>1</handsNumber>
+</newLemma>
+<newLemma lemma="sera" idAtlasSign="02689">
+<handsNumber>1</handsNumber>
+</newLemma>
+<newLemma lemma="cartello" idAtlasSign="80134">
+<handsNumber>1</handsNumber>
+<signboard>BARDONECCHIA</signboard>
+</newLemma>
+<newLemma lemma="andare" idAtlasSign="00110">
 <handsNumber>1</handsNumber>
 </newLemma>
 <newLemma lemma="binario" idAtlasSign="80013">
@@ -46,13 +50,7 @@
 <newLemma lemma="numero" idAtlasSign="01547">
 <handsNumber>1</handsNumber>
 </newLemma>
-<newLemma lemma="cinque" idAtlasSign="00497">
-<handsNumber>1</handsNumber>
-</newLemma>
-<newLemma lemma="cuneo" idAtlasSign="80048">
-<handsNumber>1</handsNumber>
-</newLemma>
-<newLemma lemma="andare" idAtlasSign="00110">
+<newLemma lemma="15" idAtlasSign="80106">
 <handsNumber>1</handsNumber>
 </newLemma>
 <newLemma lemma="partire" idAtlasSign="01673">
